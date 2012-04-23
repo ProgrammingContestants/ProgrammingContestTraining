@@ -1,0 +1,10 @@
+* Directory structure
+
+- "slides" directory
+-- slide files (e.g. 004_E–â‘è_Å‹­‚Ìô•¶(â–{).pptx)
+    naming rule: [number]_A|C|E–â‘è_[title]([author])
+
+- "code" directory
+-- language directories (e.g. java, cpp, ...)
+--- contest directories (e.g. Domestic2010, Domestic2010Practice)
+---- solution files (e.g. ProblemC.java, ProblemE.java)
