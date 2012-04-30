@@ -1,8 +1,8 @@
 * Directory structure
 
 - "slides" directory
--- slide files (e.g. 004_E–â‘è_Å‹­‚Ìô•¶(â–{).pptx)
-    naming rule: [number]_A|C|E–â‘è_[title]([author])
+-- slide files (e.g. 004_EF_The_Most_Powerful_Spell.pptx)
+    naming rule: [number]_AB|CD|EF_[title]([author])
 
 - "code" directory
 -- language directories (e.g. java, cpp, ...)
