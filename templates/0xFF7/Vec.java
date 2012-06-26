@@ -10,10 +10,10 @@ class Vec {
 
     public Vec add(Vec other)          { return new Vec(x+other.x, y+other.y); }
     public Vec sub(Vec other)          { return new Vec(x-other.x, y-other.y); }
-    public Vec mul(double k)           { return new Vec(x*k, y*k); }
-    public Vec div(double k)           { return new Vec(x*k, y*k); }
-    public Vec mul(double a, double b) { return new Vec(x*a, y*b); }
-    public Vec div(double a, double b) { return new Vec(x/a, y/b); }
+    public Vec mul(double k)           { return new Vec(x * k, y * k); }
+    public Vec div(double k)           { return new Vec(x / k, y / k); }
+    public Vec mul(double a, double b) { return new Vec(x * a, y * b); }
+    public Vec div(double a, double b) { return new Vec(x / a, y / b); }
     public Vec neg()                   { return mul(-1); }
     public Vec unit()                  { return div(len()); }
     public double dot(Vec other)       { return x*other.x + y*other.y; }
@@ -21,8 +21,10 @@ class Vec {
     public double len2()               { return dot(this); }
     public double len()                { return Math.sqrt(len2()); }
     public double arg()                { return Math.atan2(y, x); }
+    public double arg(Vec v)           { return arg() - v.arg(); }
     public double dist(Vec other)      { return sub(other).len(); }
-    public String toString()           { return String.format("(%f,%f)", x, y); }
+
+    public double[] toArray()          { return new double[] { x, y }; }
 
     public boolean contained(List<Vec> points) {
         if (points.size()<3) throw new RuntimeException("Invalid Polygon");
@@ -36,17 +38,23 @@ class Vec {
         }
         return true;
     }
-    public boolean contained(Vec[] points) {
+
+    public boolean contained(Vec ... points) {
         return contained(Arrays.asList(points));
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%f,%f)", x, y);
+    }
+
+    public boolean eq(Vec v) {
+        return Math.abs(x - v.x) < 1e-9 && Math.abs(y - v.y) < 1e-9;
+    }
+
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Vec)) return false;
-        Vec p = (Vec)other;
-        if (Math.abs(x-p.x)<1e-9 && Math.abs(y-p.y)<1e-9) {
-            return true;
-        }
-        return false;
+        return other instanceof Vec && eq((Vec)other);
     }
 
     public static Vec crossedVec(Vec a, Vec b, Vec c, Vec d) {
