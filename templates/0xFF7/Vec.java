@@ -54,7 +54,7 @@ class Vec {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Vec && eq((Vec)other);
+        return other == this || (other instanceof Vec && eq((Vec)other));
     }
 
     public static Vec crossedVec(Vec a, Vec b, Vec c, Vec d) {
