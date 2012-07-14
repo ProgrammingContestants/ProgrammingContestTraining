@@ -1,1 +1,3 @@
 contest1.map: LDRDDLRULLLDL
+contest2.map: 
+contest3.map: LDDDRRRRDDLLLLLDURRRRUURR
