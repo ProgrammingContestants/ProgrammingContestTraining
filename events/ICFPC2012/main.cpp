@@ -135,29 +135,35 @@ void move (char c)/*{{{*/
 	pos to = rob;
 	switch (c) {
 		case 'l':
+		case 'L':
 		case 'z':
 			operations.push_back('L');
 			--to.x;
 			break;
 		case 'r':
+		case 'R':
 		case 'c':
 			operations.push_back('R');
 			++to.x;
 			break;
 		case 'u':
+		case 'U':
 		case 's':
 			operations.push_back('U');
 			--to.y;
 			break;
 		case 'd':
+		case 'D':
 		case 'x':
 			operations.push_back('D');
 			++to.y;
 			break;
 		case 'w':
+		case 'W':
 			operations.push_back('W');
 			return;
 		case 'a':
+		case 'A':
 			operations.push_back('A');
 			abort_flag = true;
 			++score; /* (restore) */
