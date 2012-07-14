@@ -49,8 +49,8 @@ void init ()/*{{{*/
 	operations.clear();
 
 	// find robot, lambda
-	for (int i = 0; i < width; ++i) {
-		 for (int j = 0; j < field.size(); ++j) {
+	for (int i = 0; i < height; ++i) {
+		 for (int j = 0; j < width; ++j) {
 			if (field[i][j] == 'R') {
 				rob.y = i;
 				rob.x = j;
