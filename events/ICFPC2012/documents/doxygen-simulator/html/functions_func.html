@@ -80,6 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_j"><span>j</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
@@ -97,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -152,12 +153,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Field()
 : <a class="el" href="class_field.html#a3e804c92273d9159f413f227b535c672">Field</a>
 </li>
+<li>flood()
+: <a class="el" href="class_field.html#ae77b9941efc9abaa2738c4ceb1b93a9d">Field</a>
+, <a class="el" href="class_cell.html#a107695aebe145d302175e0e0a8385b70">Cell</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>Game()
-: <a class="el" href="class_game.html#ad59df6562a58a614fda24622d3715b65">Game</a>
+: <a class="el" href="class_game.html#a01cd63875a9f36acc5f7334be9960f67">Game</a>
 </li>
 <li>GameState()
 : <a class="el" href="class_game_state.html#a4fa0a2bf50315c4a35a3890a0adcee5c">GameState</a>
@@ -166,17 +171,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_game.html#a2dd496c0f98d110590692eb60669f9b2">Game</a>
 </li>
 <li>get_cell()
-: <a class="el" href="class_field.html#a41cfb7f036e801f14697cc054bc1e863">Field</a>
+: <a class="el" href="class_field.html#ace48d9ace8b3278d75486ad1df82aa1c">Field</a>
+</li>
+<li>get_cell_internal()
+: <a class="el" href="class_field.html#ae3b34cc8626ce6b6a9fb3a2b15854e78">Field</a>
 </li>
 <li>get_char()
-: <a class="el" href="class_operation.html#a6a3f4063ffad9071c133be4b01c78df0">Operation</a>
-, <a class="el" href="class_cell.html#aa0d655b04d26775c14151deba3c112e0">Cell</a>
+: <a class="el" href="class_cell.html#aa0d655b04d26775c14151deba3c112e0">Cell</a>
+, <a class="el" href="class_operation.html#a6a3f4063ffad9071c133be4b01c78df0">Operation</a>
 </li>
 <li>get_collected()
 : <a class="el" href="class_game_state.html#ad2eef5258df6acba5eb0ac877769f185">GameState</a>
 </li>
 <li>get_condition()
 : <a class="el" href="class_game_state.html#a0c24d2d8057fbf442cae84f9990ef885">GameState</a>
+</li>
+<li>get_condition_string()
+: <a class="el" href="class_game_state.html#a2ab351d18034fea7864fcf539601bd86">GameState</a>
 </li>
 <li>get_dx()
 : <a class="el" href="class_operation.html#a070f1439cd8a348ce98931fd28d6c8d3">Operation</a>
@@ -185,16 +196,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_operation.html#a2780e04d38b5eaf5ea3b1f61e0f01912">Operation</a>
 </li>
 <li>get_field()
-: <a class="el" href="class_game.html#ad0434dcbc10adcd9fa3b1cd58335f831">Game</a>
+: <a class="el" href="class_game.html#a530e1ab0b9f82660d2bdb5f0912c424c">Game</a>
 </li>
 <li>get_flooding()
 : <a class="el" href="class_metadata.html#a19626525b2021a27e9a621bf570c24a8">Metadata</a>
 </li>
 <li>get_game_state()
-: <a class="el" href="class_game.html#a3a19a289ce2d32b98d28df73418c4f74">Game</a>
+: <a class="el" href="class_game.html#accd92710dc5f5e6ffbdc0254f65dbb48">Game</a>
+</li>
+<li>get_growth()
+: <a class="el" href="class_metadata.html#aace09a6e31735f07e85830ff582c9f59">Metadata</a>
 </li>
 <li>get_height()
 : <a class="el" href="class_field.html#a4b9b1baf11c6598304dbceb263b22616">Field</a>
+</li>
+<li>get_id()
+: <a class="el" href="class_cell.html#a33d803d7e51649255a81f0a75e432f89">Cell</a>
+</li>
+<li>get_metadata()
+: <a class="el" href="class_game.html#a25b2ca79bb43780ce290f121d3bd4f8d">Game</a>
+</li>
+<li>get_operations()
+: <a class="el" href="class_game.html#a7c81cd1dd0d7503698b0cada6d28bffc">Game</a>
+</li>
+<li>get_razors()
+: <a class="el" href="class_metadata.html#a6b1de2fd8f1cbd4df0845e21363abd4f">Metadata</a>
 </li>
 <li>get_remain()
 : <a class="el" href="class_game_state.html#a726eb5327f6b5be59d5bbfb52dda36bd">GameState</a>
@@ -203,12 +229,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_game_state.html#a345c890c9bfb1fd155aa25f5cfcde6a9">GameState</a>
 </li>
 <li>get_string()
-: <a class="el" href="class_condition.html#a33c8aeff49db6a677e30ddffe938acdd">Condition</a>
-, <a class="el" href="class_field.html#a86cd05f57a0c24e9cbd408e3084deab9">Field</a>
+: <a class="el" href="class_field.html#a86cd05f57a0c24e9cbd408e3084deab9">Field</a>
+, <a class="el" href="class_condition.html#a33c8aeff49db6a677e30ddffe938acdd">Condition</a>
+</li>
+<li>get_target_id()
+: <a class="el" href="class_metadata.html#adc5d7f71c14b3af1da83ba57556cdd3b">Metadata</a>
 </li>
 <li>get_type()
-: <a class="el" href="class_cell.html#a444d82b0627a965e14329505238fee4a">Cell</a>
-, <a class="el" href="class_condition.html#a9dfd16293fc1c6d0787c14af544cce27">Condition</a>
+: <a class="el" href="class_condition.html#a9dfd16293fc1c6d0787c14af544cce27">Condition</a>
+, <a class="el" href="class_cell.html#a444d82b0627a965e14329505238fee4a">Cell</a>
 , <a class="el" href="class_operation.html#a235a275bc96ce0fc596e0673f18aeab6">Operation</a>
 </li>
 <li>get_water()
@@ -231,9 +260,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>init()
-: <a class="el" href="class_field.html#ada08767f0b3fa554cd5c7e5323e0e39d">Field</a>
-, <a class="el" href="class_metadata.html#a5a03e5da638f0f1f9094f15c5ab2b5be">Metadata</a>
-, <a class="el" href="class_robot.html#a86817b4586ada4c694819dfc8554e048">Robot</a>
+: <a class="el" href="class_field.html#a5999301cae67d87ff080027569ad43f6">Field</a>
+, <a class="el" href="class_metadata.html#a982c84473cc7fcf289b1444429781431">Metadata</a>
+, <a class="el" href="class_robot.html#a3a26eab709815a6afc41297548d29269">Robot</a>
 </li>
 <li>is_dead()
 : <a class="el" href="class_robot.html#acc97868e96a4ec4ef43d47d50698f9ee">Robot</a>
@@ -241,6 +270,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>is_finished()
 : <a class="el" href="class_game.html#a682b817ff32feaa430bd02148d87d902">Game</a>
 , <a class="el" href="class_game_state.html#aa49d507ed20a0b53608ef96ee3e7a06c">GameState</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_j"></a>- j -</h3><ul>
+<li>jump()
+: <a class="el" href="class_robot.html#ab2a931fdfdf3c2b818d1b9151295fa2b">Robot</a>
 </li>
 </ul>
 
@@ -261,14 +297,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_robot.html#a757e00b66d10bdf040458bb68d8db7fb">Robot</a>
 </li>
 <li>move_robot()
-: <a class="el" href="class_field.html#aa8ecc74b248fa211b4a641a5d70c75e9">Field</a>
+: <a class="el" href="class_field.html#accd70a6960417a5663b184165c937089">Field</a>
+</li>
+<li>moves()
+: <a class="el" href="class_game.html#a219a83b8e533ec2042c6d5eb0012ce2b">Game</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>operate()
-: <a class="el" href="class_field.html#a09acf7c2579d20eac9bb6eaf3b6dd2f2">Field</a>
+: <a class="el" href="class_field.html#a24c0ef017626f62c08515117cc2d8b53">Field</a>
 </li>
 <li>Operation()
 : <a class="el" href="class_operation.html#a28d6376569fb31fc51d00e2484df3cd0">Operation</a>
@@ -311,7 +350,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>update()
-: <a class="el" href="class_field.html#af48801e4d3d1b92ba7c094132fb56cb3">Field</a>
+: <a class="el" href="class_field.html#a33c0298c1908cf341a701686a0705659">Field</a>
 </li>
 </ul>
 
@@ -355,7 +394,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 15 2012 13:25:37 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 15 2012 16:57:01 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

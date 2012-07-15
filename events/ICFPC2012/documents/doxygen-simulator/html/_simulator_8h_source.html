@@ -67,7 +67,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,25 +89,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="_simulator_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _LAMBDA_SIMULATOR_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _LAMBDA_SIMULATOR_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_game_8h.html">Game.h</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_operation_8h.html">Operation.h</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="code" href="class_simulator.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_simulator.html">Simulator</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="code" href="class_simulator.html#a46a485177db800961c8efebba74540b6">    9</a></span>&#160;                <a class="code" href="class_game.html">Game</a>* <a class="code" href="class_simulator.html#a46a485177db800961c8efebba74540b6">game</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                <a class="code" href="class_operation.html#af59ebae7d90ecabc5ba29cba5b85e98f">Operation::OperationType</a> <a class="code" href="class_simulator.html#ad052a5dc044eb33f75afd2031d7993fd">char_to_optype</a>(<span class="keywordtype">char</span> c);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                <a class="code" href="class_simulator.html#a031573bfcfe2e0f5c9539bcc1c7fc5d9">Simulator</a>();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                <a class="code" href="class_simulator.html#a0f49aa04f42060a785adf77346b9de9f">~Simulator</a>();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <span class="keywordtype">void</span> <a class="code" href="class_simulator.html#aa2de7e32b04cc3e8fc60aec23997621b">run</a>();</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;};</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_common_8h.html">Common.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_game_8h.html">Game.h</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_operation_8h.html">Operation.h</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="code" href="class_simulator.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_simulator.html">Simulator</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="code" href="class_simulator.html#a46a485177db800961c8efebba74540b6">   11</a></span>&#160;                <a class="code" href="class_game.html">Game</a>* <a class="code" href="class_simulator.html#a46a485177db800961c8efebba74540b6">game</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                <a class="code" href="class_operation.html#af59ebae7d90ecabc5ba29cba5b85e98f">Operation::OperationType</a> <a class="code" href="class_simulator.html#ad052a5dc044eb33f75afd2031d7993fd">char_to_optype</a>(<span class="keywordtype">char</span> c);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <a class="code" href="class_simulator.html#a031573bfcfe2e0f5c9539bcc1c7fc5d9">Simulator</a>();</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                <a class="code" href="class_simulator.html#a0f49aa04f42060a785adf77346b9de9f">~Simulator</a>();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                <span class="keywordtype">void</span> <a class="code" href="class_simulator.html#aa2de7e32b04cc3e8fc60aec23997621b">run</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;};</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 15 2012 13:25:37 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 15 2012 16:57:01 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

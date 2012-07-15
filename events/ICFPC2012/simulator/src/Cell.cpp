@@ -28,6 +28,12 @@ Cell::Cell(char c) : flooded(false), id(UNDEF_ID)
 		case ' ':
 			type = EMPTY;
 			break;
+		case 'W':
+			type = BEARD;
+			break;
+		case '!':
+			type = RAZOR;
+			break;
 		default:
 			if('A'<=c&&c<='I'){
 				type=TRAMPOLINE;
@@ -81,12 +87,16 @@ char Cell::get_char()
 			return 'O';
 		case EARTH:
 			return '.';
-		case EMPTY:
-			return ' ';
 		case TRAMPOLINE:
 			return id;
 		case TARGET:
 			return id;
+		case BEARD:
+			return 'W';
+		case RAZOR:
+			return '!';
+		case EMPTY:
+			return ' ';
 	}
 }
 

@@ -11,7 +11,8 @@ var searchData=
   ['clift',['CLIFT',['../class_cell.html#a17f4fc9beca099930fcbf72a4c9b59bdaf8b264e2f13971a7275109f1dfd4d492',1,'Cell']]],
   ['collect_5flambda',['collect_lambda',['../class_game_state.html#ac0393acccf7eeb4e5bf4b09a40b05419',1,'GameState']]],
   ['collected',['collected',['../class_game_state.html#a4b691917c171845635a197552a25b8c4',1,'GameState']]],
-  ['condition',['Condition',['../class_condition.html',1,'Condition'],['../class_condition.html#af11513db4fcbde93961fa0b65e7ab764',1,'Condition::Condition()'],['../class_game_state.html#ab33457b9393ce6a1e89e8c8f522deb69',1,'GameState::condition()']]],
+  ['common_2eh',['Common.h',['../_common_8h.html',1,'']]],
+  ['condition',['Condition',['../class_condition.html',1,'Condition'],['../class_game_state.html#ab33457b9393ce6a1e89e8c8f522deb69',1,'GameState::condition()'],['../class_condition.html#af11513db4fcbde93961fa0b65e7ab764',1,'Condition::Condition()']]],
   ['condition_2ecpp',['Condition.cpp',['../_condition_8cpp.html',1,'']]],
   ['condition_2eh',['Condition.h',['../_condition_8h.html',1,'']]],
   ['conditiontype',['ConditionType',['../class_condition.html#aafeae4504e9e837f29172d2b98df4ecc',1,'Condition']]]
