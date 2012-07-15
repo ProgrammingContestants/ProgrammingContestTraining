@@ -3,6 +3,13 @@
 #include "gtest/gtest.h"
 
 TEST(GameTest, constructor) {
-  // OK
+  string map = "";
+  map += "######\n";
+  map += "#. *R#\n";
+  map += "#  \.#\n";
+  map += "#\ * #\n";
+  map += "L  .\#\n";
+  map += "######\n";
+  Game game();
 }
 
