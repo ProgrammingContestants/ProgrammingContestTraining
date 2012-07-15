@@ -1,6 +1,7 @@
 #include "../inc/Cell.h"
+#include <cassert>
 
-Cell::Cell(char c) : flooded(false)
+Cell::Cell(char c) : flooded(false), id(UNDEF_ID)
 {
 	switch (c) {
 		case 'R':
@@ -27,6 +28,16 @@ Cell::Cell(char c) : flooded(false)
 		case ' ':
 			type = EMPTY;
 			break;
+		default:
+			if('A'<=c&&c<='I'){
+				type=TRAMPOLINE;
+				id=c;
+			}else if('1'<=c&&c<='9'){
+				type=TARGET;
+				id=c;
+			}else{
+				assert(0);
+			}
 	}
 }
 
@@ -41,7 +52,13 @@ Cell::CellType Cell::get_type()
 
 void Cell::set_type(CellType t)
 {
+	set_type(t,UNDEF_ID);
+}
+
+void Cell::set_type(CellType t, char id)
+{
 	type = t;
+	this->id = id;
 }
 
 char Cell::get_char()
@@ -63,5 +80,15 @@ char Cell::get_char()
 			return '.';
 		case EMPTY:
 			return ' ';
+		case TRAMPOLINE:
+			return id;
+		case TARGET:
+			return id;
 	}
+}
+
+
+char Cell::get_id(){
+	assert(id!=UNDEF_ID);
+	return id;
 }

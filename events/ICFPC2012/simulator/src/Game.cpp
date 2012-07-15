@@ -22,10 +22,7 @@ Game::Game()
 
 	/* TODO: input and create metadata */
 	/* defaluts */
-	int water = 0;
-	int flooding = 0;
-	int waterproof = 10;
-	metadata.init(water, flooding, waterproof);
+	metadata.init();
 
 	generate_field(str);
 }
