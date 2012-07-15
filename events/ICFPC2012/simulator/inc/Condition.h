@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_CONDITION_H
 #define _LAMBDA_CONDITION_H
 
+#include "Common.h"
 #include <string>
 using namespace std;
 

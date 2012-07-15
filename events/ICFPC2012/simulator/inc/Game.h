@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_GAME_H
 #define _LAMBDA_GAME_H
 
+#include "Common.h"
 #include "Metadata.h"
 #include "Field.h"
 #include "Operation.h"
@@ -27,6 +28,7 @@ class Game {
 		bool move(Operation op);
 		bool is_finished();
 		void print_game_states();
+		string get_operations();
 
 		Field& get_field();
 		GameState& get_game_state();

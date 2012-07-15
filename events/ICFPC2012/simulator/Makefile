@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-W -ansi -pedantic -Wunreachable-code -Wstrict-prototypes -O2 -g
+CFLAGS=-W -ansi -pedantic -Wunreachable-code -O2 -g
 LDFLAGS=
 SOURCES=main.cpp $(wildcard src/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)

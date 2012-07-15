@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_OPERATION_H
 #define _LAMBDA_OPERATION_H
 
+#include "Common.h"
 #include <iostream>
 using namespace std;
 
