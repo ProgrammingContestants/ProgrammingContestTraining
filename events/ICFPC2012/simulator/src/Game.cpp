@@ -98,32 +98,33 @@ GameState& Game::moves(string commands)
       case 'l':
       case 'L':
          op = Operation::LEFT;
-
+         break;
       case 'r':
       case 'R':
         op = Operation::RIGHT;
-
+         break;
       case 'u':
       case 'U':
         op = Operation::UP;
-
+         break;
       case 'd':
       case 'D':
         op = Operation::DOWN;
-
+         break;
       case 'w':
       case 'W':
         op = Operation::WAIT;
-
+         break;
       case 'a':
       case 'A':
         op = Operation::ABORT;
-
+         break;
       default:
         op = Operation::UNKNOWN;
-      operations.push_back(op);
-      field.operate(op, state, metadata);
     }
+    operations.push_back(op);
+    field.operate(op, state, metadata);
+    print_game_states();
   }
   return state;
 }
