@@ -61,10 +61,12 @@ void Game::print_game_states()
 	}
 	cerr << endl;
 	cerr << "score: " << state.get_score();
+	cerr << ", turn: " << field.get_steps();
 	cerr << ", collected: " << state.get_collected();
-	cerr << ", remain: " << state.get_remain() << endl;
-	cerr << "state: " << state.get_condition_string() << endl;
-	cerr << "water: " << field.get_water_height() << endl;
+	cerr << ", remain: " << state.get_remain();
+	cerr << ", state: " << state.get_condition_string();
+	cerr << ", water: " << field.get_water_height();
+	cerr << ", razors: " << state.get_razors() << endl;
 }
 
 string Game::get_operations()
