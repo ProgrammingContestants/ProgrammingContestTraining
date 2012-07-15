@@ -20,24 +20,12 @@ void Robot::init(int _x, int _y, Metadata& metadata)
 
 bool Robot::move(int dx, int dy)
 {
-	x += dx;
-	y += dy;
-	return true;
+	return move(dx,dy,false);
 }
 
 bool Robot::move(int dx, int dy, bool flooded)
 {
-	x += dx;
-	y += dy;
-	if (flooded) {
-		if (--water_life == 0) {
-			dead = true;
-		}
-	}
-	else {
-		water_life = waterproof;
-	}
-	return true;
+	return set_location(x+dx,y+dy,flooded);
 }
 
 bool Robot::is_dead()
@@ -60,7 +48,21 @@ int Robot::get_y()
 	return y;
 }
 
-void Robot::jump(int target_x,int target_y){
-	x=target_x;
-	y=target_y;
+bool Robot::set_location(int dest_x,int dest_y){
+	return set_location(dest_x,dest_y,false);
 }
+
+bool Robot::set_location(int dest_x,int dest_y,bool flooded){
+	x=dest_x;
+	y=dest_y;
+	if (flooded) {
+		if (--water_life == 0) {
+			dead = true;
+		}
+	}
+	else {
+		water_life = waterproof;
+	}
+	return true;
+}
+

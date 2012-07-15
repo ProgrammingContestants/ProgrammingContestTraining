@@ -21,7 +21,8 @@ class Robot {
 		bool move(int dx, int dy, bool flooded);
 		bool is_dead();
 		void destroy();
-		void jump(int target_x,int target_y);
+		bool set_location(int dest_x,int dest_y);
+		bool set_location(int dest_x,int dest_y,bool flooded);
 
 		int get_x();
 		int get_y();

@@ -6,6 +6,7 @@
 class Cell {
 	public:
 		enum CellType {
+			ROBOT,
 			WALL,
 			ROCK,
 			LAMBDA,

@@ -170,12 +170,13 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 		case Cell::TRAMPOLINE:
 			{
 			char target_id=metadata.get_target_id(cell.get_id());
-			for(int x=0;x<get_width();x++){
-				for(int y=0;y<get_height();y++){
-					Cell& c = get_cell_internal(x,y);
+			for(int tx=0;tx<get_width();tx++){
+				for(int ty=0;ty<get_height();ty++){
+					Cell& c = get_cell_internal(tx,ty);
 					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
-						robot.jump(x,y);
-						c.set_type(Cell::EMPTY);
+						get_cell_internal(x,y).set_type(Cell::EMPTY);
+						robot.set_location(tx,ty);
+						c.set_type(Cell::ROBOT);
 					}else if(c.get_type()==Cell::TRAMPOLINE&&metadata.get_target_id(c.get_id())==target_id){
 						c.set_type(Cell::EMPTY);
 					}
@@ -189,7 +190,8 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	}
 	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	robot.move(dx, dy);
-	cells[width * (y+dy) + (x+dx)].set_type(Cell::EMPTY);
+	get_cell_internal(x,y).set_type(Cell::EMPTY);
+	get_cell_internal(x+dx,y+dy).set_type(Cell::ROBOT);
 	return true;
 }
 
