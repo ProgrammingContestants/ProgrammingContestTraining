@@ -123,7 +123,7 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 
 void Field::flood()
 {
-	if (steps % flooding == 0) {
+	if (flooding != 0 && steps % flooding == 0) {
 		cerr << "Flooding!" << endl;
 		++water;
 		for (int i = 0; i < width; i++) {

@@ -5,7 +5,7 @@ Game::Game(istream &in)
 	int width = 0;
 	vector<string> v;
 	string str, row;
-	while (getline(cin, row) && row != "") {
+	while (getline(in, row), row != "") {
 		width = max(width, (int)row.length());
 		v.push_back(row);
 	}
