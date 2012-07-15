@@ -291,7 +291,8 @@ void Field::update(GameState& state, Metadata& metadata)
 
 				/* process HOR */
 				if (type == Cell::HOR && fallen) {
-					if (old[width * (fallen_y + 1) + fallen_x].get_type() != Cell::EMPTY) {
+					if (old[width * (fallen_y + 1) + fallen_x].get_type() != Cell::EMPTY
+							&& old[width * (fallen_y + 1) + fallen_x].get_type() != Cell::ROBOT) {
 						/* break and reveal Lambda */
 						cells[width * (fallen_y) + fallen_x].set_type(Cell::LAMBDA);
 					}
@@ -319,9 +320,13 @@ void Field::update(GameState& state, Metadata& metadata)
 			}
 		}
 	}
+
+	/* destroy check */
 	if (robot.get_y() - 1 >= 0
-			&& old[width * (robot.get_y()-1) + (robot.get_x())].get_type() != Cell::ROCK
-			&& cells[width * (robot.get_y()-1) + (robot.get_x())].get_type() == Cell::ROCK) {
+			&& (old[width * (robot.get_y()-1) + (robot.get_x())].get_type() != Cell::ROCK
+				&& cells[width * (robot.get_y()-1) + (robot.get_x())].get_type() == Cell::ROCK)
+			|| (old[width * (robot.get_y()-1) + (robot.get_x())].get_type() != Cell::HOR
+				&& cells[width * (robot.get_y()-1) + (robot.get_x())].get_type() == Cell::HOR) ) {
 		robot.destroy();
 	}
 }
