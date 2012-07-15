@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <cstdio>
 #include <cstdlib>
@@ -12,23 +11,13 @@ char *field;
 
 void read_field()
 {
-	vector<string> lines;
 	string line;
-	while (getline(cin, line))
-	{
-		if (line.empty()) break;
-		lines.push_back(line);
-	}
-
-	W = (int)lines[0].length();
-	H = (int)lines.size();
-	field = new char[W * H];
-
 	for (int iy = 0; iy < H; iy++)
 	{
+		getline(cin, line);
 		for (int ix = 0; ix < W; ix++)
 		{
-			field[iy * W + ix] = lines[iy][ix];
+			field[iy * W + ix] = line[ix];
 		}
 	}
 }
@@ -69,17 +58,16 @@ int main()
 
 	string line;
 
-	cerr << "reading field..." << endl;
+	getline(cin, line);
+	W = atoi(line.c_str());
+
+	getline(cin, line);
+	H = atoi(line.c_str());
+
+	field = new char[W * H];
 	read_field();
-	cerr << "read field ended." << endl;
 
-	while (getline(cin, line))
-	{
-		if (line == "END-OF-INPUT") break;
-		cerr << "read metadata: " << line << endl;
-	}
-
-	while (getline(cin, line))
+	for (;getline(cin, line);)
 	{
 		random_overwrite();
 
