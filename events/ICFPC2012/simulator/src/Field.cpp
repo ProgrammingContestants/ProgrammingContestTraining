@@ -169,15 +169,14 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 		/* Trampoline jumping */
 		case Cell::TRAMPOLINE:
 			{
-			char trampoline_id=cell.get_id();
-			char target_id=metadata.get_target_id(trampoline_id);
+			char target_id=metadata.get_target_id(cell.get_id());
 			for(int x=0;x<get_width();x++){
 				for(int y=0;y<get_height();y++){
 					Cell& c = get_cell_internal(x,y);
 					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
 						rob.jump(x,y);
 						c.set_type(Cell::EMPTY);
-					}else if(c.get_type()==Cell::TRAMPOLINE&&c.get_id()==trampoline_id){
+					}else if(c.get_type()==Cell::TRAMPOLINE&&metadata.get_target_id(c.get_id())==target_id){
 						c.set_type(Cell::EMPTY);
 					}
 				}
