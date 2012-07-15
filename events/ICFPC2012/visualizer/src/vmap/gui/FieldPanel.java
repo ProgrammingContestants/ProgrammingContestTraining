@@ -117,7 +117,7 @@ public class FieldPanel extends JPanel
 	
 	protected void paintComponent(Graphics g)
 	{
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		Point o = getOrigin();

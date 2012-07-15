@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,6 +45,7 @@ public class MainFrame extends JFrame
 	private JButton buttonInitialize;
 	private JButton buttonKill;
 	private JButton buttonRestart;
+	private JCheckBox checkSuppressStdErr;
 	private JSlider sliderChipSize;
 	private JLabel labelScore;
 	private JTextField sentCommands;
@@ -116,6 +118,8 @@ public class MainFrame extends JFrame
 		});
 		buttonRestart.setEnabled(false);
 		
+		checkSuppressStdErr = new JCheckBox("Suppress error output");
+		
 		labelScore = new JLabel("");
 		
 		sliderChipSize = new JSlider(1, 100, 32);
@@ -133,6 +137,7 @@ public class MainFrame extends JFrame
 		toolPanel.add(buttonInitialize);
 		toolPanel.add(buttonKill);
 		toolPanel.add(buttonRestart);
+		toolPanel.add(checkSuppressStdErr);
 		toolPanel.add(sliderChipSize);
 		add(toolPanel, BorderLayout.NORTH);
 		
@@ -176,13 +181,10 @@ public class MainFrame extends JFrame
 		return s;
 	}
 	
-	private Dimension calcDimension(String mapString)
+	private int calcHeight(String mapString)
 	{
 		String[] lines = mapString.split("\n");
-		int rows = 0;
-		for (; rows < lines.length && !lines[rows].isEmpty(); rows++);
-		if (rows == 0) return new Dimension();
-		return new Dimension(lines[0].length(), rows);
+		return lines.length;
 	}
 	
 	private boolean createProcess(String initialInput)
@@ -197,7 +199,10 @@ public class MainFrame extends JFrame
 		{
 			public void printLine(String line)
 			{
-				console.printStandardError(line);
+				if (!checkSuppressStdErr.isSelected())
+				{
+					console.printStandardError(line);
+				}
 			}
 		});
 		r.setFinishListener(new ProcessFinishListener()
@@ -248,14 +253,14 @@ public class MainFrame extends JFrame
 		turn = 0;
 		
 		String fieldText = getFieldText(input);
-		Dimension dim = calcDimension(fieldText);
-		nLines = dim.height;
+		nLines = calcHeight(fieldText);
 		
 		if (createProcess(input))
 		{
 			previousInput = input;
 			buttonRestart.setEnabled(true);
 			
+			// TODO: until supported by the simulator
 			//fieldPanel.setTrampolineMapping(readTrampolineMappings());
 			
 			FieldMap m = FieldMap.fromString(fieldText);
