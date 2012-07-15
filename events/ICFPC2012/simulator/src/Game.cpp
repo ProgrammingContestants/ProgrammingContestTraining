@@ -61,14 +61,14 @@ void Game::generate_field(string str)
 	while (getline(iss, row, '\n')) {
 		rows.push_back(row);
 	}
-	field.init(rows, state, metadata);
+	field.init(rows, &state, &metadata);
 }
 
 bool Game::move(Operation op)
 {
 	cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
-	field.operate(op, state);
+	field.operate(op);
 	return true;
 }
 
@@ -88,15 +88,14 @@ void Game::print_game_states()
 	cerr << "score: " << state.get_score();
 	cerr << ", collected: " << state.get_collected();
 	cerr << ", remain: " << state.get_remain() << endl;
-	cerr << "state: " << state.get_condition_string() << endl;
 }
 
-Field& Game::get_field()
+Field* Game::get_field()
 {
-	return field;
+	return &field;
 }
 
-GameState& Game::get_game_state()
+GameState* Game::get_game_state()
 {
-	return state;
+	return &state;
 }
