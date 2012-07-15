@@ -270,3 +270,8 @@ Robot& Field::get_robot()
 {
 	return robot;
 }
+
+const int Field::get_steps()
+{
+	return steps;
+}

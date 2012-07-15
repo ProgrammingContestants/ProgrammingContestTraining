@@ -44,5 +44,6 @@ class Field
 		void operate(Operation op, GameState& state, Metadata& metadata);
 		void print();
 		Robot& get_robot();
+		const int get_steps();
 };
 #endif
