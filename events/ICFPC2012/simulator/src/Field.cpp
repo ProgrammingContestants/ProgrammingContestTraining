@@ -71,7 +71,7 @@ string Field::get_string()
 	return str;
 }
 
-void Field::operate(Operation op, GameState& state)
+void Field::operate(Operation op, GameState& state, Metadata& metadata)
 {
 	++steps;
 	int dx = 0, dy = 0;
@@ -99,7 +99,7 @@ void Field::operate(Operation op, GameState& state)
 	state.decrement_score();
 
 	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy, state);
+		move_robot(dx, dy, state, metadata);
 	}
 	update(state);
 
@@ -119,12 +119,13 @@ void Field::flood()
 	}
 }
 
-bool Field::move_robot(int dx, int dy, GameState& state)
+bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 {
 	/* TODO: SEGFAULT GURAD */
 
 	int y = rob.get_y(), x = rob.get_x();
-	switch (cells[width * (y+dy) + (x+dx)].get_type()) {
+	Cell &cell = cells[width * (y+dy) + (x+dx)];
+	switch (cell.get_type()) {
 		/* Cannot move */
 		case Cell::WALL:
 		case Cell::CLIFT:
@@ -156,6 +157,25 @@ bool Field::move_robot(int dx, int dy, GameState& state)
 				}
 			}
 			break;
+
+		case Cell::TRAMPOLINE:
+			{
+			char trampoline_id=cell.get_id();
+			char target_id=metadata.get_target_id(trampoline_id);
+			for(int x=0;x<get_width();x++){
+				for(int y=0;y<get_height();y++){
+					Cell &c = get_cell(x,y);
+					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
+						rob.jump(x,y);
+						c.set_type(Cell::EMPTY);
+					}else if(c.get_type()==Cell::TRAMPOLINE&&c.get_id()==trampoline_id){
+						c.set_type(Cell::EMPTY);
+					}
+				}
+			}
+			return true;
+			}
+
 		default:
 			return false;
 	}

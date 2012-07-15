@@ -22,10 +22,7 @@ Game::Game(istream &in)
 
 	/* TODO: input and create metadata */
 	/* defaluts */
-	int water = 0;
-	int flooding = 0;
-	int waterproof = 10;
-	metadata.init(water, flooding, waterproof);
+	metadata.init();
 
 	generate_field(str);
 }
@@ -68,7 +65,7 @@ bool Game::move(Operation op)
 {
 	dbg_cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
-	field.operate(op, state);
+	field.operate(op, state, metadata);
 	return true;
 }
 

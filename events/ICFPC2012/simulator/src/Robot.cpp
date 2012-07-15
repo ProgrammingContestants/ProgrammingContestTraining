@@ -59,3 +59,8 @@ int Robot::get_y()
 {
 	return y;
 }
+
+void Robot::jump(int target_x,int target_y){
+	x=target_x;
+	y=target_y;
+}
