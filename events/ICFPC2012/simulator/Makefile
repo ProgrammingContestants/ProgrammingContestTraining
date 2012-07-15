@@ -3,7 +3,7 @@ CFLAGS=-W -ansi -pedantic -Wunreachable-code -Wstrict-prototypes -O2 -g
 LDFLAGS=
 SOURCES=main.cpp $(wildcard src/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=main
+EXECUTABLE=main.out
 
 all: $(EXECUTABLE)
 
@@ -16,4 +16,4 @@ $(EXECUTABLE): $(OBJECTS)
 .PHONY: clean
 
 clean:
-	rm src/*.o $(EXECUTABLE) tags main.o
+	rm src/*.o $(EXECUTABLE)

@@ -21,37 +21,16 @@ Game::Game()
 	}
 
 	/* TODO: input and create metadata */
-	metadata = new Metadata(0, 0, 10); /* tmp */
+	/* defaluts */
+	int water = 0;
+	int flooding = 0;
+	int waterproof = 10;
+	metadata.init(water, flooding, waterproof);
 
-	state = new GameState();
 	generate_field(str);
 }
 
-Game::Game(Metadata* md): metadata(md)
-{
-	int width = 0;
-	vector<string> v;
-	string str, row;
-	while (getline(cin, row), row != "") {
-		width = max(width, (int)row.length());
-		v.push_back(row);
-	}
-	for(vector<string>::iterator  it=(v).begin(); it!=(v).end(); ++it) {
-		int len = (*it).length();
-		for (int i = len; i < width; ++i) {
-			(*it) += ' ';
-		}
-		if (str.length() != 0) {
-			str +=  '\n';
-		}
-		str += (*it);
-	}
-
-	state = new GameState();
-	generate_field(str);
-}
-
-Game::Game(int w, int h, Metadata* md): metadata(md)
+Game::Game(int w, int h)
 {
 	char c;
 	string str;
@@ -65,7 +44,7 @@ Game::Game(int w, int h, Metadata* md): metadata(md)
 	generate_field(str);
 }
 
-Game::Game(string str, Metadata* md): metadata(md)
+Game::Game(string str)
 {
 	generate_field(str);
 }
@@ -82,41 +61,41 @@ void Game::generate_field(string str)
 	while (getline(iss, row, '\n')) {
 		rows.push_back(row);
 	}
-	field = new Field(rows, state, metadata);
+	field.init(rows, &state, &metadata);
 }
 
 bool Game::move(Operation op)
 {
 	cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
-	field->operate(op);
+	field.operate(op);
 	return true;
 }
 
 bool Game::is_finished()
 {
-	return state->is_finished();
+	return state.is_finished();
 }
 
 void Game::print_game_states()
 {
-	field->print();
+	field.print();
 	cerr << "operations: ";
 	for (int i = 0; i < operations.size(); ++i) {
 		cerr << operations[i].get_char();
 	}
 	cerr << endl;
-	cerr << "score: " << state->get_score();
-	cerr << ", collected: " << state->get_collected();
-	cerr << ", remain: " << state->get_remain() << endl;
+	cerr << "score: " << state.get_score();
+	cerr << ", collected: " << state.get_collected();
+	cerr << ", remain: " << state.get_remain() << endl;
 }
 
 Field* Game::get_field()
 {
-	return field;
+	return &field;
 }
 
 GameState* Game::get_game_state()
 {
-	return state;
+	return &state;
 }

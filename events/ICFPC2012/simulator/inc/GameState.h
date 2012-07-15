@@ -7,7 +7,7 @@ class GameState {
 	private:
 		int remain;
 		int collected;
-		Condition* condition;
+		Condition condition;
 		int score;
 	public:
 		GameState();
