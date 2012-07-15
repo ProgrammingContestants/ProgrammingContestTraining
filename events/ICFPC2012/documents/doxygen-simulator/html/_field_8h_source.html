@@ -67,7 +67,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,48 +89,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="_field_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _LAMBDA_FIELD_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _LAMBDA_FIELD_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_metadata_8h.html">Metadata.h</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_cell_8h.html">Cell.h</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_operation_8h.html">Operation.h</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_game_state_8h.html">GameState.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_robot_8h.html">Robot.h</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="class_field.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_field.html">Field</a></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="class_field.html#ae4c63348414c54e94f4381a46d8607dd">   18</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#ae4c63348414c54e94f4381a46d8607dd">width</a>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="class_field.html#a1415e0c5d74c47bef138f00a6fd0e70a">   19</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#a1415e0c5d74c47bef138f00a6fd0e70a">height</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="class_field.html#a1fbe36a575f0dde4bdd64480f5cd65bf">   20</a></span>&#160;                vector&lt;Cell&gt; <a class="code" href="class_field.html#a1fbe36a575f0dde4bdd64480f5cd65bf">cells</a>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="class_field.html#a8c9e501e4d9386f14e75c5f87ec6fea7">   22</a></span>&#160;                <a class="code" href="class_metadata.html">Metadata</a>* <a class="code" href="class_field.html#a8c9e501e4d9386f14e75c5f87ec6fea7">metadata</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="class_field.html#ac28806994e5c50555f0dd60538215529">   23</a></span>&#160;                <a class="code" href="class_robot.html">Robot</a> <a class="code" href="class_field.html#ac28806994e5c50555f0dd60538215529">rob</a>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="class_field.html#a6633ecc988636301b6d072103d22df1c">   24</a></span>&#160;                <a class="code" href="class_game_state.html">GameState</a>* <a class="code" href="class_field.html#a6633ecc988636301b6d072103d22df1c">state</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                <span class="keywordtype">bool</span> move_robot(<span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                <span class="keywordtype">void</span> update();</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_common_8h.html">Common.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_metadata_8h.html">Metadata.h</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_cell_8h.html">Cell.h</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_operation_8h.html">Operation.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_game_state_8h.html">GameState.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_robot_8h.html">Robot.h</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="class_field.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_field.html">Field</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="class_field.html#ab9be47385a62167e020c049f0513f468">   19</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#ab9be47385a62167e020c049f0513f468">steps</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="class_field.html#a01bf3c252b138c658c5aa3f6dec2a421">   20</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#a01bf3c252b138c658c5aa3f6dec2a421">flooding</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="class_field.html#a21b8b683219088a9fb7e64dbe4dc2738">   21</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#a21b8b683219088a9fb7e64dbe4dc2738">water</a>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="class_field.html#ae4c63348414c54e94f4381a46d8607dd">   23</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#ae4c63348414c54e94f4381a46d8607dd">width</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="class_field.html#a1415e0c5d74c47bef138f00a6fd0e70a">   24</a></span>&#160;                <span class="keywordtype">int</span> <a class="code" href="class_field.html#a1415e0c5d74c47bef138f00a6fd0e70a">height</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="class_field.html#a1fbe36a575f0dde4bdd64480f5cd65bf">   25</a></span>&#160;                vector&lt;Cell&gt; <a class="code" href="class_field.html#a1fbe36a575f0dde4bdd64480f5cd65bf">cells</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="class_field.html#ac28806994e5c50555f0dd60538215529">   27</a></span>&#160;                <a class="code" href="class_robot.html">Robot</a> <a class="code" href="class_field.html#ac28806994e5c50555f0dd60538215529">rob</a>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                <a class="code" href="class_field.html">Field</a>();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                ~<a class="code" href="class_field.html">Field</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordtype">bool</span> move_robot(<span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy, <a class="code" href="class_game_state.html">GameState</a>&amp; state, <a class="code" href="class_metadata.html">Metadata</a>&amp; metadata);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                <span class="keywordtype">void</span> update(<a class="code" href="class_game_state.html">GameState</a>&amp; state);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                <span class="keywordtype">void</span> flood();</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                <span class="keywordtype">void</span> init(vector&lt;string&gt; rows, <a class="code" href="class_game_state.html">GameState</a>* s, <a class="code" href="class_metadata.html">Metadata</a>* md);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                <span class="keywordtype">int</span> get_width();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                <span class="keywordtype">int</span> get_height();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                <a class="code" href="class_cell.html">Cell</a> get_cell(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <span class="keywordtype">string</span> get_string();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <span class="keywordtype">void</span> operate(<a class="code" href="class_operation.html">Operation</a> op);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <span class="keywordtype">void</span> print();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                <a class="code" href="class_field.html">Field</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                ~<a class="code" href="class_field.html">Field</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <span class="keywordtype">void</span> init(vector&lt;string&gt; rows, <a class="code" href="class_game_state.html">GameState</a>&amp; s, <a class="code" href="class_metadata.html">Metadata</a>&amp; metadata);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <span class="keywordtype">int</span> get_width();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <span class="keywordtype">int</span> get_height();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                <a class="code" href="class_cell.html">Cell</a> &amp;get_cell(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                <a class="code" href="class_cell.html">Cell</a> &amp;get_cell_internal(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                <span class="keywordtype">string</span> get_string();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                <span class="keywordtype">void</span> operate(<a class="code" href="class_operation.html">Operation</a> op, <a class="code" href="class_game_state.html">GameState</a>&amp; state, <a class="code" href="class_metadata.html">Metadata</a>&amp; metadata);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <span class="keywordtype">void</span> print();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;};</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 15 2012 13:25:37 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 15 2012 16:57:01 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

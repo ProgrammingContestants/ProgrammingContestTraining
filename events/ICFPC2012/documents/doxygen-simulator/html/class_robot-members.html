@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,9 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="entry"><a class="el" href="class_robot.html#abc45cc78a7c9bad20c521c9b3afdd94c">destroy</a>()</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_robot.html#a1e72a12b8a234e901e6831079802e6e4">get_x</a>()</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_robot.html#af3cce6e13a94e3e91793e90672c984d4">get_y</a>()</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_robot.html#a86817b4586ada4c694819dfc8554e048">init</a>(int _x, int _y, Metadata *md)</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_robot.html#a3a26eab709815a6afc41297548d29269">init</a>(int _x, int _y, Metadata &amp;metadata)</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_robot.html#acc97868e96a4ec4ef43d47d50698f9ee">is_dead</a>()</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_robot.html#af472d5d70fa71782976329b40cdb0eb8">metadata</a></td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_robot.html#ab2a931fdfdf3c2b818d1b9151295fa2b">jump</a>(int target_x, int target_y)</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_robot.html#a28035a446c46d27e47ba01b0f2e3b3e4">move</a>(int dx, int dy)</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_robot.html#a757e00b66d10bdf040458bb68d8db7fb">move</a>(int dx, int dy, bool flooded)</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_robot.html#a4fc7c70ae20623f05e06f2ecb388b6c4">Robot</a>()</td><td class="entry"><a class="el" href="class_robot.html">Robot</a></td><td class="entry"></td></tr>
@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 15 2012 13:25:37 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 15 2012 16:57:01 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>
