@@ -24,7 +24,7 @@ class Field
 		int height;
 		vector<Cell> cells;
 
-		Robot rob;
+		Robot robot;
 
 		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
 		void update(GameState& state);
@@ -42,5 +42,6 @@ class Field
 		string get_string();
 		void operate(Operation op, GameState& state, Metadata& metadata);
 		void print();
+		Robot& get_robot();
 };
 #endif

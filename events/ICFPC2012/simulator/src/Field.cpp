@@ -23,7 +23,7 @@ void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 			cells.push_back(Cell(rows[y][x]));
 			/* TODO: is it right doing here? */
 			if (rows[y][x] == 'R') {
-				rob.init(x, y, metadata);
+				robot.init(x, y, metadata);
 			}
 			else if (rows[y][x] == '\\') {
 				++cnt_lambda;
@@ -68,7 +68,7 @@ string Field::get_string()
 	string str;
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			if(rob.get_x()==x&&rob.get_y()==y){
+			if(robot.get_x()==x&&robot.get_y()==y){
 				str += 'R';
 			}else{
 				str += cells[width * y + x].get_char();
@@ -112,7 +112,7 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 	update(state);
 
 	/* dead check */
-	if (rob.is_dead()) {
+	if (robot.is_dead()) {
 		state.change_condition(Condition::LOSING);
 	}
 }
@@ -131,7 +131,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 {
 	/* TODO: SEGFAULT GURAD */
 
-	int y = rob.get_y(), x = rob.get_x();
+	int y = robot.get_y(), x = robot.get_x();
 	Cell &cell = get_cell_internal(x+dx,y+dy);
 	switch (cell.get_type()) {
 		/* Cannot move */
@@ -174,7 +174,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 				for(int y=0;y<get_height();y++){
 					Cell& c = get_cell_internal(x,y);
 					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
-						rob.jump(x,y);
+						robot.jump(x,y);
 						c.set_type(Cell::EMPTY);
 					}else if(c.get_type()==Cell::TRAMPOLINE&&metadata.get_target_id(c.get_id())==target_id){
 						c.set_type(Cell::EMPTY);
@@ -188,7 +188,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 			return false;
 	}
 	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
-	rob.move(dx, dy);
+	robot.move(dx, dy);
 	cells[width * (y+dy) + (x+dx)].set_type(Cell::EMPTY);
 	return true;
 }
@@ -238,14 +238,19 @@ void Field::update(GameState& state)
 			}
 		}
 	}
-	if (rob.get_y() - 1 >= 0
-			&& old[width * (rob.get_y()-1) + (rob.get_x())].get_type() != Cell::ROCK
-			&& cells[width * (rob.get_y()-1) + (rob.get_x())].get_type() == Cell::ROCK) {
-		rob.destroy();
+	if (robot.get_y() - 1 >= 0
+			&& old[width * (robot.get_y()-1) + (robot.get_x())].get_type() != Cell::ROCK
+			&& cells[width * (robot.get_y()-1) + (robot.get_x())].get_type() == Cell::ROCK) {
+		robot.destroy();
 	}
 }
 
 void Field::print()
 {
 	cout << get_string();
+}
+
+Robot& Field::get_robot()
+{
+	return robot;
 }
