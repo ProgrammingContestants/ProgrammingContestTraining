@@ -64,6 +64,11 @@ int GameState::get_score()
 	return score;
 }
 
+string GameState::get_condition_string()
+{
+	return condition.get_string();
+}
+
 void GameState::set_remain(int r)
 {
 	remain = r;

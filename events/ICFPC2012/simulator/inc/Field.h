@@ -15,27 +15,27 @@ using namespace std;
 class Field
 {
 	private:
+		int steps;
 		int width;
 		int height;
 		vector<Cell> cells;
 
-		Metadata* metadata;
 		Robot rob;
-		GameState* state;
 
-		bool move_robot(int dx, int dy);
-		void update();
+		bool move_robot(int dx, int dy, GameState& state);
+		void update(GameState& state);
+		void flood();
 
 	public:
 		Field();
 		~Field();
 
-		void init(vector<string> rows, GameState* s, Metadata* md);
+		void init(vector<string> rows, GameState& s, Metadata& metadata);
 		int get_width();
 		int get_height();
 		Cell get_cell(int x, int y);
 		string get_string();
-		void operate(Operation op);
+		void operate(Operation op, GameState& state);
 		void print();
 };
 #endif
