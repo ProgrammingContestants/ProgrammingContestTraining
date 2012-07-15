@@ -91,6 +91,15 @@ void Game::print_game_states()
 	cerr << "state: " << state.get_condition_string() << endl;
 }
 
+string Game::get_operations()
+{
+	string str;
+	for (int i = 0; i < operations.size(); ++i) {
+		str += operations[i].get_char();
+	}
+	return str;
+}
+
 Field& Game::get_field()
 {
 	return field;

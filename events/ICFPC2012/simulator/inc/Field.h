@@ -16,6 +16,9 @@ class Field
 {
 	private:
 		int steps;
+		int flooding;
+		int water;
+
 		int width;
 		int height;
 		vector<Cell> cells;

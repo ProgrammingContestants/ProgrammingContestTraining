@@ -26,6 +26,7 @@ class Game {
 		bool move(Operation op);
 		bool is_finished();
 		void print_game_states();
+		string get_operations();
 
 		Field& get_field();
 		GameState& get_game_state();

@@ -11,6 +11,9 @@ Field::~Field()
 void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 {
 	steps = 0;
+	water = metadata.get_water();
+	flooding = metadata.get_flooding();
+
 	width = rows[0].length();
 	height = rows.size();
 
@@ -28,10 +31,16 @@ void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 		}
 	}
 
+	/* flooding */
+	for (int i = height - 1; i >= height - water; i--) {
+		for (int j = 0; j < width; j++) {
+			cells[width * i + j].flood();
+		}
+	}
+
 	/* TODO: should make init() function? */
 	s.set_remain(cnt_lambda);
 }
-
 
 int Field::get_width()
 {
@@ -102,6 +111,12 @@ void Field::operate(Operation op, GameState& state)
 
 void Field::flood()
 {
+	if (steps % flooding == 0) {
+		++water;
+		for (int i = 0; i < width; i++) {
+			cells[width * (height - water) + i].flood();
+		}
+	}
 }
 
 bool Field::move_robot(int dx, int dy, GameState& state)
