@@ -18,8 +18,8 @@ class Robot {
 
 		void init(int _x, int _y, Metadata& metadata);
 		bool move(int dx, int dy);
-		bool move(int dx, int dy, bool flooded);
 		bool is_dead();
+		bool breathe(bool flooded);
 		void destroy();
 		bool set_location(int dest_x,int dest_y);
 		bool set_location(int dest_x,int dest_y,bool flooded);

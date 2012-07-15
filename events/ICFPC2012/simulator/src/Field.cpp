@@ -106,25 +106,35 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 	/* Operation cost */
 	state.decrement_score();
 
-	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy, state, metadata);
-	}
+	move_robot(dx, dy, state, metadata);
 	update(state);
 
 	/* dead check */
 	if (robot.is_dead()) {
-		state.change_condition(Condition::LOSING);
+		state.lose();
 	}
+	if( !robot.breathe(cells[width * robot.get_y() + robot.get_x()].is_flooded()) ) {
+		/* Die by Drowing */
+		state.drown();
+	}
+
+	flood();
 }
 
 void Field::flood()
 {
 	if (steps % flooding == 0) {
+		cerr << "Flooding!" << endl;
 		++water;
 		for (int i = 0; i < width; i++) {
 			cells[width * (height - water) + i].flood();
 		}
 	}
+}
+
+int Field::get_water_height()
+{
+	return water;
 }
 
 bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
@@ -134,6 +144,10 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	int y = robot.get_y(), x = robot.get_x();
 	Cell &cell = get_cell_internal(x+dx,y+dy);
 	switch (cell.get_type()) {
+		/* Stay */
+		case Cell::ROBOT:
+			break;
+
 		/* Cannot move */
 		case Cell::WALL:
 		case Cell::CLIFT:

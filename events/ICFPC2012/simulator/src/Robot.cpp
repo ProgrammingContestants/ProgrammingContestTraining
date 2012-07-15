@@ -20,12 +20,19 @@ void Robot::init(int _x, int _y, Metadata& metadata)
 
 bool Robot::move(int dx, int dy)
 {
-	return move(dx,dy,false);
 }
 
-bool Robot::move(int dx, int dy, bool flooded)
+bool Robot::breathe(bool flooded)
 {
-	return set_location(x+dx,y+dy,flooded);
+	if (flooded) {
+		if (water_life-- == 0) {
+			return false;
+		}
+	}
+	else {
+		water_life = waterproof;
+	}
+	return true;
 }
 
 bool Robot::is_dead()

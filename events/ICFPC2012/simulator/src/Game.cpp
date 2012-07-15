@@ -5,7 +5,7 @@ Game::Game(istream &in)
 	int width = 0;
 	vector<string> v;
 	string str, row;
-	while (getline(in, row), row != "") {
+	while (getline(cin, row) && row != "") {
 		width = max(width, (int)row.length());
 		v.push_back(row);
 	}
@@ -63,6 +63,8 @@ void Game::print_game_states()
 	cerr << "score: " << state.get_score();
 	cerr << ", collected: " << state.get_collected();
 	cerr << ", remain: " << state.get_remain() << endl;
+	cerr << "state: " << state.get_condition_string() << endl;
+	cerr << "water: " << field.get_water_height() << endl;
 }
 
 string Game::get_operations()
@@ -72,6 +74,11 @@ string Game::get_operations()
 		str += operations[i].get_char();
 	}
 	return str;
+}
+
+void Game::print_field()
+{
+	field.print();
 }
 
 Field& Game::get_field()

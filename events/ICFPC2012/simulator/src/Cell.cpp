@@ -56,6 +56,11 @@ void Cell::flood()
 	flooded = true;
 }
 
+bool Cell::is_flooded()
+{
+	return flooded;
+}
+
 Cell::CellType Cell::get_type()
 {
 	return type;

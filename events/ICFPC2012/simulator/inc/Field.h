@@ -39,6 +39,7 @@ class Field
 		int get_height();
 		Cell &get_cell(int x, int y);
 		Cell &get_cell_internal(int x, int y);
+		int get_water_height();
 		string get_string();
 		void operate(Operation op, GameState& state, Metadata& metadata);
 		void print();

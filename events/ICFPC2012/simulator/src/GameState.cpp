@@ -30,6 +30,11 @@ void GameState::lose()
 	condition.change(Condition::LOSING);
 }
 
+void GameState::drown()
+{
+	condition.change(Condition::LOSING);
+}
+
 void GameState::abort()
 {
 	condition.change(Condition::ABORTING);

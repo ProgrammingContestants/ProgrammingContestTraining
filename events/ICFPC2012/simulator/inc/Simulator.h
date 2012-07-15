@@ -14,7 +14,10 @@ class Simulator {
 		
 	public:
 		Simulator();
+		Simulator(bool console); /* dammy */
 		~Simulator();
+
+		void output();
 		void run();
 };
 #endif
