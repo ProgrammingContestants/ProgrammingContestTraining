@@ -22,8 +22,6 @@ class Game {
 		vector<Operation> operations;
 	public:
 		Game(istream &in);
-		Game(istream &in, int w, int h);
-		Game(string str);
 		~Game();
 		bool move(Operation op);
 		bool is_finished();
@@ -32,5 +30,6 @@ class Game {
 
 		Field& get_field();
 		GameState& get_game_state();
+		Metadata& get_metadata();
 };
 #endif

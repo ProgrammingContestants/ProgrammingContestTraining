@@ -9,30 +9,30 @@ Metadata::~Metadata()
 {
 }
 
-void Metadata::init()
+void Metadata::init(istream& in)
 {
-	while(!cin.eof()){
+	while(!in.eof()){
 		string keyword;
-		cin>>keyword;
+		in>>keyword;
 		if(keyword=="Water"){
-			cin>>water;
+			in>>water;
 		}else if(keyword=="Flooding"){
-			cin>>flooding;
+			in>>flooding;
 		}else if(keyword=="Waterproof"){
-			cin>>waterproof;
+			in>>waterproof;
 		}else if(keyword=="Trampoline"){
 			char trampoline;
-			cin>>trampoline;
+			in>>trampoline;
 			string keyword2;
-			cin>>keyword2;
+			in>>keyword2;
 			assert(keyword2=="targets");
 			char target;
-			cin>>target;
+			in>>target;
 			trampoline_targets[trampoline]=target;
 		}else if(keyword=="Growth"){
-			cin>>growth;
+			in>>growth;
 		}else if(keyword=="Razors"){
-			cin>>razors;
+			in>>razors;
 		}
 	}
 }
@@ -55,4 +55,12 @@ char Metadata::get_target_id(char trampoline_id)
 	map<int,int>::iterator it=trampoline_targets.find(trampoline_id);
 	assert(it!=trampoline_targets.end());
 	return (*it).second;
+}
+int Metadata::get_growth()
+{
+	return growth;
+}
+int Metadata::get_razors()
+{
+	return razors;
 }

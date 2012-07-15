@@ -20,29 +20,7 @@ Game::Game(istream &in)
 		str += (*it);
 	}
 
-	/* TODO: input and create metadata */
-	/* defaluts */
-	metadata.init();
-
-	generate_field(str);
-}
-
-Game::Game(istream &in, int w, int h)
-{
-	char c;
-	string str;
-	for (int i = 0; i < h; ++i) {
-		for (int j = 0; j < w; ++j) {
-			in >> c;
-			str += c;
-		}
-		str += '\n';
-	}
-	generate_field(str);
-}
-
-Game::Game(string str)
-{
+	metadata.init(in);
 	generate_field(str);
 }
 
@@ -105,4 +83,9 @@ Field& Game::get_field()
 GameState& Game::get_game_state()
 {
 	return state;
+}
+
+Metadata& Game::get_metadata()
+{
+	return metadata;
 }

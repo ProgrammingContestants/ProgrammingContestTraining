@@ -19,10 +19,12 @@ public:
 		Metadata();
 		~Metadata();
 
-		void init();
+		void init(istream& in);
 		int get_water();
 		int get_flooding();
 		int get_waterproof();
 		char get_target_id(char trampoline_id);
+		int get_growth();
+		int get_razors();
 };
 #endif

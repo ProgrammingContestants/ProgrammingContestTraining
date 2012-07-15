@@ -2,10 +2,14 @@
 
 Simulator::Simulator()
 {
-	int w, h;
-	/*cin >> w >> h;*/
+	ostringstream oss;
+	string line;
+	while(getline(cin,line),line!="END-OF-INPUT"){
+		oss<<line<<endl;
+	}
+	istringstream iss(oss.str());
 
-	game = new Game(cin);
+	game = new Game(iss);
 }
 
 Simulator::~Simulator()
