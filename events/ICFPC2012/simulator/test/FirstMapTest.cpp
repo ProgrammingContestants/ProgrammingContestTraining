@@ -11,13 +11,6 @@ TEST(FirstMapTest, map1_parse) {
   ASSERT_EQ(6, field.get_height());
 }
 
-TEST(FirstMapTest, map1_play) {
-  ifstream ifs("map/contest1.map");
-  Game game(ifs);
-  GameState s = game.moves("LDRDDUULLLDDL");
-  ASSERT_EQ(212, s.get_score());
-}
-
 TEST(FirstMapTest, map2_parse) {
   ifstream ifs("map/contest2.map");
   Game game(ifs);
@@ -80,4 +73,18 @@ TEST(FirstMapTest, map9_parse) {
   Field &field = game.get_field();
   ASSERT_EQ(26, field.get_width());
   ASSERT_EQ(17, field.get_height());
+}
+
+TEST(FirstMapTest, map1_best) {
+  ifstream ifs("map/contest1.map");
+  Game game(ifs);
+  GameState s = game.moves("LDRDDUULLLDDL");
+  ASSERT_EQ(212, s.get_score());
+}
+
+TEST(FirstMapTest, map3_best) {
+  ifstream ifs("map/contest3.map");
+  Game game(ifs);
+  GameState s = game.moves("LDDDRRRRDDLLLLLDURRRRUURR");
+  ASSERT_EQ(275, s.get_score());
 }

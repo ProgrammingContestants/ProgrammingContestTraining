@@ -124,7 +124,6 @@ GameState& Game::moves(string commands)
     }
     operations.push_back(op);
     field.operate(op, state, metadata);
-    print_game_states();
   }
   return state;
 }
