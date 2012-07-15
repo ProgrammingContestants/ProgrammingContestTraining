@@ -25,5 +25,6 @@ class GameState {
 		int get_collected();
 		Condition get_condition();
 		int get_score();
+		string get_condition_string();
 };
 #endif
