@@ -16,14 +16,14 @@ void Field::init(vector<string> rows, GameState* s, Metadata* md)
 	metadata = md;
 
 	int cnt_lambda = 0;
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			cells.push_back(Cell(rows[i][j]));
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			cells.push_back(Cell(rows[y][x]));
 			/* TODO: is it right doing here? */
-			if (rows[i][j] == 'R') {
-				rob.init(j, i, metadata);
+			if (rows[y][x] == 'R') {
+				rob.init(x, y, metadata);
 			}
-			else if (rows[i][j] == '\\') {
+			else if (rows[y][x] == '\\') {
 				++cnt_lambda;
 			}
 		}

@@ -5,6 +5,7 @@
 #include "Field.h"
 #include "Operation.h"
 
+#include <istream>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -19,8 +20,8 @@ class Game {
 		void generate_field(string str);
 		vector<Operation> operations;
 	public:
-		Game();
-		Game(int w, int h);
+		Game(istream &in);
+		Game(istream &in, int w, int h);
 		Game(string str);
 		~Game();
 		bool move(Operation op);

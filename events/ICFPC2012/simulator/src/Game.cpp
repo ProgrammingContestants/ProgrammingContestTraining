@@ -1,11 +1,11 @@
 #include "../inc/Game.h"
 
-Game::Game()
+Game::Game(istream &in)
 {
 	int width = 0;
 	vector<string> v;
 	string str, row;
-	while (getline(cin, row), row != "") {
+	while (getline(in, row), row != "") {
 		width = max(width, (int)row.length());
 		v.push_back(row);
 	}
@@ -30,13 +30,13 @@ Game::Game()
 	generate_field(str);
 }
 
-Game::Game(int w, int h)
+Game::Game(istream &in, int w, int h)
 {
 	char c;
 	string str;
 	for (int i = 0; i < h; ++i) {
 		for (int j = 0; j < w; ++j) {
-			cin >> c;
+			in >> c;
 			str += c;
 		}
 		str += '\n';
