@@ -110,9 +110,12 @@ TEST(FirstMapTest, map3_play) {
 
 // ---------------------- tests for finding best solution and simulating moving ---------------------- //
 
+string cmd_prefix = "../ai.out < ";
+string cmd_suffix = " > ret.out 2> /dev/null & sleep 150; kill $!";
+
 TEST(FirstMapTest, map1_best) {
   string map_path = "map/contest1.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -122,7 +125,7 @@ TEST(FirstMapTest, map1_best) {
 
 TEST(FirstMapTest, map2_best) {
   string map_path = "map/contest2.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -132,7 +135,7 @@ TEST(FirstMapTest, map2_best) {
 
 TEST(FirstMapTest, map3_best) {
   string map_path = "map/contest3.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -142,7 +145,7 @@ TEST(FirstMapTest, map3_best) {
 
 TEST(FirstMapTest, map4_best) {
   string map_path = "map/contest4.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -152,7 +155,7 @@ TEST(FirstMapTest, map4_best) {
 
 TEST(FirstMapTest, map5_best) {
   string map_path = "map/contest5.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -162,7 +165,7 @@ TEST(FirstMapTest, map5_best) {
 
 TEST(FirstMapTest, map6_best) {
   string map_path = "map/contest6.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -172,7 +175,7 @@ TEST(FirstMapTest, map6_best) {
 
 TEST(FirstMapTest, map7_best) {
   string map_path = "map/contest7.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -182,7 +185,7 @@ TEST(FirstMapTest, map7_best) {
 
 TEST(FirstMapTest, map8_best) {
   string map_path = "map/contest8.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -192,7 +195,7 @@ TEST(FirstMapTest, map8_best) {
 
 TEST(FirstMapTest, map9_best) {
   string map_path = "map/contest9.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
@@ -202,7 +205,7 @@ TEST(FirstMapTest, map9_best) {
 
 TEST(FirstMapTest, map10_best) {
   string map_path = "map/contest10.map", cmds;
-  system(("../ai.out < " + map_path + " > ret.out 2> /dev/null").c_str());
+  system((cmd_prefix + map_path + cmd_suffix).c_str());
   ifstream ifs(map_path.c_str()), cmds_ifs("ret.out");
   cmds_ifs >> cmds;
   Game game(ifs);
