@@ -9,6 +9,7 @@
 #include "simulator/inc/Game.h"
 #include "simulator/inc/Condition.h"
 #include "simulator/inc/Operation.h"
+#include "simulator/inc/Robot.h"
 
 #define arr_size(array) (sizeof(array)/sizeof(*array))
 
@@ -49,9 +50,12 @@ void sig_handle(int sig) {
 void show_field(Field &field) {
     int width = field.get_width();
     int height = field.get_height();
+    Robot robot = field.get_robot();
+    int rx = robot.get_x(), ry = robot.get_y();
     for (int i=height; i>=1 ; --i) {
         for (int j=1; j<=width; ++j) {
-            cerr << field.get_cell(j, i).get_char();
+            if (j==rx && i==ry) cerr << 'R';
+            else                cerr << field.get_cell(j, i).get_char();
         }
         cerr << endl;
     }

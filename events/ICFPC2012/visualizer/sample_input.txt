@@ -1,0 +1,15 @@
+##L###########
+#!!!.WR#.**..#
+#.*A.WW#..1..#
+#.*....#.  \.#
+#.\\\..#...\.#
+#2.....**B...#
+##############
+
+Water 0
+Flooding 10
+Waterproof 5
+Trampoline A targets 1
+Trampoline B targets 2
+Growth 25
+Razors 1
