@@ -55,16 +55,24 @@ int Field::get_height()
 Cell &Field::get_cell(int x, int y)
 {
 	/* 1 origin, bottom left is (1, 1) */
-	--x; --y;
-	return cells[width * (height - y) + x];
+	return get_cell_internal(x-1,height-y);
+}
+
+Cell &Field::get_cell_internal(int x, int y)
+{
+	return cells[width * y + x];
 }
 
 string Field::get_string()
 {
 	string str;
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			str += cells[width * i + j].get_char();
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			if(rob.get_x()==x&&rob.get_y()==y){
+				str += 'R';
+			}else{
+				str += cells[width * y + x].get_char();
+			}
 		}
 		str += '\n';
 	}
@@ -124,7 +132,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	/* TODO: SEGFAULT GURAD */
 
 	int y = rob.get_y(), x = rob.get_x();
-	Cell &cell = cells[width * (y+dy) + (x+dx)];
+	Cell &cell = get_cell_internal(x+dx,y+dy);
 	switch (cell.get_type()) {
 		/* Cannot move */
 		case Cell::WALL:
@@ -150,21 +158,22 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 			if (dx == 0) {
 				return false;
 			} else {
-				if (cells[width * y + x + dx + dx].get_type() == Cell::EMPTY) {
-					cells[width * y + x + dx + dx].set_type(Cell::ROCK);
+				if (get_cell_internal(x+dx*2,y).get_type() == Cell::EMPTY) {
+					get_cell_internal(x+dx*2,y).set_type(Cell::ROCK);
 				} else {
 					return false;
 				}
 			}
 			break;
 
+		/* Trampoline jumping */
 		case Cell::TRAMPOLINE:
 			{
 			char trampoline_id=cell.get_id();
 			char target_id=metadata.get_target_id(trampoline_id);
 			for(int x=0;x<get_width();x++){
 				for(int y=0;y<get_height();y++){
-					Cell &c = get_cell(x,y);
+					Cell& c = get_cell_internal(x,y);
 					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
 						rob.jump(x,y);
 						c.set_type(Cell::EMPTY);
@@ -181,8 +190,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	}
 	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	rob.move(dx, dy);
-	cells[width * y + x].set_type(Cell::EMPTY);
-	cells[width * (y+dy) + (x+dx)].set_type(Cell::ROBOT);
+	cells[width * (y+dy) + (x+dx)].set_type(Cell::EMPTY);
 	return true;
 }
 
@@ -240,10 +248,5 @@ void Field::update(GameState& state)
 
 void Field::print()
 {
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			cout << cells[width * i + j].get_char();
-		}
-		cout << endl;
-	}
+	cout << get_string();
 }
