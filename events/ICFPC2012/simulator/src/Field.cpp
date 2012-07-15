@@ -27,7 +27,7 @@ void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 			if (rows[y][x] == 'R') {
 				robot.init(x, y, metadata);
 			}
-			else if (rows[y][x] == '\\') {
+			else if (rows[y][x] == '\\' || rows[y][x] == '@') {
 				++cnt_lambda;
 			}
 		}
@@ -147,7 +147,6 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 void Field::flood()
 {
 	if (flooding != 0 && steps % flooding == 0) {
-		cerr << "Flooding!" << endl;
 		++water;
 		for (int i = 0; i < width; i++) {
 			cells[width * (height - water) + i].flood();
@@ -196,11 +195,12 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 
 		/* Rock pushing */
 		case Cell::ROCK:
+		case Cell::HOR:
 			if (dx == 0) {
 				return false;
 			} else {
 				if (get_cell_internal(x+dx*2,y).get_type() == Cell::EMPTY) {
-					get_cell_internal(x+dx*2,y).set_type(Cell::ROCK);
+					get_cell_internal(x+dx*2,y).set_type(cell.get_type());
 				} else {
 					return false;
 				}
@@ -241,28 +241,39 @@ void Field::update(GameState& state, Metadata& metadata)
 	vector<Cell> old = cells;
 	for (int i = height - 1; i >= 0; --i) {
 		for (int j = 0; j < width; ++j) {
-			/* ROCK */
-			if (old[width * (i) + (j)].get_type() == Cell::ROCK) {
+			/* ROCK or HOR */
+			bool fallen = false;
+			int fallen_y, fallen_x;
+			Cell::CellType type = old[width * (i) + (j)].get_type();
+			if (type == Cell::ROCK || type == Cell::HOR) {
 				if (i + 1 < height
 						&& old[width * (i+1) + (j)].get_type() == Cell::EMPTY) {
+					/* Fall Straight Down */
 					cells[width * (i) + (j)].set_type(Cell::EMPTY);
-					cells[width * (i+1) + (j)].set_type(Cell::ROCK);
+					cells[width * (i+1) + (j)].set_type(type);
+					fallen = true;
+					fallen_y = i + 1; fallen_x = j;
 				}
 				else if (i + 1 < height
-						&& old[width * (i+1) + (j)].get_type() == Cell::ROCK) {
+						&& ( old[width * (i+1) + (j)].get_type() == Cell::ROCK
+							|| old[width * (i+1) + (j)].get_type() == Cell::HOR) ) {
 					if (j + 1 < width
 							&& old[width * (i) + (j+1)].get_type() == Cell::EMPTY
 							&& old[width * (i+1) + (j+1)].get_type() == Cell::EMPTY) {
 						/* Fall Right */
 						cells[width * (i) + (j)].set_type(Cell::EMPTY);
-						cells[width * (i+1) + (j+1)].set_type(Cell::ROCK);
+						cells[width * (i+1) + (j+1)].set_type(type);
+						fallen = true;
+						fallen_y = i + 1; fallen_x = j + 1;
 					}
 					else if (j - 1 >= 0
 							&& old[width * (i) + (j-1)].get_type() == Cell::EMPTY
 							&& old[width * (i+1) + (j-1)].get_type() == Cell::EMPTY) {
 						/* Fall Left */
 						cells[width * (i) + (j)].set_type(Cell::EMPTY);
-						cells[width * (i+1) + (j-1)].set_type(Cell::ROCK);
+						cells[width * (i+1) + (j-1)].set_type(type);
+						fallen = true;
+						fallen_y = i + 1; fallen_x = j - 1;
 					}
 				}
 				else if (i + 1 < height
@@ -272,7 +283,17 @@ void Field::update(GameState& state, Metadata& metadata)
 							&& old[width * (i+1) + (j+1)].get_type() == Cell::EMPTY) {
 						/* Fall Right */
 						cells[width * (i) + (j)].set_type(Cell::EMPTY);
-						cells[width * (i+1) + (j+1)].set_type(Cell::ROCK);
+						cells[width * (i+1) + (j+1)].set_type(type);
+						fallen = true;
+						fallen_y = i + 1; fallen_x = j + 1;
+					}
+				}
+
+				/* process HOR */
+				if (type == Cell::HOR && fallen) {
+					if (old[width * (fallen_y + 1) + fallen_x].get_type() != Cell::EMPTY) {
+						/* break and reveal Lambda */
+						cells[width * (fallen_y) + fallen_x].set_type(Cell::LAMBDA);
 					}
 				}
 			}
