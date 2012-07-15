@@ -48,11 +48,13 @@ int Robot::get_y()
 	return y;
 }
 
-bool Robot::set_location(int dest_x,int dest_y){
+bool Robot::set_location(int dest_x,int dest_y)
+{
 	return set_location(dest_x,dest_y,false);
 }
 
-bool Robot::set_location(int dest_x,int dest_y,bool flooded){
+bool Robot::set_location(int dest_x,int dest_y,bool flooded)
+{
 	x=dest_x;
 	y=dest_y;
 	if (flooded) {

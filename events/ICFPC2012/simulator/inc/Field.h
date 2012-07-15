@@ -27,8 +27,9 @@ class Field
 		Robot robot;
 
 		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
-		void update(GameState& state);
+		void update(GameState& state, Metadata& metadata);
 		void flood();
+		void use_razor(GameState& state);
 
 	public:
 		Field();
