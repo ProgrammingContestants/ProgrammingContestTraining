@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_ROBOT_H
 #define _LAMBDA_ROBOT_H
 
+#include "Common.h"
 #include "Metadata.h"
 #include "Operation.h"
 

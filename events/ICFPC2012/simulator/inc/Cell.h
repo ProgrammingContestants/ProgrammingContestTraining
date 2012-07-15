@@ -1,6 +1,8 @@
 #ifndef _LAMBDA_CELL_H
 #define _LAMBDA_CELL_H
 
+#include "Common.h"
+
 class Cell {
 	public:
 		enum CellType {

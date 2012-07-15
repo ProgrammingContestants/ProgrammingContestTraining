@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_FIELD_H
 #define _LAMBDA_FIELD_H
 
+#include "Common.h"
 #include "Metadata.h"
 #include "Cell.h"
 #include "Operation.h"

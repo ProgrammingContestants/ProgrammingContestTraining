@@ -159,7 +159,7 @@ bool Field::move_robot(int dx, int dy, GameState& state)
 		default:
 			return false;
 	}
-	cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
+	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	rob.move(dx, dy);
 	cells[width * y + x].set_type(Cell::EMPTY);
 	cells[width * (y+dy) + (x+dx)].set_type(Cell::ROBOT);

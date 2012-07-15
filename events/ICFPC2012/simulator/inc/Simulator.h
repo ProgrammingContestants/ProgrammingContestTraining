@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_SIMULATOR_H
 #define _LAMBDA_SIMULATOR_H
 
+#include "Common.h"
 #include "Game.h"
 #include "Operation.h"
 

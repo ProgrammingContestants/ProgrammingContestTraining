@@ -66,7 +66,7 @@ void Game::generate_field(string str)
 
 bool Game::move(Operation op)
 {
-	cerr << "[Game] Recieved operation " << op.get_char() << endl;
+	dbg_cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
 	field.operate(op, state);
 	return true;

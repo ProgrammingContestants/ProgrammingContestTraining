@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_GAME_H
 #define _LAMBDA_GAME_H
 
+#include "Common.h"
 #include "Metadata.h"
 #include "Field.h"
 #include "Operation.h"

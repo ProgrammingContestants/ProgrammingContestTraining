@@ -1,5 +1,8 @@
 #ifndef _LAMBDA_METADATA_H
 #define _LAMBDA_METADATA_H
+
+#include "Common.h"
+
 class Metadata {
 	private:
 		int water;
