@@ -1,14 +1,12 @@
-#include "inc/Cell.h"
-#include "inc/Condition.h"
-#include "inc/Field.h"
-#include "inc/Game.h"
-#include "inc/GameState.h"
-#include "inc/Operation.h"
-#include "inc/Robot.h"
+#include "inc/Simulator.h"
+
+#include <iostream>
+using namespace std;
 
 int main(int argc, char const* argv[])
 {
-	Game game;
-	
+	cerr << "input field (end with empty line) (*** TMPORARLY ***)" << endl;
+	Simulator* sim = new Simulator();
+	sim->run();
 	return 0;
 }

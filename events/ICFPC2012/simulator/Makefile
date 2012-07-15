@@ -1,0 +1,22 @@
+CC=g++
+CFLAGS=-W -ansi -pedantic -Wunreachable-code -Wstrict-prototypes -O2 -g
+LDFLAGS=
+SOURCES=main.cpp $(wildcard src/*.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=main
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.PHONY: clean mrproper
+
+clean:
+	rm src/*.o
+
+mrproper: clean
+	rm $(EXECUTABLE)
