@@ -13,11 +13,12 @@ class Metadata {
 		int flooding;
 		int waterproof;
 		map<int,int> trampoline_targets;
+		int growth;
+		int razors;
 public:
 		Metadata();
 		~Metadata();
 
-		void init(int w, int f, int wp, map<int,int> targets);
 		void init();
 		int get_water();
 		int get_flooding();

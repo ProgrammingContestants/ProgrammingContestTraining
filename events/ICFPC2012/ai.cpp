@@ -46,6 +46,19 @@ void sig_handle(int sig) {
 }
 
 
+void show_field(Field &field) {
+    int width = field.get_width();
+    int height = field.get_height();
+    for (int i=height; i>=1 ; --i) {
+        for (int j=1; j<=width; ++j) {
+            cerr << field.get_cell(j, i).get_char();
+        }
+        cerr << endl;
+    }
+    cerr << endl;
+}
+
+
 int main(int argc, char **argv)/*{{{*/
 {
     if (SIG_ERR == signal(SIGINT, sig_handle)) {
@@ -67,15 +80,17 @@ int main(int argc, char **argv)/*{{{*/
         Condition::ConditionType type = game.get_game_state().get_condition().get_type();
         if (type==Condition::ABORTING || type==Condition::LOSING) {
             if (max_score<game.get_game_state().get_score()) {
-                cerr << "ABORTING score:" << game.get_game_state().get_score();
-                cerr << ", collected:" << game.get_game_state().get_collected() << endl;
                 update_score(game);
+                cerr << "ABORTING score:" << max_score;
+                cerr << ", collected:" << game.get_game_state().get_collected() << endl;
+                show_field(game.get_field());
             }
             continue;
         } else if (type==Condition::WINNING) {
-            cerr << "WINNING score:" << game.get_game_state().get_score();
-            cerr << ", collected:" << game.get_game_state().get_collected() << endl;
             update_score(game);
+            cerr << "WINNING score:" << max_score;
+            cerr << ", collected:" << game.get_game_state().get_collected() << endl;
+            show_field(game.get_field());
             break;
         }
 
