@@ -36,6 +36,7 @@ class Field
 		void init(vector<string> rows, GameState& s, Metadata& metadata);
 		int get_width();
 		int get_height();
+		int get_water_height();
 		Cell get_cell(int x, int y);
 		string get_string();
 		void operate(Operation op, GameState& state);

@@ -17,6 +17,7 @@ class GameState {
 		void win();
 		void lose();
 		void abort();
+		void drown();
 		void decrement_score();
 		bool is_finished();
 

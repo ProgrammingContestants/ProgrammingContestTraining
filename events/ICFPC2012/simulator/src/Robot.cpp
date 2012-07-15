@@ -25,13 +25,11 @@ bool Robot::move(int dx, int dy)
 	return true;
 }
 
-bool Robot::move(int dx, int dy, bool flooded)
+bool Robot::breathe(bool flooded)
 {
-	x += dx;
-	y += dy;
 	if (flooded) {
-		if (--water_life == 0) {
-			dead = true;
+		if (water_life-- == 0) {
+			return false;
 		}
 	}
 	else {

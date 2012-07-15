@@ -18,14 +18,14 @@ void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 	height = rows.size();
 
 	int cnt_lambda = 0;
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			cells.push_back(Cell(rows[y][x]));
+	for (int i = 0; i < height; ++i) {
+		for (int j = 0; j < width; ++j) {
+			cells.push_back(Cell(rows[i][j]));
 			/* TODO: is it right doing here? */
-			if (rows[y][x] == 'R') {
-				rob.init(x, y, metadata);
+			if (rows[i][j] == 'R') {
+				rob.init(j, i, metadata);
 			}
-			else if (rows[y][x] == '\\') {
+			else if (rows[i][j] == '\\') {
 				++cnt_lambda;
 			}
 		}
@@ -55,7 +55,7 @@ int Field::get_height()
 Cell Field::get_cell(int x, int y)
 {
 	/* 1 origin, bottom left is (1, 1) */
-	--x; --y;
+	--x;
 	return cells[width * (height - y) + x];
 }
 
@@ -98,25 +98,35 @@ void Field::operate(Operation op, GameState& state)
 	/* Operation cost */
 	state.decrement_score();
 
-	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy, state);
-	}
+	move_robot(dx, dy, state);
 	update(state);
 
 	/* dead check */
 	if (rob.is_dead()) {
-		state.change_condition(Condition::LOSING);
+		state.lose();
 	}
+	if( !rob.breathe(cells[width * rob.get_y() + rob.get_x()].is_flooded()) ) {
+		/* Die by Drowing */
+		state.drown();
+	}
+
+	flood();
 }
 
 void Field::flood()
 {
 	if (steps % flooding == 0) {
+		cerr << "Flooding!" << endl;
 		++water;
 		for (int i = 0; i < width; i++) {
 			cells[width * (height - water) + i].flood();
 		}
 	}
+}
+
+int Field::get_water_height()
+{
+	return water;
 }
 
 bool Field::move_robot(int dx, int dy, GameState& state)
@@ -125,6 +135,10 @@ bool Field::move_robot(int dx, int dy, GameState& state)
 
 	int y = rob.get_y(), x = rob.get_x();
 	switch (cells[width * (y+dy) + (x+dx)].get_type()) {
+		/* Stay */
+		case Cell::ROBOT:
+			break;
+
 		/* Cannot move */
 		case Cell::WALL:
 		case Cell::CLIFT:
@@ -161,6 +175,7 @@ bool Field::move_robot(int dx, int dy, GameState& state)
 	}
 	cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	rob.move(dx, dy);
+
 	cells[width * y + x].set_type(Cell::EMPTY);
 	cells[width * (y+dy) + (x+dx)].set_type(Cell::ROBOT);
 	return true;

@@ -3,9 +3,13 @@
 Simulator::Simulator()
 {
 	int w, h;
-	/*cin >> w >> h;*/
+	cin >> w >> h;
+	game = new Game(w, h);
+}
 
-	game = new Game(cin);
+Simulator::Simulator(bool console)
+{
+	game = new Game();
 }
 
 Simulator::~Simulator()
@@ -18,10 +22,14 @@ void Simulator::run()
 	cerr << "input operation character" << endl;
 	while (cin >> c) {
 		Operation::OperationType t = char_to_optype(c);
-		if (t != Operation::UNKNOWN) {
-			game->move(t);
-			game->print_game_states();
+		if (t == Operation::UNKNOWN) {
+			continue;
 		}
+
+		game->move(t);
+		output();
+		game->print_game_states();
+
 		if (game->is_finished()) {
 			break;
 		}
@@ -30,6 +38,18 @@ void Simulator::run()
 	cerr << "GAME FINISHED" << endl;
 	game->print_game_states();
 }
+
+void Simulator::output()
+{
+	game->print_field();
+	/* TODO: extra */
+	if (game->is_finished()) {
+		cout << "end" << endl;
+	} else {
+		cout << "next" << endl;
+	}
+}
+
 
 Operation::OperationType Simulator::char_to_optype(char c)
 {

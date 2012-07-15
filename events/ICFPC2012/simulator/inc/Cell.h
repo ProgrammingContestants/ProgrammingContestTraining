@@ -18,6 +18,7 @@ class Cell {
 		~Cell();
 		void set_type(CellType t);
 		void flood();
+		bool is_flooded();
 
 		CellType get_type();
 		char get_char();

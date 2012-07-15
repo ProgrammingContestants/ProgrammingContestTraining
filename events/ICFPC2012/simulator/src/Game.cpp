@@ -1,11 +1,11 @@
 #include "../inc/Game.h"
 
-Game::Game(istream &in)
+Game::Game()
 {
 	int width = 0;
 	vector<string> v;
 	string str, row;
-	while (getline(in, row), row != "") {
+	while (getline(cin, row) && row != "") {
 		width = max(width, (int)row.length());
 		v.push_back(row);
 	}
@@ -21,26 +21,29 @@ Game::Game(istream &in)
 	}
 
 	/* TODO: input and create metadata */
-	/* defaluts */
-	int water = 0;
-	int flooding = 0;
-	int waterproof = 10;
+	/* sample */
+	int water = 1;
+	int flooding = 8;
+	int waterproof = 5;
 	metadata.init(water, flooding, waterproof);
 
 	generate_field(str);
 }
 
-Game::Game(istream &in, int w, int h)
+Game::Game(int w, int h)
 {
+	cerr << "w: " << w << ", h: " << h << endl;
 	char c;
-	string str;
+	string str, buf;
+	cin.ignore();
 	for (int i = 0; i < h; ++i) {
-		for (int j = 0; j < w; ++j) {
-			in >> c;
-			str += c;
+		if (i != 0) {
+			str += '\n';
 		}
-		str += '\n';
+		getline(cin, buf);
+		str += buf;
 	}
+	cerr << str << endl;
 	generate_field(str);
 }
 
@@ -89,6 +92,7 @@ void Game::print_game_states()
 	cerr << ", collected: " << state.get_collected();
 	cerr << ", remain: " << state.get_remain() << endl;
 	cerr << "state: " << state.get_condition_string() << endl;
+	cerr << "water: " << field.get_water_height() << endl;
 }
 
 string Game::get_operations()
@@ -98,6 +102,11 @@ string Game::get_operations()
 		str += operations[i].get_char();
 	}
 	return str;
+}
+
+void Game::print_field()
+{
+	field.print();
 }
 
 Field& Game::get_field()
