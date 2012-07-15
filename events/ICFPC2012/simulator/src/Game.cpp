@@ -65,11 +65,7 @@ bool Game::move(Operation op)
 {
 	dbg_cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
-<<<<<<< HEAD
-	field.operate(op);
-=======
 	field.operate(op, state, metadata);
->>>>>>> 9eabfec889f3d461463438c28153576207a67d82
 	return true;
 }
 
