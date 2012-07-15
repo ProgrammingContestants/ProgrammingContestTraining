@@ -36,28 +36,32 @@ int main(int argc, char **argv)/*{{{*/
     }
     while (!game_queue.empty()) {
         Game game = game_queue.front(); game_queue.pop();
-        game.print_game_states();
+
+        Condition::ConditionType type = game.get_game_state().get_condition().get_type();
+        if (type==Condition::ABORTING || type==Condition::LOSING) {
+            cout << "ABORTING score:" << game.get_game_state().get_score();
+            cout << ", collected:" << game.get_game_state().get_collected() << endl;
+            continue;
+        } else if (type==Condition::WINNING) {
+            cout << "WINNING score:" << game.get_game_state().get_score();
+            cout << ", collected:" << game.get_game_state().get_collected() << endl;
+            break;
+        }
+
+        string field_str = game.get_field().get_string();
+        long field_hash = str_hash(field_str);
+
+        if (hashes.find(field_hash)!=hashes.end()) continue;
+        hashes.insert(field_hash);
+
+
         for (int i=0; i<arr_size(operations); i++) {
             Game next_game = game;
             next_game.move(operations[i]);
 
-            Condition::ConditionType type = next_game.get_game_state()->get_condition().get_type();
-            if (type==Condition::ABORTING || type==Condition::LOSING) {
-                continue;
-            } else if (type==Condition::WINNING) {
-                goto END_GAME;
-            }
-
-            string field_str = next_game.get_field()->get_string();
-            long field_hash = str_hash(field_str);
-
-            if (hashes.find(field_hash)!=hashes.end()) continue;
-            hashes.insert(field_hash);
-
             game_queue.push(next_game);
         }
     }
-    END_GAME:
 
     return 0;
 }/*}}}*/
