@@ -1,22 +1,28 @@
 
     Protocol Definition for the Visualizer
-                                      Version 1.1
+                                      Version 1.2
 
 1. Initial Input
 1.1 Input Format
 
- <W>
- <H>
- <FieldMap>
- <MetaData>
+ <InputString>
  <EndOfInput>
 
 1.2 Description
-- <W> is an integer.
-- <H> is an integer.
-- <FieldMap> is a text of <H> lines, and each line has <W> characters.
-- <MetaData> is a several lines of string.
+- <InputString> follows the input format specified by ICFPC task specification.
 - <EndOfInput> is a string "END-OF-INPUT".
+
+1.3 Initial Response
+1.3.1 Format
+
+ <NumberOfTrampolines>
+ <TrampolineMappings>
+
+1.3.2 Description
+- <NumberOfTrampolines> is an integer.
+- <TrampolineMappings> has <NumberOfTrampolines> lines.
+- Each line has one character and one integer separated by one whitespace.
+ <TrampolineChar> <TargetID>
 
 2. Communication
 2.1 Input
