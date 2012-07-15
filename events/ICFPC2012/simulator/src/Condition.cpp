@@ -1,7 +1,8 @@
 #include "../inc/Condition.h"
 
-Condition::Condition(ConditionType ct): type(ct)
+Condition::Condition()
 {
+	type = DIGGING;
 }
 
 Condition::~Condition()

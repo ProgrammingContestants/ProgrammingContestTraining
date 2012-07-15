@@ -20,15 +20,17 @@ class Field
 		vector<Cell> cells;
 
 		Metadata* metadata;
-		Robot* rob;
+		Robot rob;
 		GameState* state;
 
 		bool move_robot(int dx, int dy);
 		void update();
 
 	public:
-		Field(vector<string> rows, GameState* s, Metadata* md);
+		Field();
 		~Field();
+
+		void init(vector<string> rows, GameState* s, Metadata* md);
 		int get_width();
 		int get_height();
 		Cell get_cell(int x, int y);

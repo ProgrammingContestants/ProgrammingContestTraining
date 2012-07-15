@@ -5,18 +5,7 @@ Simulator::Simulator()
 	int w, h;
 	/*cin >> w >> h;*/
 
-	/* create Metadata */
-	/* defaluts */
-	int water = 0;
-	int flooding = 0;
-	int waterproof = 10;
-
-	/* input metadata */
-
-	/* create metadata */
-	Metadata* md = new Metadata(water, flooding, waterproof);
-
-	game = new Game(md);
+	game = new Game();
 }
 
 Simulator::~Simulator()

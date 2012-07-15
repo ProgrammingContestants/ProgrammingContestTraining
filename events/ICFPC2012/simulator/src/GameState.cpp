@@ -2,7 +2,6 @@
 
 GameState::GameState(): remain(0), collected(0), score(0)
 {
-	condition = new Condition(Condition::DIGGING);
 }
 
 GameState::~GameState()
@@ -11,7 +10,7 @@ GameState::~GameState()
 
 void GameState::change_condition(Condition::ConditionType ct)
 {
-	condition->change(ct);
+	condition.change(ct);
 }
 
 void GameState::collect_lambda()
@@ -22,18 +21,18 @@ void GameState::collect_lambda()
 
 void GameState::win()
 {
-	condition->change(Condition::WINNING);
+	condition.change(Condition::WINNING);
 	score += collected * 50;
 }
 
 void GameState::lose()
 {
-	condition->change(Condition::LOSING);
+	condition.change(Condition::LOSING);
 }
 
 void GameState::abort()
 {
-	condition->change(Condition::ABORTING);
+	condition.change(Condition::ABORTING);
 	score += collected * 25;
 }
 
@@ -44,7 +43,7 @@ void GameState::decrement_score()
 
 bool GameState::is_finished()
 {
-	return condition->get_type() != Condition::DIGGING;
+	return condition.get_type() != Condition::DIGGING;
 }
 
 /* Getters */
@@ -58,7 +57,7 @@ int GameState::get_collected()
 }
 Condition GameState::get_condition()
 {
-	return (*condition);
+	return condition;
 }
 int GameState::get_score()
 {
