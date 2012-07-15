@@ -34,6 +34,9 @@ Cell::Cell(char c) : flooded(false), id(UNDEF_ID)
 		case '!':
 			type = RAZOR;
 			break;
+		case '@':
+			type = HOR;
+			break;
 		default:
 			if('A'<=c&&c<='I'){
 				type=TRAMPOLINE;
@@ -102,6 +105,8 @@ char Cell::get_char()
 			return 'W';
 		case RAZOR:
 			return '!';
+		case HOR:
+			return '@';
 		case EMPTY:
 			return ' ';
 	}

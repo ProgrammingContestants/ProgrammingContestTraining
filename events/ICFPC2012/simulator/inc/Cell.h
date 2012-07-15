@@ -17,6 +17,7 @@ class Cell {
 			TARGET,
 			BEARD,
 			RAZOR,
+			HOR,
 			EMPTY
 		};
 
