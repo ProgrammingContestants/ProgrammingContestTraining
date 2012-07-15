@@ -6,14 +6,13 @@ Field::Field()
 
 Field::~Field()
 {
-	
 }
 
-void Field::init(vector<string> rows, GameState* s, Metadata* md)
+void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 {
+	steps = 0;
 	width = rows[0].length();
 	height = rows.size();
-	metadata = md;
 
 	int cnt_lambda = 0;
 	for (int y = 0; y < height; ++y) {
@@ -30,8 +29,7 @@ void Field::init(vector<string> rows, GameState* s, Metadata* md)
 	}
 
 	/* TODO: should make init() function? */
-	state = s;
-	s->set_remain(cnt_lambda);
+	s.set_remain(cnt_lambda);
 }
 
 
@@ -64,8 +62,9 @@ string Field::get_string()
 	return str;
 }
 
-void Field::operate(Operation op)
+void Field::operate(Operation op, GameState& state)
 {
+	++steps;
 	int dx = 0, dy = 0;
 	switch(op.get_type()) {
 		case Operation::LEFT:
@@ -83,30 +82,33 @@ void Field::operate(Operation op)
 		case Operation::WAIT:
 			break;
 		case Operation::ABORT:
-			state->abort();
+			state.abort();
 			return;
 	}
 
 	/* Operation cost */
-	state->decrement_score();
+	state.decrement_score();
 
 	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy);
+		move_robot(dx, dy, state);
 	}
-	update();
+	update(state);
 
 	/* dead check */
 	if (rob.is_dead()) {
-		state->change_condition(Condition::LOSING);
+		state.change_condition(Condition::LOSING);
 	}
 }
 
-bool Field::move_robot(int dx, int dy)
+void Field::flood()
+{
+}
+
+bool Field::move_robot(int dx, int dy, GameState& state)
 {
 	/* TODO: SEGFAULT GURAD */
 
 	int y = rob.get_y(), x = rob.get_x();
-	cerr << "y: " << y << ", x:" << x << endl;
 	switch (cells[width * (y+dy) + (x+dx)].get_type()) {
 		/* Cannot move */
 		case Cell::WALL:
@@ -121,10 +123,10 @@ bool Field::move_robot(int dx, int dy)
 
 		/* State changing move */
 		case Cell::LAMBDA:
-			state->collect_lambda();
+			state.collect_lambda();
 			break;
 		case Cell::OLIFT:
-			state->win();
+			state.win();
 			break;
 
 		/* Rock pushing */
@@ -149,7 +151,7 @@ bool Field::move_robot(int dx, int dy)
 	return true;
 }
 
-void Field::update()
+void Field::update(GameState& state)
 {
 	vector<Cell> old = cells;
 	for (int i = height - 1; i >= 0; --i) {
@@ -189,7 +191,7 @@ void Field::update()
 				}
 			}
 			if (old[width * (i) + (j)].get_type() == Cell::CLIFT
-					&& state->get_remain() == 0) {
+					&& state.get_remain() == 0) {
 				cells[width * (i) + (j)].set_type(Cell::OLIFT);
 			}
 		}

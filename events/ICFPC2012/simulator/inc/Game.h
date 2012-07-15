@@ -28,7 +28,7 @@ class Game {
 		bool is_finished();
 		void print_game_states();
 
-		Field* get_field();
-		GameState* get_game_state();
+		Field& get_field();
+		GameState& get_game_state();
 };
 #endif

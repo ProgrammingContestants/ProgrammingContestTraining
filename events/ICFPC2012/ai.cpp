@@ -7,12 +7,21 @@
 #include <set>
 #include "simulator/inc/Game.h"
 #include "simulator/inc/Condition.h"
+#include "simulator/inc/Operation.h"
+#include "simulator/inc/Condition.h"
 
 #define arr_size(array) (sizeof(array)/sizeof(*array))
 
 using namespace std;
 
-CommandType commands[] = { LEFT, RIGHT, UP, DOWN, WAIT, ABORT };
+Operation operations[] = {
+    Operation(Operation::LEFT),
+    Operation(Operation::RIGHT),
+    Operation(Operation::UP),
+    Operation(Operation::DOWN),
+    Operation(Operation::WAIT),
+    Operation(Operation::ABORT),
+};
 
 long str_hash(const string& str);
 
@@ -27,28 +36,32 @@ int main(int argc, char **argv)/*{{{*/
     }
     while (!game_queue.empty()) {
         Game game = game_queue.front(); game_queue.pop();
-        for (int i=0; i<arr_size(commands); i++) {
+
+        Condition::ConditionType type = game.get_game_state().get_condition().get_type();
+        if (type==Condition::ABORTING || type==Condition::LOSING) {
+            cout << "ABORTING score:" << game.get_game_state().get_score();
+            cout << ", collected:" << game.get_game_state().get_collected() << endl;
+            continue;
+        } else if (type==Condition::WINNING) {
+            cout << "WINNING score:" << game.get_game_state().get_score();
+            cout << ", collected:" << game.get_game_state().get_collected() << endl;
+            break;
+        }
+
+        string field_str = game.get_field().get_string();
+        long field_hash = str_hash(field_str);
+
+        if (hashes.find(field_hash)!=hashes.end()) continue;
+        hashes.insert(field_hash);
+
+
+        for (int i=0; i<arr_size(operations); i++) {
             Game next_game = game;
-            next_game.move(commands[i]);
-
-            string cond_str = next_game.get_condition().get_string();
-            if (cond_str=="ABORTING" || cond_str=="LOSING") {
-                continue;
-            } else if (cond_str=="WINNING") {
-                goto END_GAME;
-            }
-
-            string field_str = next_game.get_field().get_string();
-            long field_hash = str_hash(field);
-
-            if (hashes.find(field_hash)!=hashes.end()) continue;
-            hahses.insert(field_hash);
+            next_game.move(operations[i]);
 
             game_queue.push(next_game);
         }
     }
-
-    END_GAME:
 
     return 0;
 }/*}}}*/
@@ -58,3 +71,4 @@ static const collate<char>& coll = use_facet<collate<char> >(loc);
 long str_hash(const string& str) {
     return coll.hash(str.data(), str.data()+str.length());
 }
+
