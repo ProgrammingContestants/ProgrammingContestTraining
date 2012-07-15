@@ -13,10 +13,7 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean mrproper
+.PHONY: clean
 
 clean:
-	rm src/*.o
-
-mrproper: clean
-	rm $(EXECUTABLE)
+	rm src/*.o $(EXECUTABLE) tags main.o

@@ -21,6 +21,7 @@ Game::Game()
 	}
 
 	/* TODO: input and create metadata */
+	metadata = new Metadata(0, 0, 10); /* tmp */
 
 	state = new GameState();
 	generate_field(str);
