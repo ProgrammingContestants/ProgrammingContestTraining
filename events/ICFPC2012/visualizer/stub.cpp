@@ -46,9 +46,16 @@ void print_field()
 	cout.flush();
 }
 
-void print_score()
+void print_additional_information()
 {
+	// Score
 	cout << rand() % 501 << endl;
+
+	// Water Height
+	cout << rand() % H << endl;
+
+	// Current Water Proof
+	cout << rand() % 10 << endl;
 }
 
 void random_overwrite()
@@ -79,16 +86,23 @@ int main()
 		cerr << "read metadata: " << line << endl;
 	}
 
+	// Initial Response
+	cout << "2" << endl;
+	cout << "A 1" << endl;
+	cout << "B 2" << endl;
+
 	while (getline(cin, line))
 	{
 		random_overwrite();
 
 		print_field();
-		print_score();
+		print_additional_information();
 
 		if (line[0] == 'A')
 		{
+			cout << "end" << endl;
 			break;
 		}
+		cout << "next" << endl;
 	}
 }
