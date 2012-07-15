@@ -1,7 +1,7 @@
 #include "../inc/Metadata.h"
 #include <cassert>
 
-Metadata::Metadata()
+Metadata::Metadata():water(0),flooding(0),waterproof(10),growth(25),razors(0)
 {
 }
 
@@ -9,23 +9,8 @@ Metadata::~Metadata()
 {
 }
 
-void Metadata::init(int w, int f, int wp, map<int,int> targets)
-{
-	water = w;
-	flooding = f;
-	waterproof = wp;
-	trampoline_targets=targets;
-}
-
 void Metadata::init()
 {
-	int water = 0;
-	int flooding = 0;
-	int waterproof = 10;
-	map<int,int> trampoline_targets;
-	int growth = 25;
-	int razors = 0;
-
 	while(!cin.eof()){
 		string keyword;
 		cin>>keyword;
@@ -50,8 +35,6 @@ void Metadata::init()
 			cin>>razors;
 		}
 	}
-
-	init(water,flooding,waterproof,trampoline_targets);
 }
 
 int Metadata::get_water()
