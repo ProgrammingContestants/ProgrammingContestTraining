@@ -32,6 +32,7 @@ class Field
 		int get_width();
 		int get_height();
 		Cell get_cell(int x, int y);
+		string get_string();
 		void operate(Operation op);
 		void print();
 };
