@@ -1,18 +1,28 @@
 
     Protocol Definition for the Visualizer
-                                      Version 1.0
+                                      Version 1.2
 
 1. Initial Input
 1.1 Input Format
 
- <W>
- <H>
- <FieldMap>
+ <InputString>
+ <EndOfInput>
 
 1.2 Description
-- <W> is an integer.
-- <H> is an integer.
-- <FieldMap> is a text of <H> lines, and each line has <W> characters.
+- <InputString> follows the input format specified by ICFPC task specification.
+- <EndOfInput> is a string "END-OF-INPUT".
+
+1.3 Initial Response
+1.3.1 Format
+
+ <NumberOfTrampolines>
+ <TrampolineMappings>
+
+1.3.2 Description
+- <NumberOfTrampolines> is an integer.
+- <TrampolineMappings> has <NumberOfTrampolines> lines.
+- Each line has one character and one integer separated by one whitespace.
+ <TrampolineChar> <TargetID>
 
 2. Communication
 2.1 Input
@@ -22,7 +32,7 @@
 
 2.1.2 Description
 - <C> is an character.
-- <C> is one of these characters: L R U D W A
+- <C> is one of these characters: 'L' 'R' 'U' 'D' 'S' 'W' 'A'
 
 2.2 Output
 2.2.1 Output Format
@@ -37,9 +47,11 @@
 - <AdditionalInformation> has several extra data.
 Brief:
  <Score> of single integer
+ <WaterHeight> of single integer
+ <CurrentWaterProof> of single integer
 
 - <Direction> notifies the visualizer what to do next.
-- <Direction> is one of these string: next end
+- <Direction> is one of these strings: "next" "end"
 - If <Direction> is "next", it means the game is continued.
 - If <Direction> is "end", it means the game is ended.
 
