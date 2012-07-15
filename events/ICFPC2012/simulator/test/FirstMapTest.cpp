@@ -110,8 +110,8 @@ TEST(FirstMapTest, map3_play) {
 
 // ---------------------- tests for finding best solution and simulating moving ---------------------- //
 
-string cmd_prefix = "../ai.out < ";
-string cmd_suffix = " > ret.out 2> /dev/null & sleep 150; kill $!";
+string cmd_prefix = "./timelimit.sh 150 ../ai.out < ";
+string cmd_suffix = " > ret.out 2> /dev/null";
 
 TEST(FirstMapTest, map1_best) {
   string map_path = "map/contest1.map", cmds;
