@@ -1,0 +1,48 @@
+
+    Protocol Definition for the Visualizer
+                                      Version 1.0
+
+1. Initial Input
+1.1 Input Format
+
+ <W>
+ <H>
+ <FieldMap>
+
+1.2 Description
+- <W> is an integer.
+- <H> is an integer.
+- <FieldMap> is a text of <H> lines, and each line has <W> characters.
+
+2. Communication
+2.1 Input
+2.1.1 Input Format
+
+ <C>
+
+2.1.2 Description
+- <C> is an character.
+- <C> is one of these characters: L R U D W A
+
+2.2 Output
+2.2.1 Output Format
+
+ <FieldMap>
+ <AdditionalInformation>
+ <Direction>
+
+2.2.2 Description
+- <FieldMap> is same format to that of Initial Input.
+
+- <AdditionalInformation> has several extra data.
+Brief:
+ <Score> of single integer
+
+- <Direction> notifies the visualizer what to do next.
+- <Direction> is one of these string: next end
+- If <Direction> is "next", it means the game is continued.
+- If <Direction> is "end", it means the game is ended.
+
+
+
+
