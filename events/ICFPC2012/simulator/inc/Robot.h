@@ -22,7 +22,6 @@ class Robot {
 		bool breathe(bool flooded);
 		void destroy();
 		bool set_location(int dest_x,int dest_y);
-		bool set_location(int dest_x,int dest_y,bool flooded);
 
 		int get_x();
 		int get_y();

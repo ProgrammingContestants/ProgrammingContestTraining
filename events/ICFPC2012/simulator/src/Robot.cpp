@@ -20,6 +20,7 @@ void Robot::init(int _x, int _y, Metadata& metadata)
 
 bool Robot::move(int dx, int dy)
 {
+	return set_location(x+dx,y+dy);
 }
 
 bool Robot::breathe(bool flooded)
@@ -56,20 +57,8 @@ int Robot::get_y()
 }
 
 bool Robot::set_location(int dest_x,int dest_y){
-	return set_location(dest_x,dest_y,false);
-}
-
-bool Robot::set_location(int dest_x,int dest_y,bool flooded){
 	x=dest_x;
 	y=dest_y;
-	if (flooded) {
-		if (--water_life == 0) {
-			dead = true;
-		}
-	}
-	else {
-		water_life = waterproof;
-	}
 	return true;
 }
 
