@@ -10,6 +10,7 @@ class GameState {
 		int collected;
 		Condition condition;
 		int score;
+		int razors;
 	public:
 		GameState();
 		~GameState();
@@ -21,6 +22,8 @@ class GameState {
 		void drown();
 		void decrement_score();
 		bool is_finished();
+		void collect_razor();
+		void use_razor();
 
 		int get_remain();
 		void set_remain(int r);
@@ -28,5 +31,6 @@ class GameState {
 		Condition get_condition();
 		int get_score();
 		string get_condition_string();
+		int get_razors();
 };
 #endif

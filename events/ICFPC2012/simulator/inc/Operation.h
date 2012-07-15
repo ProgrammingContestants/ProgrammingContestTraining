@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include <iostream>
+#include <cassert>
 using namespace std;
 
 class Operation {
@@ -14,6 +15,7 @@ class Operation {
 			DOWN,
 			WAIT,
 			ABORT,
+			RAZOR,
 			UNKNOWN
 		};
 
