@@ -1,5 +1,32 @@
 #include "../inc/Game.h"
 
+Game::Game()
+{
+	int width = 0;
+	vector<string> v;
+	string str, row;
+	while (getline(cin, row), row != "") {
+		width = max(width, (int)row.length());
+		v.push_back(row);
+	}
+	for(vector<string>::iterator  it=(v).begin(); it!=(v).end(); ++it) {
+		int len = (*it).length();
+		for (int i = len; i < width; ++i) {
+			(*it) += ' ';
+		}
+		if (str.length() != 0) {
+			str +=  '\n';
+		}
+		str += (*it);
+	}
+
+	/* TODO: input and create metadata */
+	metadata = new Metadata(0, 0, 10); /* tmp */
+
+	state = new GameState();
+	generate_field(str);
+}
+
 Game::Game(Metadata* md): metadata(md)
 {
 	int width = 0;
@@ -82,4 +109,14 @@ void Game::print_game_states()
 	cerr << "score: " << state->get_score();
 	cerr << ", collected: " << state->get_collected();
 	cerr << ", remain: " << state->get_remain() << endl;
+}
+
+Field* Game::get_field()
+{
+	return field;
+}
+
+GameState* Game::get_game_state()
+{
+	return state;
 }

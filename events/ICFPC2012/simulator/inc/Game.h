@@ -19,6 +19,7 @@ class Game {
 		void generate_field(string str);
 		vector<Operation> operations;
 	public:
+		Game();
 		Game(Metadata* md);
 		Game(int w, int h, Metadata* md);
 		Game(string str, Metadata* md);
@@ -26,5 +27,8 @@ class Game {
 		bool move(Operation op);
 		bool is_finished();
 		void print_game_states();
+
+		Field* get_field();
+		GameState* get_game_state();
 };
 #endif

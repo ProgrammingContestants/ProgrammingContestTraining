@@ -38,6 +38,18 @@ Cell Field::get_cell(int x, int y)
 	return cells[width * (height - y) + x];
 }
 
+string Field::get_string()
+{
+	string str;
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			str += cells[width * i + j].get_char();
+		}
+		str += '\n';
+	}
+	return str;
+}
+
 void Field::operate(Operation op)
 {
 	int dx = 0, dy = 0;
