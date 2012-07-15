@@ -1,7 +1,9 @@
 package vmap.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import vmap.Env;
 import vmap.model.Cell;
 import vmap.model.FieldMap;
 import vmap.model.TrampolineMappings;
@@ -27,8 +30,12 @@ import vmap.model.TrampolineMappings;
 public class FieldPanel extends JPanel
 {
 	private static final Stroke STROKE_ARROW = new BasicStroke(3.0F);
+	private static final int FADE_COUNT = 20;
 	
 	private Image img;
+	private Image prevImage;
+	private BufferedImage drawingImage;
+	private int fadeCount;
 	private int chipSize = 32;
 	
 	private TrampolineMappings tmap;
@@ -38,7 +45,13 @@ public class FieldPanel extends JPanel
 	{
 		try
 		{
-			img = ImageIO.read(new File("mc.png"));
+			String fileName = "mc.png";
+			Env env = Env.getEnv();
+			if (env.isSet("cell_image_file"))
+			{
+				fileName = env.get("cell_image_file");
+			}
+			img = ImageIO.read(new File(fileName));
 		}
 		catch (IOException e)
 		{
@@ -64,6 +77,10 @@ public class FieldPanel extends JPanel
 				repaint();
 			}
 		});
+		
+		Thread animThread = new AnimationThread();
+		animThread.setDaemon(true);
+		animThread.start();
 	}
 	
 	public void setChipSize(int size)
@@ -82,6 +99,11 @@ public class FieldPanel extends JPanel
 	public void setFieldMap(FieldMap m)
 	{
 		fieldMap = m;
+		prevImage = drawingImage;
+		fadeCount = 0;
+		
+		Dimension size = getActualFieldSize();
+		drawingImage = new BufferedImage(size.width, size.height, Transparency.TRANSLUCENT);
 		
 		recalcPreferredSize();
 		repaint();
@@ -95,18 +117,34 @@ public class FieldPanel extends JPanel
 	
 	protected void paintComponent(Graphics g)
 	{
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		Point o = getOrigin();
+		g.translate(o.x, o.y);
 		
 		if (fieldMap != null)
 		{
-			drawField(g);
+			Graphics gBuf = drawingImage.getGraphics();
+			drawField(gBuf);
+			gBuf.dispose();
+			
+			if (prevImage == null || fadeCount >= FADE_COUNT)
+			{
+				g.drawImage(drawingImage, 0, 0, null);
+			}
+			else
+			{
+				drawImageInterpol((Graphics2D)g, prevImage, drawingImage, (float)fadeCount / FADE_COUNT);
+			}
 		}
 		
 		if (tmap != null)
 		{
 			drawTrampoline(g);
 		}
+		
+		g.translate(-o.x, -o.y);
 		
 		if (isFocusOwner())
 		{
@@ -175,6 +213,18 @@ public class FieldPanel extends JPanel
 		g.drawLine(p1.x, p1.y, (int)(p1.x - l * Math.cos(a - b)), (int)(p1.y - l * Math.sin(a - b)));
 	}
 	
+	private static void drawImageInterpol(Graphics2D g, Image img0, Image img1, float t)
+	{
+		Composite compSave = g.getComposite();
+		
+		g.drawImage(img0, 0, 0, null);
+		
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, t));
+		g.drawImage(img1, 0, 0, null);
+		
+		g.setComposite(compSave);
+	}
+	
 	private void recalcPreferredSize()
 	{
 		Dimension size = getActualFieldSize();
@@ -185,9 +235,7 @@ public class FieldPanel extends JPanel
 	
 	private Point toView(int ix, int iy)
 	{
-		Point o = getOrigin();
-		o.translate(chipSize * ix, chipSize * iy);
-		return o;
+		return new Point(chipSize * ix, chipSize * iy);
 	}
 	
 	private Dimension getActualFieldSize()
@@ -206,6 +254,25 @@ public class FieldPanel extends JPanel
 	{
 		int sx = index * 48;
 		g.drawImage(img, x, y, x + chipSize, y + chipSize, sx, 0, sx + 48, 48, null);
+	}
+	
+	private class AnimationThread extends Thread
+	{
+		public void run()
+		{
+			try
+			{
+				while (true)
+				{
+					if (fadeCount < FADE_COUNT) fadeCount++;
+					repaint();
+					Thread.sleep(20);
+				}
+			}
+			catch (InterruptedException e)
+			{
+			}
+		}
 	}
 	
 	private static final long serialVersionUID = 1L;

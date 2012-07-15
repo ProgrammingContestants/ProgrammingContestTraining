@@ -3,10 +3,13 @@ package vmap.gui;
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -24,6 +27,7 @@ import javax.swing.event.ChangeListener;
 import vmap.Env;
 import vmap.connection.Runner;
 import vmap.connection.event.PrintLineListener;
+import vmap.connection.event.ProcessFinishListener;
 import vmap.model.FieldMap;
 import vmap.model.TrampolineMappings;
 
@@ -32,9 +36,14 @@ import vmap.model.TrampolineMappings;
  */
 public class MainFrame extends JFrame
 {
+	private String previousInput;
+	
 	private FieldPanel fieldPanel;
+	private JScrollPane scrollPane;
+	
 	private JButton buttonInitialize;
 	private JButton buttonKill;
+	private JButton buttonRestart;
 	private JSlider sliderChipSize;
 	private JLabel labelScore;
 	private JTextField sentCommands;
@@ -52,9 +61,32 @@ public class MainFrame extends JFrame
 		fieldPanel.setFocusable(true);
 		fieldPanel.addKeyListener(new InputHandler());
 		
-		JScrollPane jsp = new JScrollPane(fieldPanel);
-		jsp.setPreferredSize(new Dimension(400, 300));
-		add(jsp);
+		scrollPane = new JScrollPane(fieldPanel);
+		scrollPane.setPreferredSize(new Dimension(400, 300));
+		scrollPane.getViewport().addMouseListener(new MouseListener()
+		{
+			public void mouseReleased(MouseEvent e)
+			{
+			}
+			
+			public void mousePressed(MouseEvent e)
+			{
+				System.out.println("pressed");
+			}
+			
+			public void mouseExited(MouseEvent e)
+			{
+			}
+			
+			public void mouseEntered(MouseEvent e)
+			{
+			}
+			
+			public void mouseClicked(MouseEvent e)
+			{
+			}
+		});
+		add(scrollPane);
 		
 		buttonInitialize = new JButton("Init");
 		buttonInitialize.addActionListener(new ActionListener()
@@ -74,6 +106,16 @@ public class MainFrame extends JFrame
 		});
 		buttonKill.setEnabled(false);
 		
+		buttonRestart = new JButton("Restart");
+		buttonRestart.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				restartSimulation();
+			}
+		});
+		buttonRestart.setEnabled(false);
+		
 		labelScore = new JLabel("");
 		
 		sliderChipSize = new JSlider(1, 100, 32);
@@ -90,10 +132,11 @@ public class MainFrame extends JFrame
 		JPanel toolPanel = new JPanel();
 		toolPanel.add(buttonInitialize);
 		toolPanel.add(buttonKill);
+		toolPanel.add(buttonRestart);
 		toolPanel.add(sliderChipSize);
 		add(toolPanel, BorderLayout.NORTH);
 		
-		sentCommands = new JTextField(20);
+		sentCommands = new JTextField(30);
 		sentCommands.setEditable(false);
 		
 		JPanel infoPanel = new JPanel();
@@ -157,6 +200,14 @@ public class MainFrame extends JFrame
 				console.printStandardError(line);
 			}
 		});
+		r.setFinishListener(new ProcessFinishListener()
+		{
+			public void finished(int exitCode)
+			{
+				console.printStandardError("-- Exit Code = " + exitCode);
+				buttonKill.setEnabled(false);
+			}
+		});
 		
 		boolean ret = r.start();
 		if (ret)
@@ -172,7 +223,10 @@ public class MainFrame extends JFrame
 		else
 		{
 			JOptionPane.showMessageDialog(this,
-				"failed to execute: " + command + "\nCheck the simulator file name and/or the value of the key 'simulator' in env.txt");
+				"Failed to execute: " + command + "\n" +
+				"Check the simulator file name and/or the value of the key 'simulator' in env.txt",
+				"Fatal Error",
+				JOptionPane.ERROR_MESSAGE);
 		}
 		return ret;
 	}
@@ -189,6 +243,35 @@ public class MainFrame extends JFrame
 		buttonKill.setEnabled(false);
 	}
 	
+	private void startSimulation(String input)
+	{
+		turn = 0;
+		
+		String fieldText = getFieldText(input);
+		Dimension dim = calcDimension(fieldText);
+		nLines = dim.height;
+		
+		if (createProcess(input))
+		{
+			previousInput = input;
+			buttonRestart.setEnabled(true);
+			
+			//fieldPanel.setTrampolineMapping(readTrampolineMappings());
+			
+			FieldMap m = FieldMap.fromString(fieldText);
+			setGameModel(m);
+			buttonKill.setEnabled(true);
+		}
+	}
+	
+	private void restartSimulation()
+	{
+		if (previousInput != null)
+		{
+			startSimulation(previousInput);
+		}
+	}
+	
 	private void initialize()
 	{
 		InitializeDialog dialog = new InitializeDialog();
@@ -196,21 +279,7 @@ public class MainFrame extends JFrame
 		dialog.setVisible(true);
 		if (dialog.isApproved())
 		{
-			turn = 0;
-			
-			String initialInput = dialog.getInputText();
-			String fieldText = getFieldText(initialInput);
-			Dimension dim = calcDimension(fieldText);
-			nLines = dim.height;
-			
-			if (createProcess(initialInput))
-			{
-				fieldPanel.setTrampolineMapping(readTrampolineMappings());
-				
-				FieldMap m = FieldMap.fromString(fieldText);
-				setGameModel(m);
-				buttonKill.setEnabled(true);
-			}
+			startSimulation(dialog.getInputText());
 		}
 	}
 	
@@ -262,7 +331,6 @@ public class MainFrame extends JFrame
 		m.setWaterProof(Integer.parseInt(currentProof));
 		setGameModel(m);
 		
-		//if (command.equals("A"))
 		if (direction.equals("end"))
 		{
 			runner.exit();
@@ -278,27 +346,13 @@ public class MainFrame extends JFrame
 		String command = "";
 		switch (code)
 		{
-		case KeyEvent.VK_LEFT:
-			command = "L";
-			break;
-		case KeyEvent.VK_RIGHT:
-			command = "R";
-			break;
-		case KeyEvent.VK_UP:
-			command = "U";
-			break;
-		case KeyEvent.VK_DOWN:
-			command = "D";
-			break;
-		case KeyEvent.VK_S:
-			command = "S";
-			break;
-		case KeyEvent.VK_W:
-			command = "W";
-			break;
-		case KeyEvent.VK_A:
-			command = "A";
-			break;
+		case KeyEvent.VK_LEFT:  command = "L"; break;
+		case KeyEvent.VK_RIGHT: command = "R"; break;
+		case KeyEvent.VK_UP:    command = "U"; break;
+		case KeyEvent.VK_DOWN:  command = "D"; break;
+		case KeyEvent.VK_S:     command = "S"; break;
+		case KeyEvent.VK_W:     command = "W"; break;
+		case KeyEvent.VK_A:     command = "A"; break;
 		default:
 			processed = false;
 			break;

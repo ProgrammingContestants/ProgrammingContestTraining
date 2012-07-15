@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import vmap.connection.event.PrintLineListener;
+import vmap.connection.event.ProcessFinishListener;
 
 public class Runner
 {
@@ -14,6 +15,7 @@ public class Runner
 	private PrintWriter writer;
 	private BufferedReader reader;
 	private PrintLineListener errListener;
+	private ProcessFinishListener finishListener;
 	
 	public Runner(String cmd)
 	{
@@ -23,6 +25,11 @@ public class Runner
 	public void setErrorListener(PrintLineListener l)
 	{
 		errListener = l;
+	}
+	
+	public void setFinishListener(ProcessFinishListener l)
+	{
+		finishListener = l;
 	}
 	
 	public boolean start()
@@ -53,6 +60,11 @@ public class Runner
 			
 			reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			writer = new PrintWriter(p.getOutputStream());
+			
+			Thread waitThread = new WaitThread();
+			waitThread.setDaemon(true);
+			waitThread.start();
+			
 			ret = true;
 		}
 		catch (IOException e)
@@ -102,5 +114,26 @@ public class Runner
 			e.printStackTrace();
 		}
 		return s;
+	}
+	
+	private class WaitThread extends Thread
+	{
+		public void run()
+		{
+			try
+			{
+				p.waitFor();
+			}
+			catch (InterruptedException e)
+			{
+			}
+			finally
+			{
+				if (finishListener != null)
+				{
+					finishListener.finished(p.exitValue());
+				}
+			}
+		}
 	}
 }

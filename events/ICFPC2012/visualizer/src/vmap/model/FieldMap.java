@@ -17,6 +17,7 @@ public class FieldMap
 		CMAP['.'] = Cell.EARTH;
 		CMAP['W'] = Cell.BEARD;
 		CMAP['!'] = Cell.RAZOR;
+		CMAP['@'] = Cell.HOROCK;
 		CMAP[' '] = Cell.EMPTY;
 	}
 	
