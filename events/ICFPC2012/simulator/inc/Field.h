@@ -26,7 +26,7 @@ class Field
 
 		Robot rob;
 
-		bool move_robot(int dx, int dy, GameState& state);
+		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
 		void update(GameState& state);
 		void flood();
 
@@ -39,7 +39,7 @@ class Field
 		int get_height();
 		Cell get_cell(int x, int y);
 		string get_string();
-		void operate(Operation op, GameState& state);
+		void operate(Operation op, GameState& state, Metadata& metadata);
 		void print();
 };
 #endif
