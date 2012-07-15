@@ -13,7 +13,7 @@ class Condition {
 			LOSING
 		};
 
-		Condition(ConditionType ct);
+		Condition();
 		~Condition();
 		void change(ConditionType ct);
 

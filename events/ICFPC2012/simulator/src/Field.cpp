@@ -1,14 +1,27 @@
 #include "../inc/Field.h"
 
-Field::Field(vector<string> rows, GameState* s, Metadata* md) : width(rows[0].length()), height(rows.size()), metadata(md)
+Field::Field()
 {
+}
+
+Field::~Field()
+{
+	
+}
+
+void Field::init(vector<string> rows, GameState* s, Metadata* md)
+{
+	width = rows[0].length();
+	height = rows.size();
+	metadata = md;
+
 	int cnt_lambda = 0;
 	for (int i = 0; i < height; ++i) {
 		for (int j = 0; j < width; ++j) {
 			cells.push_back(Cell(rows[i][j]));
 			/* TODO: is it right doing here? */
 			if (rows[i][j] == 'R') {
-				rob = new Robot(j, i, metadata);
+				rob.init(j, i, metadata);
 			}
 			else if (rows[i][j] == '\\') {
 				++cnt_lambda;
@@ -20,6 +33,7 @@ Field::Field(vector<string> rows, GameState* s, Metadata* md) : width(rows[0].le
 	state = s;
 	s->set_remain(cnt_lambda);
 }
+
 
 int Field::get_width()
 {
@@ -82,7 +96,7 @@ void Field::operate(Operation op)
 	update();
 
 	/* dead check */
-	if (rob->is_dead()) {
+	if (rob.is_dead()) {
 		state->change_condition(Condition::LOSING);
 	}
 }
@@ -91,7 +105,8 @@ bool Field::move_robot(int dx, int dy)
 {
 	/* TODO: SEGFAULT GURAD */
 
-	int y = rob->get_y(), x = rob->get_x();
+	int y = rob.get_y(), x = rob.get_x();
+	cerr << "y: " << y << ", x:" << x << endl;
 	switch (cells[width * (y+dy) + (x+dx)].get_type()) {
 		/* Cannot move */
 		case Cell::WALL:
@@ -128,7 +143,7 @@ bool Field::move_robot(int dx, int dy)
 			return false;
 	}
 	cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
-	rob->move(dx, dy);
+	rob.move(dx, dy);
 	cells[width * y + x].set_type(Cell::EMPTY);
 	cells[width * (y+dy) + (x+dx)].set_type(Cell::ROBOT);
 	return true;
@@ -179,10 +194,10 @@ void Field::update()
 			}
 		}
 	}
-	if (rob->get_y() - 1 >= 0
-			&& old[width * (rob->get_y()-1) + (rob->get_x())].get_type() != Cell::ROCK
-			&& cells[width * (rob->get_y()-1) + (rob->get_x())].get_type() == Cell::ROCK) {
-		rob->destroy();
+	if (rob.get_y() - 1 >= 0
+			&& old[width * (rob.get_y()-1) + (rob.get_x())].get_type() != Cell::ROCK
+			&& cells[width * (rob.get_y()-1) + (rob.get_x())].get_type() == Cell::ROCK) {
+		rob.destroy();
 	}
 }
 
