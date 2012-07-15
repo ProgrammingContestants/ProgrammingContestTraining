@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_FIELD_H
 #define _LAMBDA_FIELD_H
 
+#include "Common.h"
 #include "Metadata.h"
 #include "Cell.h"
 #include "Operation.h"
@@ -15,27 +16,30 @@ using namespace std;
 class Field
 {
 	private:
+		int steps;
+		int flooding;
+		int water;
+
 		int width;
 		int height;
 		vector<Cell> cells;
 
-		Metadata* metadata;
 		Robot rob;
-		GameState* state;
 
-		bool move_robot(int dx, int dy);
-		void update();
+		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
+		void update(GameState& state);
+		void flood();
 
 	public:
 		Field();
 		~Field();
 
-		void init(vector<string> rows, GameState* s, Metadata* md);
+		void init(vector<string> rows, GameState& s, Metadata& metadata);
 		int get_width();
 		int get_height();
 		Cell get_cell(int x, int y);
 		string get_string();
-		void operate(Operation op);
+		void operate(Operation op, GameState& state, Metadata& metadata);
 		void print();
 };
 #endif

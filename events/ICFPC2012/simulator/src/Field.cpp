@@ -6,34 +6,41 @@ Field::Field()
 
 Field::~Field()
 {
-	
 }
 
-void Field::init(vector<string> rows, GameState* s, Metadata* md)
+void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 {
+	steps = 0;
+	water = metadata.get_water();
+	flooding = metadata.get_flooding();
+
 	width = rows[0].length();
 	height = rows.size();
-	metadata = md;
 
 	int cnt_lambda = 0;
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			cells.push_back(Cell(rows[i][j]));
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			cells.push_back(Cell(rows[y][x]));
 			/* TODO: is it right doing here? */
-			if (rows[i][j] == 'R') {
-				rob.init(j, i, metadata);
+			if (rows[y][x] == 'R') {
+				rob.init(x, y, metadata);
 			}
-			else if (rows[i][j] == '\\') {
+			else if (rows[y][x] == '\\') {
 				++cnt_lambda;
 			}
 		}
 	}
 
-	/* TODO: should make init() function? */
-	state = s;
-	s->set_remain(cnt_lambda);
-}
+	/* flooding */
+	for (int i = height - 1; i >= height - water; i--) {
+		for (int j = 0; j < width; j++) {
+			cells[width * i + j].flood();
+		}
+	}
 
+	/* TODO: should make init() function? */
+	s.set_remain(cnt_lambda);
+}
 
 int Field::get_width()
 {
@@ -64,8 +71,9 @@ string Field::get_string()
 	return str;
 }
 
-void Field::operate(Operation op)
+void Field::operate(Operation op, GameState& state, Metadata& metadata)
 {
+	++steps;
 	int dx = 0, dy = 0;
 	switch(op.get_type()) {
 		case Operation::LEFT:
@@ -83,30 +91,39 @@ void Field::operate(Operation op)
 		case Operation::WAIT:
 			break;
 		case Operation::ABORT:
-			state->abort();
+			state.abort();
 			return;
 	}
 
 	/* Operation cost */
-	state->decrement_score();
+	state.decrement_score();
 
 	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy);
+		move_robot(dx, dy, state, metadata);
 	}
-	update();
+	update(state);
 
 	/* dead check */
 	if (rob.is_dead()) {
-		state->change_condition(Condition::LOSING);
+		state.change_condition(Condition::LOSING);
 	}
 }
 
-bool Field::move_robot(int dx, int dy)
+void Field::flood()
+{
+	if (steps % flooding == 0) {
+		++water;
+		for (int i = 0; i < width; i++) {
+			cells[width * (height - water) + i].flood();
+		}
+	}
+}
+
+bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 {
 	/* TODO: SEGFAULT GURAD */
 
 	int y = rob.get_y(), x = rob.get_x();
-	cerr << "y: " << y << ", x:" << x << endl;
 	Cell &cell = cells[width * (y+dy) + (x+dx)];
 	switch (cell.get_type()) {
 		/* Cannot move */
@@ -122,10 +139,10 @@ bool Field::move_robot(int dx, int dy)
 
 		/* State changing move */
 		case Cell::LAMBDA:
-			state->collect_lambda();
+			state.collect_lambda();
 			break;
 		case Cell::OLIFT:
-			state->win();
+			state.win();
 			break;
 
 		/* Rock pushing */
@@ -144,7 +161,7 @@ bool Field::move_robot(int dx, int dy)
 		case Cell::TRAMPOLINE:
 			{
 			char trampoline_id=cell.get_id();
-			char target_id=metadata->get_target_id(trampoline_id);
+			char target_id=metadata.get_target_id(trampoline_id);
 			for(int x=0;x<get_width();x++){
 				for(int y=0;y<get_height();y++){
 					Cell &c = get_cell(x,y);
@@ -162,14 +179,14 @@ bool Field::move_robot(int dx, int dy)
 		default:
 			return false;
 	}
-	cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
+	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	rob.move(dx, dy);
 	cells[width * y + x].set_type(Cell::EMPTY);
 	cells[width * (y+dy) + (x+dx)].set_type(Cell::ROBOT);
 	return true;
 }
 
-void Field::update()
+void Field::update(GameState& state)
 {
 	vector<Cell> old = cells;
 	for (int i = height - 1; i >= 0; --i) {
@@ -209,7 +226,7 @@ void Field::update()
 				}
 			}
 			if (old[width * (i) + (j)].get_type() == Cell::CLIFT
-					&& state->get_remain() == 0) {
+					&& state.get_remain() == 0) {
 				cells[width * (i) + (j)].set_type(Cell::OLIFT);
 			}
 		}

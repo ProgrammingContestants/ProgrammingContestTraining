@@ -1,11 +1,11 @@
 #include "../inc/Game.h"
 
-Game::Game()
+Game::Game(istream &in)
 {
 	int width = 0;
 	vector<string> v;
 	string str, row;
-	while (getline(cin, row), row != "") {
+	while (getline(in, row), row != "") {
 		width = max(width, (int)row.length());
 		v.push_back(row);
 	}
@@ -27,13 +27,13 @@ Game::Game()
 	generate_field(str);
 }
 
-Game::Game(int w, int h)
+Game::Game(istream &in, int w, int h)
 {
 	char c;
 	string str;
 	for (int i = 0; i < h; ++i) {
 		for (int j = 0; j < w; ++j) {
-			cin >> c;
+			in >> c;
 			str += c;
 		}
 		str += '\n';
@@ -58,14 +58,14 @@ void Game::generate_field(string str)
 	while (getline(iss, row, '\n')) {
 		rows.push_back(row);
 	}
-	field.init(rows, &state, &metadata);
+	field.init(rows, state, metadata);
 }
 
 bool Game::move(Operation op)
 {
-	cerr << "[Game] Recieved operation " << op.get_char() << endl;
+	dbg_cerr << "[Game] Recieved operation " << op.get_char() << endl;
 	operations.push_back(op);
-	field.operate(op);
+	field.operate(op, state, metadata);
 	return true;
 }
 
@@ -85,14 +85,24 @@ void Game::print_game_states()
 	cerr << "score: " << state.get_score();
 	cerr << ", collected: " << state.get_collected();
 	cerr << ", remain: " << state.get_remain() << endl;
+	cerr << "state: " << state.get_condition_string() << endl;
 }
 
-Field* Game::get_field()
+string Game::get_operations()
 {
-	return &field;
+	string str;
+	for (int i = 0; i < operations.size(); ++i) {
+		str += operations[i].get_char();
+	}
+	return str;
 }
 
-GameState* Game::get_game_state()
+Field& Game::get_field()
 {
-	return &state;
+	return field;
+}
+
+GameState& Game::get_game_state()
+{
+	return state;
 }

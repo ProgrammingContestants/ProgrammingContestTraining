@@ -3,9 +3,9 @@
 
 #include <map>
 #include <iostream>
-#include <sstream>
 #include <string>
 using namespace std;
+#include "Common.h"
 
 class Metadata {
 	private:

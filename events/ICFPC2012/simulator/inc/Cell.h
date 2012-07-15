@@ -1,6 +1,8 @@
 #ifndef _LAMBDA_CELL_H
 #define _LAMBDA_CELL_H
 
+#include "Common.h"
+
 class Cell {
 	public:
 		enum CellType {
@@ -18,7 +20,7 @@ class Cell {
 
 		Cell(char c);
 		~Cell();
-
+		void flood();
 		void set_type(CellType t);
 		void set_type(CellType t, char id);
 		CellType get_type();

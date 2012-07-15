@@ -45,6 +45,11 @@ Cell::~Cell()
 {
 }
 
+void Cell::flood()
+{
+	flooded = true;
+}
+
 Cell::CellType Cell::get_type()
 {
 	return type;

@@ -1,6 +1,7 @@
 #ifndef _LAMBDA_GAMESTATE_H
 #define _LAMBDA_GAMESTATE_H
 
+#include "Common.h"
 #include "Condition.h"
 
 class GameState {
@@ -25,5 +26,6 @@ class GameState {
 		int get_collected();
 		Condition get_condition();
 		int get_score();
+		string get_condition_string();
 };
 #endif

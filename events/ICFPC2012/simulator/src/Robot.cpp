@@ -8,14 +8,13 @@ Robot::~Robot()
 {
 }
 
-void Robot::init(int _x, int _y, Metadata* md)
+void Robot::init(int _x, int _y, Metadata& metadata)
 {
 	x = _x;
 	y = _y;
 	dead = false;
-	metadata = md;
 
-	waterproof = metadata->get_waterproof();
+	waterproof = metadata.get_waterproof();
 	water_life = waterproof;
 }
 

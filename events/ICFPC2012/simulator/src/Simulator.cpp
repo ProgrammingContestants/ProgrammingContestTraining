@@ -5,7 +5,7 @@ Simulator::Simulator()
 	int w, h;
 	/*cin >> w >> h;*/
 
-	game = new Game();
+	game = new Game(cin);
 }
 
 Simulator::~Simulator()
