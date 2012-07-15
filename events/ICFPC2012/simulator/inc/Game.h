@@ -31,5 +31,8 @@ class Game {
 		Field& get_field();
 		GameState& get_game_state();
 		Metadata& get_metadata();
+
+		// for test
+		GameState& moves(string commands);
 };
 #endif
