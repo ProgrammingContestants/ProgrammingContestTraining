@@ -35,17 +35,22 @@ int Operation::get_dy()
 char Operation::get_char()
 {
 	switch (type) {
-		case LEFT
+		case LEFT:
 			return 'L';
-		case RIGHT
+		case RIGHT:
 			return 'R';
-		case UP
+		case UP:
 			return 'U';
-		case DOWN
+		case DOWN:
 			return 'D';
-		case WAIT
+		case WAIT:
 			return 'W';
-		case ABORT
+		case ABORT:
 			return 'A';
 	}
+}
+
+Operation::OperationType Operation::get_type()
+{
+	return type;
 }

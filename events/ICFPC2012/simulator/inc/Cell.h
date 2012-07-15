@@ -2,14 +2,7 @@
 #define _LAMBDA_CELL_H
 
 class Cell {
-	private:
-		CellType type;
-		bool flooded;
 	public:
-		Cell(CellType type);
-		~Cell();
-		CellType get_type();
-
 		enum CellType {
 			ROBOT,
 			WALL,
@@ -20,5 +13,16 @@ class Cell {
 			EARTH,
 			EMPTY
 		};
+
+		Cell(char c);
+		~Cell();
+		void set_type(CellType t);
+
+		CellType get_type();
+		char get_char();
+
+	private:
+		CellType type;
+		bool flooded;
 };
 #endif
