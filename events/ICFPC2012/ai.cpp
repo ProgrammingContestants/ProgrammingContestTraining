@@ -17,6 +17,7 @@
 #define arr_size(array) (sizeof(array)/sizeof(*array))
 
 using namespace std;
+typedef long long int llint;
 
 static Operation operations[] = {
     Operation(Operation::LEFT),
@@ -84,7 +85,7 @@ int main(int argc, char **argv)/*{{{*/
     int depth = 0;
     while (!game_queue->empty()) {
         depth++;
-        cerr << "depth:" << depth << ", state:" << game_queue->size() << ", hashes:" << hashes.size() << endl;
+        cerr << "depth:" << depth << ", state:" << game_queue->size() << ", hashes:" << hashes.size() << ", best_path:" << max_operations << endl;
         while (!game_queue->empty()) {
             Game game = game_queue->front(); game_queue->pop_front();
 
@@ -158,12 +159,30 @@ int main(int argc, char **argv)/*{{{*/
             }
 
         }
-        deque<Game> *tmp = next_queue;
-        next_queue = game_queue;
-        game_queue = tmp;
+        if (depth%3==0 && hashes.size()<100000 && next_queue->size()>1000) {
+            long score = 0;
+            for (deque<Game>::iterator it=next_queue->begin(); it!=next_queue->end(); it++) score += (*it).get_game_state().get_score();
+            long average = score/((long)next_queue->size());
+            while (!next_queue->empty()) {
+                if (next_queue->front().get_game_state().get_score()>=average || 1.0*rand()/RAND_MAX<0.1) game_queue->push_back(next_queue->front());
+                next_queue->pop_front();
+            }
+        } else if (depth%3==0 && next_queue->size()>1000) {
+            long score = 0;
+            for (deque<Game>::iterator it=next_queue->begin(); it!=next_queue->end(); it++) score += (*it).get_game_state().get_score();
+            long average = score/((long)next_queue->size());
+            while (!next_queue->empty()) {
+                if (next_queue->front().get_game_state().get_score()>=average && 1.0*rand()/RAND_MAX<0.1) game_queue->push_back(next_queue->front());
+                next_queue->pop_front();
+            }
+        } else {
+            deque<Game> *tmp = next_queue;
+            next_queue = game_queue;
+            game_queue = tmp;
+        }
     }
 
-    END_SEARCH:
+END_SEARCH:
 
     cout << max_operations << endl;
 
