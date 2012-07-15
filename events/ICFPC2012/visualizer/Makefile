@@ -1,5 +1,5 @@
 
-FILES = *.jar run.* *.cpp Makefile *.png *.txt
+FILES = *.jar run.* *.cpp Makefile *.png *.txt src
 
 default:
 	g++ stub.cpp -o stub
