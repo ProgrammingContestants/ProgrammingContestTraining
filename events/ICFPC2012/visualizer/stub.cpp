@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <string>
 #include <cstdio>
 #include <cstdlib>
@@ -11,13 +12,23 @@ char *field;
 
 void read_field()
 {
+	vector<string> lines;
 	string line;
+	while (getline(cin, line))
+	{
+		if (line.empty()) break;
+		lines.push_back(line);
+	}
+
+	W = (int)lines[0].length();
+	H = (int)lines.size();
+	field = new char[W * H];
+
 	for (int iy = 0; iy < H; iy++)
 	{
-		getline(cin, line);
 		for (int ix = 0; ix < W; ix++)
 		{
-			field[iy * W + ix] = line[ix];
+			field[iy * W + ix] = lines[iy][ix];
 		}
 	}
 }
@@ -35,9 +46,16 @@ void print_field()
 	cout.flush();
 }
 
-void print_score()
+void print_additional_information()
 {
+	// Score
 	cout << rand() % 501 << endl;
+
+	// Water Height
+	cout << rand() % H << endl;
+
+	// Current Water Proof
+	cout << rand() % 10 << endl;
 }
 
 void random_overwrite()
@@ -58,25 +76,33 @@ int main()
 
 	string line;
 
-	getline(cin, line);
-	W = atoi(line.c_str());
-
-	getline(cin, line);
-	H = atoi(line.c_str());
-
-	field = new char[W * H];
+	cerr << "reading field..." << endl;
 	read_field();
+	cerr << "read field ended." << endl;
 
-	for (;getline(cin, line);)
+	while (getline(cin, line))
+	{
+		if (line == "END-OF-INPUT") break;
+		cerr << "read metadata: " << line << endl;
+	}
+
+	// Initial Response
+	cout << "2" << endl;
+	cout << "A 1" << endl;
+	cout << "B 2" << endl;
+
+	while (getline(cin, line))
 	{
 		random_overwrite();
 
 		print_field();
-		print_score();
+		print_additional_information();
 
 		if (line[0] == 'A')
 		{
+			cout << "end" << endl;
 			break;
 		}
+		cout << "next" << endl;
 	}
 }
