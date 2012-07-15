@@ -59,6 +59,40 @@ void show_field(Field &field) {
 }
 
 
+bool search_path_to_goal(Game& game) {
+    queue<Game> game_queue;
+    set<long> hashes;
+
+    game_queue.push(game);
+    hashes.insert(str_hash(game.get_field().get_string()));
+
+    while (!game_queue.empty()) {
+        Game g = game_queue.front(); game_queue.pop();
+
+        Condition::ConditionType type = game.get_game_state().get_condition().get_type();
+        if (type==Condition::WINNING) {
+            update_score(game);
+            cerr << "WINNING score:" << max_score;
+            cerr << ", collected:" << game.get_game_state().get_collected() << endl;
+            show_field(game.get_field());
+            return true;
+        }
+
+        long field_hash = str_hash(g.get_field().get_string());
+        if (hashes.find(field_hash)!=hashes.end()) continue;
+        hashes.insert(field_hash);
+
+        for (int i=0; i<arr_size(operations)-1; i++) {
+            Game next_game = g;
+            next_game.move(operations[i]);
+
+            game_queue.push(next_game);
+        }
+    }
+    return false;
+}
+
+
 int main(int argc, char **argv)/*{{{*/
 {
     if (SIG_ERR == signal(SIGINT, sig_handle)) {
@@ -75,6 +109,11 @@ int main(int argc, char **argv)/*{{{*/
     }
     while (!game_queue.empty()) {
         Game game = game_queue.front(); game_queue.pop();
+
+
+        // if (game.get_game_state().get_remain()==0) {
+            // if (search_path_to_goal(game)) break;
+        // }
 
 
         Condition::ConditionType type = game.get_game_state().get_condition().get_type();
