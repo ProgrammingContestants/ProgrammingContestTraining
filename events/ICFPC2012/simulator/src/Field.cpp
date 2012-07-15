@@ -52,7 +52,7 @@ int Field::get_height()
 	return height;
 }
 
-Cell Field::get_cell(int x, int y)
+Cell &Field::get_cell(int x, int y)
 {
 	/* 1 origin, bottom left is (1, 1) */
 	--x; --y;

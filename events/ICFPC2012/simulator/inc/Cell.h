@@ -15,7 +15,7 @@ class Cell {
 			EARTH,
 			TRAMPOLINE,
 			TARGET,
-			EMPTY,
+			EMPTY
 		};
 
 		Cell(char c);
