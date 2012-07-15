@@ -22,10 +22,13 @@ void Simulator::run()
 	cerr << "input operation character" << endl;
 	while (cin >> c) {
 		Operation::OperationType t = char_to_optype(c);
-		if (t != Operation::UNKNOWN) {
-			game->move(t);
-			game->print_game_states();
+		if (t == Operation::UNKNOWN) {
+			continue;
 		}
+
+		game->move(t);
+		output();
+
 		if (game->is_finished()) {
 			break;
 		}
@@ -35,27 +38,42 @@ void Simulator::run()
 	game->print_game_states();
 }
 
+void Simulator::output()
+{
+	GameState& state = game->get_game_state();
+	game->print_field();
+	cout << state.get_score() << endl;
+	cout << game->get_water_height() << endl;
+	cout << game->get_robot_water_life() << endl;
+	if (game->is_finished()) {
+		cout << "end" << endl;
+	} else {
+		cout << "next" << endl;
+	}
+}
+
+
 Operation::OperationType Simulator::char_to_optype(char c)
 {
 	switch (c) {
 		case 'l':
 		case 'L':
-		case 'z':
+		case 'c':
 			return Operation::LEFT;
 
 		case 'r':
 		case 'R':
-		case 'c':
+		case 'b':
 			return Operation::RIGHT;
 
 		case 'u':
 		case 'U':
-		case 's':
+		case 'f':
 			return Operation::UP;
 
 		case 'd':
 		case 'D':
-		case 'x':
+		case 'v':
 			return Operation::DOWN;
 
 		case 'w':
@@ -65,6 +83,10 @@ Operation::OperationType Simulator::char_to_optype(char c)
 		case 'a':
 		case 'A':
 			return Operation::ABORT;
+
+		case 's':
+		case 'S':
+			return Operation::RAZOR;
 
 		default:
 			return Operation::UNKNOWN;

@@ -6,6 +6,7 @@
 class Cell {
 	public:
 		enum CellType {
+			ROBOT,
 			WALL,
 			ROCK,
 			LAMBDA,
@@ -24,6 +25,7 @@ class Cell {
 		void flood();
 		void set_type(CellType t);
 		void set_type(CellType t, char id);
+		bool is_flooded();
 		CellType get_type();
 		char get_char();
 		char get_id();

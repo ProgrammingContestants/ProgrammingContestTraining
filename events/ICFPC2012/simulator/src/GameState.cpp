@@ -1,6 +1,6 @@
 #include "../inc/GameState.h"
 
-GameState::GameState(): remain(0), collected(0), score(0)
+GameState::GameState(): remain(0), collected(0), score(0), razors(0)
 {
 }
 
@@ -26,6 +26,11 @@ void GameState::win()
 }
 
 void GameState::lose()
+{
+	condition.change(Condition::LOSING);
+}
+
+void GameState::drown()
 {
 	condition.change(Condition::LOSING);
 }
@@ -72,4 +77,19 @@ string GameState::get_condition_string()
 void GameState::set_remain(int r)
 {
 	remain = r;
+}
+
+int GameState::get_razors()
+{
+	return razors;
+}
+
+void GameState::collect_razor()
+{
+	razors++;
+}
+
+void GameState::use_razor()
+{
+	razors--;
 }

@@ -5,7 +5,7 @@ Cell::Cell(char c) : flooded(false), id(UNDEF_ID)
 {
 	switch (c) {
 		case 'R':
-			type = EMPTY;
+			type = ROBOT;
 			break;
 		case '#':
 			type = WALL;
@@ -56,6 +56,11 @@ void Cell::flood()
 	flooded = true;
 }
 
+bool Cell::is_flooded()
+{
+	return flooded;
+}
+
 Cell::CellType Cell::get_type()
 {
 	return type;
@@ -75,6 +80,8 @@ void Cell::set_type(CellType t, char id)
 char Cell::get_char()
 {
 	switch (type) {
+		case ROBOT:
+			return 'R';
 		case WALL:
 			return '#';
 		case ROCK:

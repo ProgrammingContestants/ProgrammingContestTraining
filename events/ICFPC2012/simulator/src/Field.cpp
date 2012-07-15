@@ -14,6 +14,8 @@ void Field::init(vector<string> rows, GameState& s, Metadata& metadata)
 	water = metadata.get_water();
 	flooding = metadata.get_flooding();
 
+	steps = 0;
+
 	width = rows[0].length();
 	height = rows.size();
 
@@ -79,6 +81,24 @@ string Field::get_string()
 	return str;
 }
 
+void Field::use_razor(GameState& state)
+{
+	if(state.get_razors()==0){
+		return;
+	}
+	int rx=robot.get_x();
+	int ry=robot.get_y();
+	for(int dx=-1;dx<=1;dx++){
+		for(int dy=-1;dy<=1;dy++){
+			Cell& c=get_cell_internal(rx+dx,ry+dy);
+			if(c.get_type()==Cell::BEARD){
+				c.set_type(Cell::EMPTY);
+			}
+		}
+	}
+	state.use_razor();
+}
+
 void Field::operate(Operation op, GameState& state, Metadata& metadata)
 {
 	++steps;
@@ -101,30 +121,43 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 		case Operation::ABORT:
 			state.abort();
 			return;
+		case Operation::RAZOR:
+			use_razor(state);
+			break;
 	}
 
 	/* Operation cost */
 	state.decrement_score();
 
-	if (dx != 0 || dy != 0) {
-		move_robot(dx, dy, state, metadata);
-	}
-	update(state);
+	move_robot(dx, dy, state, metadata);
+	update(state,metadata);
 
 	/* dead check */
 	if (robot.is_dead()) {
-		state.change_condition(Condition::LOSING);
+		state.lose();
 	}
+	if( !robot.breathe(cells[width * robot.get_y() + robot.get_x()].is_flooded()) ) {
+		/* Die by Drowing */
+		state.drown();
+	}
+
+	flood();
 }
 
 void Field::flood()
 {
-	if (steps % flooding == 0) {
+	if (flooding != 0 && steps % flooding == 0) {
+		cerr << "Flooding!" << endl;
 		++water;
 		for (int i = 0; i < width; i++) {
 			cells[width * (height - water) + i].flood();
 		}
 	}
+}
+
+int Field::get_water_height()
+{
+	return water;
 }
 
 bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
@@ -134,9 +167,14 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	int y = robot.get_y(), x = robot.get_x();
 	Cell &cell = get_cell_internal(x+dx,y+dy);
 	switch (cell.get_type()) {
+		/* Stay */
+		case Cell::ROBOT:
+			break;
+
 		/* Cannot move */
 		case Cell::WALL:
 		case Cell::CLIFT:
+		case Cell::BEARD:
 			return false;
 
 		/* Natural move */
@@ -151,6 +189,9 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 			break;
 		case Cell::OLIFT:
 			state.win();
+			break;
+		case Cell::RAZOR:
+			state.collect_razor();
 			break;
 
 		/* Rock pushing */
@@ -169,19 +210,20 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 		/* Trampoline jumping */
 		case Cell::TRAMPOLINE:
 			{
-			char target_id=metadata.get_target_id(cell.get_id());
-			for(int x=0;x<get_width();x++){
-				for(int y=0;y<get_height();y++){
-					Cell& c = get_cell_internal(x,y);
-					if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
-						robot.jump(x,y);
-						c.set_type(Cell::EMPTY);
-					}else if(c.get_type()==Cell::TRAMPOLINE&&metadata.get_target_id(c.get_id())==target_id){
-						c.set_type(Cell::EMPTY);
+				char target_id=metadata.get_target_id(cell.get_id());
+				for(int tx=0;tx<get_width();tx++){
+					for(int ty=0;ty<get_height();ty++){
+						Cell& c = get_cell_internal(tx,ty);
+						if(c.get_type()==Cell::TARGET&&c.get_id()==target_id){
+							get_cell_internal(x,y).set_type(Cell::EMPTY);
+							robot.set_location(tx,ty);
+							c.set_type(Cell::ROBOT);
+						}else if(c.get_type()==Cell::TRAMPOLINE&&metadata.get_target_id(c.get_id())==target_id){
+							c.set_type(Cell::EMPTY);
+						}
 					}
 				}
-			}
-			return true;
+				return true;
 			}
 
 		default:
@@ -189,15 +231,17 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	}
 	dbg_cerr << "[Field] robot move: (dx, dy) = (" << dx << ", " << dy << ")" << endl;
 	robot.move(dx, dy);
-	cells[width * (y+dy) + (x+dx)].set_type(Cell::EMPTY);
+	get_cell_internal(x,y).set_type(Cell::EMPTY);
+	get_cell_internal(x+dx,y+dy).set_type(Cell::ROBOT);
 	return true;
 }
 
-void Field::update(GameState& state)
+void Field::update(GameState& state, Metadata& metadata)
 {
 	vector<Cell> old = cells;
 	for (int i = height - 1; i >= 0; --i) {
-		 for (int j = 0; j < width; ++j) {
+		for (int j = 0; j < width; ++j) {
+			/* ROCK */
 			if (old[width * (i) + (j)].get_type() == Cell::ROCK) {
 				if (i + 1 < height
 						&& old[width * (i+1) + (j)].get_type() == Cell::EMPTY) {
@@ -232,9 +276,25 @@ void Field::update(GameState& state)
 					}
 				}
 			}
+
+			/* LIFT */
 			if (old[width * (i) + (j)].get_type() == Cell::CLIFT
 					&& state.get_remain() == 0) {
 				cells[width * (i) + (j)].set_type(Cell::OLIFT);
+			}
+
+			/* BEARD */
+			if (old[width * (i) + (j)].get_type() == Cell::BEARD) {
+				cells[width * (i) + (j)].set_type(Cell::BEARD);
+				if(steps%metadata.get_growth()==0){
+					for (int dx=-1;dx<=1;dx++){
+						for (int dy=-1;dy<=1;dy++){
+							if(old[width * (i+dy) + (j+dx)].get_type() == Cell::EMPTY){
+								cells[width * (i+dy) + (j+dx)].set_type(Cell::BEARD);
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -253,4 +313,9 @@ void Field::print()
 Robot& Field::get_robot()
 {
 	return robot;
+}
+
+const int Field::get_steps()
+{
+	return steps;
 }

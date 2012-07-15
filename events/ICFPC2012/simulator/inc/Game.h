@@ -6,7 +6,6 @@
 #include "Field.h"
 #include "Operation.h"
 
-#include <istream>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -27,10 +26,13 @@ class Game {
 		bool is_finished();
 		void print_game_states();
 		string get_operations();
+		void print_field();
 
 		Field& get_field();
 		GameState& get_game_state();
 		Metadata& get_metadata();
+		int get_water_height();
+		int get_robot_water_life();
 
 		// for test
 		GameState& moves(string commands);

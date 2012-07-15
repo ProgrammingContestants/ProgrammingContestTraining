@@ -47,6 +47,10 @@ char Operation::get_char()
 			return 'W';
 		case ABORT:
 			return 'A';
+		case RAZOR:
+			return 'S';
+		default:
+			assert(0);
 	}
 }
 
