@@ -88,8 +88,8 @@ void Field::use_razor(GameState& state)
 	}
 	int rx=robot.get_x();
 	int ry=robot.get_y();
-	for(int dx=-1;dx<=1;dx+=2){
-		for(int dy=-1;dy<=1;dy+=2){
+	for(int dx=-1;dx<=1;dx++){
+		for(int dy=-1;dy<=1;dy++){
 			Cell& c=get_cell_internal(rx+dx,ry+dy);
 			if(c.get_type()==Cell::BEARD){
 				c.set_type(Cell::EMPTY);
@@ -273,10 +273,10 @@ void Field::update(GameState& state, Metadata& metadata)
 			if (old[width * (i) + (j)].get_type() == Cell::BEARD) {
 				cells[width * (i) + (j)].set_type(Cell::BEARD);
 				if(steps%metadata.get_growth()==0){
-					for (int dx=-1;dx<=1;dx+=2){
-						for (int dy=-1;dy<=1;dy+=2){
-							if(old[width * (i) + (j)].get_type() == Cell::EMPTY){
-								cells[width * (i) + (j)].set_type(Cell::BEARD);
+					for (int dx=-1;dx<=1;dx++){
+						for (int dy=-1;dy<=1;dy++){
+							if(old[width * (i+dy) + (j+dx)].get_type() == Cell::EMPTY){
+								cells[width * (i+dy) + (j+dx)].set_type(Cell::BEARD);
 							}
 						}
 					}
