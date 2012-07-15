@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dbg_5fcerr',['dbg_cerr',['../_common_8h.html#a9c421ceb6e9bd05ce52d453eeb29e7aa',1,'Common.h']]],
   ['dead',['dead',['../class_robot.html#a2cd1e0e5bd7350ab402bb07b50070f98',1,'Robot']]],
   ['decrement_5fscore',['decrement_score',['../class_game_state.html#a0505aab3715e15696406ba6c50d745d5',1,'GameState']]],
   ['destroy',['destroy',['../class_robot.html#abc45cc78a7c9bad20c521c9b3afdd94c',1,'Robot']]],

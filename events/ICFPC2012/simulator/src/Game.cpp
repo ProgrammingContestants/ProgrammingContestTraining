@@ -88,3 +88,42 @@ Metadata& Game::get_metadata()
 {
 	return metadata;
 }
+
+// for test
+GameState& Game::moves(string commands)
+{
+  for (int i = 0; i < commands.size(); i++) {
+    Operation::OperationType op;
+    switch (commands[i]) {
+      case 'l':
+      case 'L':
+         op = Operation::LEFT;
+
+      case 'r':
+      case 'R':
+        op = Operation::RIGHT;
+
+      case 'u':
+      case 'U':
+        op = Operation::UP;
+
+      case 'd':
+      case 'D':
+        op = Operation::DOWN;
+
+      case 'w':
+      case 'W':
+        op = Operation::WAIT;
+
+      case 'a':
+      case 'A':
+        op = Operation::ABORT;
+
+      default:
+        op = Operation::UNKNOWN;
+      operations.push_back(op);
+      field.operate(op, state, metadata);
+    }
+  }
+  return state;
+}

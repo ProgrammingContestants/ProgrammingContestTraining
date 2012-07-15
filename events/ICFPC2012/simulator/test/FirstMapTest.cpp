@@ -11,6 +11,13 @@ TEST(FirstMapTest, map1_parse) {
   ASSERT_EQ(6, field.get_height());
 }
 
+TEST(FirstMapTest, map1_play) {
+  ifstream ifs("map/contest1.map");
+  Game game(ifs);
+  GameState s = game.moves("LDRDDUULLLDDL");
+  ASSERT_EQ(212, s.get_score());
+}
+
 TEST(FirstMapTest, map2_parse) {
   ifstream ifs("map/contest2.map");
   Game game(ifs);

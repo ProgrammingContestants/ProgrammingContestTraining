@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,27 +96,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3e804c92273d9159f413f227b535c672"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a3e804c92273d9159f413f227b535c672">Field</a> ()</td></tr>
 <tr class="memitem:a45d6e6d09b8f8e46de62b40119d62c60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a45d6e6d09b8f8e46de62b40119d62c60">~Field</a> ()</td></tr>
-<tr class="memitem:ada08767f0b3fa554cd5c7e5323e0e39d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ada08767f0b3fa554cd5c7e5323e0e39d">init</a> (vector&lt; string &gt; rows, <a class="el" href="class_game_state.html">GameState</a> *s, <a class="el" href="class_metadata.html">Metadata</a> *md)</td></tr>
+<tr class="memitem:a5999301cae67d87ff080027569ad43f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a5999301cae67d87ff080027569ad43f6">init</a> (vector&lt; string &gt; rows, <a class="el" href="class_game_state.html">GameState</a> &amp;s, <a class="el" href="class_metadata.html">Metadata</a> &amp;metadata)</td></tr>
 <tr class="memitem:a26989f437fe23a47a838027e26a98838"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a26989f437fe23a47a838027e26a98838">get_width</a> ()</td></tr>
 <tr class="memitem:a4b9b1baf11c6598304dbceb263b22616"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a4b9b1baf11c6598304dbceb263b22616">get_height</a> ()</td></tr>
-<tr class="memitem:a41cfb7f036e801f14697cc054bc1e863"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cell.html">Cell</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a41cfb7f036e801f14697cc054bc1e863">get_cell</a> (int x, int y)</td></tr>
+<tr class="memitem:ace48d9ace8b3278d75486ad1df82aa1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cell.html">Cell</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ace48d9ace8b3278d75486ad1df82aa1c">get_cell</a> (int x, int y)</td></tr>
+<tr class="memitem:ae3b34cc8626ce6b6a9fb3a2b15854e78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cell.html">Cell</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ae3b34cc8626ce6b6a9fb3a2b15854e78">get_cell_internal</a> (int x, int y)</td></tr>
 <tr class="memitem:a86cd05f57a0c24e9cbd408e3084deab9"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a86cd05f57a0c24e9cbd408e3084deab9">get_string</a> ()</td></tr>
-<tr class="memitem:a09acf7c2579d20eac9bb6eaf3b6dd2f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a09acf7c2579d20eac9bb6eaf3b6dd2f2">operate</a> (<a class="el" href="class_operation.html">Operation</a> op)</td></tr>
+<tr class="memitem:a24c0ef017626f62c08515117cc2d8b53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a24c0ef017626f62c08515117cc2d8b53">operate</a> (<a class="el" href="class_operation.html">Operation</a> op, <a class="el" href="class_game_state.html">GameState</a> &amp;state, <a class="el" href="class_metadata.html">Metadata</a> &amp;metadata)</td></tr>
 <tr class="memitem:a969c08bc0d7ab0a322e80fcae8b072f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a969c08bc0d7ab0a322e80fcae8b072f1">print</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:aa8ecc74b248fa211b4a641a5d70c75e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#aa8ecc74b248fa211b4a641a5d70c75e9">move_robot</a> (int dx, int dy)</td></tr>
-<tr class="memitem:af48801e4d3d1b92ba7c094132fb56cb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#af48801e4d3d1b92ba7c094132fb56cb3">update</a> ()</td></tr>
+<tr class="memitem:accd70a6960417a5663b184165c937089"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#accd70a6960417a5663b184165c937089">move_robot</a> (int dx, int dy, <a class="el" href="class_game_state.html">GameState</a> &amp;state, <a class="el" href="class_metadata.html">Metadata</a> &amp;metadata)</td></tr>
+<tr class="memitem:a33c0298c1908cf341a701686a0705659"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a33c0298c1908cf341a701686a0705659">update</a> (<a class="el" href="class_game_state.html">GameState</a> &amp;state)</td></tr>
+<tr class="memitem:ae77b9941efc9abaa2738c4ceb1b93a9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ae77b9941efc9abaa2738c4ceb1b93a9d">flood</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:ab9be47385a62167e020c049f0513f468"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ab9be47385a62167e020c049f0513f468">steps</a></td></tr>
+<tr class="memitem:a01bf3c252b138c658c5aa3f6dec2a421"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a01bf3c252b138c658c5aa3f6dec2a421">flooding</a></td></tr>
+<tr class="memitem:a21b8b683219088a9fb7e64dbe4dc2738"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a21b8b683219088a9fb7e64dbe4dc2738">water</a></td></tr>
 <tr class="memitem:ae4c63348414c54e94f4381a46d8607dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ae4c63348414c54e94f4381a46d8607dd">width</a></td></tr>
 <tr class="memitem:a1415e0c5d74c47bef138f00a6fd0e70a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a1415e0c5d74c47bef138f00a6fd0e70a">height</a></td></tr>
 <tr class="memitem:a1fbe36a575f0dde4bdd64480f5cd65bf"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_cell.html">Cell</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a1fbe36a575f0dde4bdd64480f5cd65bf">cells</a></td></tr>
-<tr class="memitem:a8c9e501e4d9386f14e75c5f87ec6fea7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_metadata.html">Metadata</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a8c9e501e4d9386f14e75c5f87ec6fea7">metadata</a></td></tr>
 <tr class="memitem:ac28806994e5c50555f0dd60538215529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_robot.html">Robot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#ac28806994e5c50555f0dd60538215529">rob</a></td></tr>
-<tr class="memitem:a6633ecc988636301b6d072103d22df1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_game_state.html">GameState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field.html#a6633ecc988636301b6d072103d22df1c">state</a></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3e804c92273d9159f413f227b535c672"></a>
@@ -150,12 +153,61 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a41cfb7f036e801f14697cc054bc1e863"></a>
+<a class="anchor" id="ae77b9941efc9abaa2738c4ceb1b93a9d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Field::flood </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ace48d9ace8b3278d75486ad1df82aa1c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_cell.html">Cell</a> Field::get_cell </td>
+          <td class="memname"><a class="el" href="class_cell.html">Cell</a> &amp; Field::get_cell </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae3b34cc8626ce6b6a9fb3a2b15854e78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cell.html">Cell</a> &amp; Field::get_cell_internal </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -221,7 +273,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ada08767f0b3fa554cd5c7e5323e0e39d"></a>
+<a class="anchor" id="a5999301cae67d87ff080027569ad43f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -234,14 +286,14 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_metadata.html">Metadata</a> *&#160;</td>
-          <td class="paramname"><em>md</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_metadata.html">Metadata</a> &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -253,7 +305,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa8ecc74b248fa211b4a641a5d70c75e9"></a>
+<a class="anchor" id="accd70a6960417a5663b184165c937089"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -270,7 +322,19 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dy</em>&#160;</td>
+          <td class="paramname"><em>dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_metadata.html">Metadata</a> &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -287,7 +351,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a09acf7c2579d20eac9bb6eaf3b6dd2f2"></a>
+<a class="anchor" id="a24c0ef017626f62c08515117cc2d8b53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -295,8 +359,24 @@ Private Attributes</h2></td></tr>
           <td class="memname">void Field::operate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_operation.html">Operation</a>&#160;</td>
-          <td class="paramname"><em>op</em></td><td>)</td>
+          <td class="paramname"><em>op</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_metadata.html">Metadata</a> &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -318,7 +398,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af48801e4d3d1b92ba7c094132fb56cb3"></a>
+<a class="anchor" id="a33c0298c1908cf341a701686a0705659"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -328,7 +408,8 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Field::update </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -362,7 +443,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1415e0c5d74c47bef138f00a6fd0e70a"></a>
+<a class="anchor" id="a01bf3c252b138c658c5aa3f6dec2a421"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -370,7 +451,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int Field::height</td>
+          <td class="memname">int Field::flooding</td>
         </tr>
       </table>
   </td>
@@ -382,7 +463,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8c9e501e4d9386f14e75c5f87ec6fea7"></a>
+<a class="anchor" id="a1415e0c5d74c47bef138f00a6fd0e70a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -390,7 +471,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_metadata.html">Metadata</a>* Field::metadata</td>
+          <td class="memname">int Field::height</td>
         </tr>
       </table>
   </td>
@@ -422,7 +503,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6633ecc988636301b6d072103d22df1c"></a>
+<a class="anchor" id="ab9be47385a62167e020c049f0513f468"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -430,7 +511,27 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_game_state.html">GameState</a>* Field::state</td>
+          <td class="memname">int Field::steps</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a21b8b683219088a9fb7e64dbe4dc2738"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Field::water</td>
         </tr>
       </table>
   </td>
@@ -469,7 +570,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 15 2012 13:25:37 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 15 2012 16:57:01 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>
