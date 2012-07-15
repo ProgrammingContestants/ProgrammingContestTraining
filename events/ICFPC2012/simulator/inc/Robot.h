@@ -25,5 +25,6 @@ class Robot {
 
 		int get_x();
 		int get_y();
+		int get_water_life();
 };
 #endif

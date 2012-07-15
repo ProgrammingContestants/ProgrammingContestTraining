@@ -28,7 +28,6 @@ void Simulator::run()
 
 		game->move(t);
 		output();
-		game->print_game_states();
 
 		if (game->is_finished()) {
 			break;
@@ -41,8 +40,11 @@ void Simulator::run()
 
 void Simulator::output()
 {
+	GameState& state = game->get_game_state();
 	game->print_field();
-	/* TODO: extra */
+	cout << state.get_score() << endl;
+	cout << game->get_water_height() << endl;
+	cout << game->get_robot_water_life() << endl;
 	if (game->is_finished()) {
 		cout << "end" << endl;
 	} else {

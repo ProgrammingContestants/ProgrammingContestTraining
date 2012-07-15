@@ -31,6 +31,8 @@ class Game {
 		Field& get_field();
 		GameState& get_game_state();
 		Metadata& get_metadata();
+		int get_water_height();
+		int get_robot_water_life();
 
 		// for test
 		GameState& moves(string commands);

@@ -56,6 +56,11 @@ int Robot::get_y()
 	return y;
 }
 
+int Robot::get_water_life()
+{
+	return water_life;
+}
+
 bool Robot::set_location(int dest_x,int dest_y){
 	x=dest_x;
 	y=dest_y;

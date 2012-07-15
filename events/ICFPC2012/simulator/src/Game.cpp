@@ -96,6 +96,17 @@ Metadata& Game::get_metadata()
 	return metadata;
 }
 
+int Game::get_water_height()
+{
+	return field.get_water_height();
+}
+
+int Game::get_robot_water_life()
+{
+	Robot& robot = field.get_robot();
+	return robot.get_water_life();
+}
+
 // for test
 GameState& Game::moves(string commands)
 {
