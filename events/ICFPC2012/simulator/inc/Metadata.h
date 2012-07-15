@@ -6,9 +6,10 @@ class Metadata {
 		int flooding;
 		int waterproof;
 	public:
-		Metadata(int w, int f, int wp);
+		Metadata();
 		~Metadata();
 
+		void init(int w, int f, int wp);
 		int get_water();
 		int get_flooding();
 		int get_waterproof();

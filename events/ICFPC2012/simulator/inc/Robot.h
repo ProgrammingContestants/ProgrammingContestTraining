@@ -13,8 +13,10 @@ class Robot {
 		int water_life;
 		bool dead;
 	public:
-		Robot(int x, int y, Metadata* md);
+		Robot();
 		~Robot();
+
+		void init(int _x, int _y, Metadata* md);
 		bool move(int dx, int dy);
 		bool move(int dx, int dy, bool flooded);
 		bool is_dead();

@@ -16,4 +16,4 @@ $(EXECUTABLE): $(OBJECTS)
 .PHONY: clean
 
 clean:
-	rm src/*.o $(EXECUTABLE) tags main.o
+	rm src/*.o $(EXECUTABLE)

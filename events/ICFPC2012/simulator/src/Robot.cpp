@@ -1,13 +1,22 @@
 #include "../inc/Robot.h"
 
-Robot::Robot(int x, int y, Metadata* md) : x(x), y(y), dead(false), metadata(md)
+Robot::Robot()
 {
-	waterproof = metadata->get_waterproof();
-	water_life = waterproof;
 }
 
 Robot::~Robot()
 {
+}
+
+void Robot::init(int _x, int _y, Metadata* md)
+{
+	x = _x;
+	y = _y;
+	dead = false;
+	metadata = md;
+
+	waterproof = metadata->get_waterproof();
+	water_life = waterproof;
 }
 
 bool Robot::move(int dx, int dy)

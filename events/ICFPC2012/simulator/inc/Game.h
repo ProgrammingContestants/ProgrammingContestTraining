@@ -13,16 +13,15 @@ using namespace std;
 
 class Game {
 	private:
-		Metadata* metadata;
-		Field* field;
-		GameState* state;
+		Metadata metadata;
+		Field field;
+		GameState state;
 		void generate_field(string str);
 		vector<Operation> operations;
 	public:
 		Game();
-		Game(Metadata* md);
-		Game(int w, int h, Metadata* md);
-		Game(string str, Metadata* md);
+		Game(int w, int h);
+		Game(string str);
 		~Game();
 		bool move(Operation op);
 		bool is_finished();
