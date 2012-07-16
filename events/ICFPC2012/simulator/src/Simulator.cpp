@@ -14,6 +14,7 @@ Simulator::Simulator()
 
 Simulator::~Simulator()
 {
+	delete game;
 }
 
 void Simulator::run()
