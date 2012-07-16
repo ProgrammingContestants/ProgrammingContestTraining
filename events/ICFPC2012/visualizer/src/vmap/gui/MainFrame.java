@@ -1,6 +1,7 @@
 package vmap.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -43,6 +46,10 @@ public class MainFrame extends JFrame
 	private JButton buttonRestart;
 	private JCheckBox checkSuppressStdErr;
 	private JSlider sliderChipSize;
+	
+	private JTextArea inputMoves;
+	private JButton buttonCommitMoves;
+	
 	private JLabel labelScore;
 	private JTextField sentCommands;
 	private Runner runner;
@@ -50,6 +57,9 @@ public class MainFrame extends JFrame
 	private int turn;
 	
 	private ConsoleWindow console;
+	
+	private boolean commiting;
+	private Thread commitingThread;
 	
 	public MainFrame()
 	{
@@ -107,11 +117,34 @@ public class MainFrame extends JFrame
 		});
 		
 		JPanel toolPanel = new JPanel();
-		toolPanel.add(buttonInitialize);
-		toolPanel.add(buttonKill);
-		toolPanel.add(buttonRestart);
-		toolPanel.add(checkSuppressStdErr);
-		toolPanel.add(sliderChipSize);
+		toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.Y_AXIS));
+		
+		JPanel panel0 = new JPanel();
+		panel0.add(buttonInitialize);
+		panel0.add(buttonKill);
+		panel0.add(buttonRestart);
+		panel0.add(checkSuppressStdErr);
+		panel0.add(sliderChipSize);
+		
+		inputMoves = new JTextArea();
+		inputMoves.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 12));
+		buttonCommitMoves = new JButton("Commit");
+		buttonCommitMoves.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				startCommits();
+			}
+		});
+		
+		JPanel panel1 = new JPanel(new BorderLayout());
+		panel1.add(new JLabel("Input Moves:"), BorderLayout.WEST);
+		panel1.add(new JScrollPane(inputMoves), BorderLayout.CENTER);
+		panel1.add(buttonCommitMoves, BorderLayout.EAST);
+		panel1.setPreferredSize(new Dimension(100, 60));
+		
+		toolPanel.add(panel0);
+		toolPanel.add(panel1);
 		add(toolPanel, BorderLayout.NORTH);
 		
 		sentCommands = new JTextField(30);
@@ -219,6 +252,7 @@ public class MainFrame extends JFrame
 		runner = null;
 		
 		buttonKill.setEnabled(false);
+		endCommits();
 	}
 	
 	private void startSimulation(String input)
@@ -262,24 +296,73 @@ public class MainFrame extends JFrame
 		}
 	}
 	
-	/*
-	private TrampolineMappings readTrampolineMappings()
+	private void startCommits()
 	{
-		TrampolineMappings tmap = new TrampolineMappings();
+		if (commiting) return;
 		
-		int n = Integer.parseInt(runner.readString(1));
-		for (int i = 0; i < n; i++)
+		commiting = true;
+		buttonCommitMoves.setEnabled(false);
+		inputMoves.setEditable(false);
+		
+		commitingThread = new Thread()
 		{
-			String[] pair = runner.readString(1).split(" ");
-			if (pair.length == 2)
+			public void run()
 			{
-				tmap.set(pair[0].charAt(0), pair[1].charAt(0) - '0');
+				try
+				{
+					while (commiting)
+					{
+						commitOneMove();
+						Thread.sleep(500);
+					}
+				}
+				catch (InterruptedException e)
+				{
+				}
+			}
+		};
+		commitingThread.setDaemon(true);
+		commitingThread.start();
+	}
+	
+	private void endCommits()
+	{
+		if (!commiting) return;
+		
+		buttonCommitMoves.setEnabled(true);
+		inputMoves.setEditable(true);
+		commiting = false;
+	}
+	
+	private void commitOneMove()
+	{
+		if (runner == null) return;
+		
+		String moves = inputMoves.getText();
+		
+		if (moves.isEmpty()) return;
+		
+		while (!moves.isEmpty())
+		{
+			char c = Character.toUpperCase(moves.charAt(0));
+			moves = moves.substring(1);
+			if ("LRUDSWA".indexOf(c) != -1)
+			{
+				String cmd = Character.toString(c);
+				sentCommands.setText(sentCommands.getText() + cmd);
+				doCommand(cmd);
+				break;
 			}
 		}
 		
-		return tmap;
+		inputMoves.setText(moves);
+		if (moves.isEmpty())
+		{
+			endCommits();
+		}
+		
+		inputMoves.setCaretPosition(0);
 	}
-	*/
 	
 	// simple parser
 	private TrampolineMappings makeTrampolineMappings(String input)
@@ -335,6 +418,7 @@ public class MainFrame extends JFrame
 			runner.exit();
 			runner = null;
 			buttonKill.setEnabled(false);
+			endCommits();
 		}
 	}
 	
@@ -368,7 +452,7 @@ public class MainFrame extends JFrame
 	{
 		public void keyPressed(KeyEvent e)
 		{
-			if (runner == null) return;
+			if (runner == null || commiting) return;
 			if (processInput(e.getKeyCode())) e.consume();
 		}
 	}
