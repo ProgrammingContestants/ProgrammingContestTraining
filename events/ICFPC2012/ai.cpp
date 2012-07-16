@@ -119,7 +119,32 @@ int main(int argc, char **argv)/*{{{*/
         cerr << "depth:" << depth << ", state:" << game_queue->size() << ", hashes:" << hashes.size() << ", best_path:" << max_operations << endl;
         while (!game_queue->empty()) {
             Game game = game_queue->front(); game_queue->pop_front();
+			int prev_score = game.get_game_state().get_score();
 
+			Operation::OperationType prev_op;
+			string prev_op_str = game.get_operations();
+			if (prev_op_str != "") {
+				char prev_op_ch = prev_op_str.at(prev_op_str.length() - 1);
+				switch(prev_op_ch) {
+					case 'L':
+						prev_op = Operation::LEFT;
+						break;
+					case 'R':
+						prev_op = Operation::RIGHT;
+						break;
+					case 'U':
+						prev_op = Operation::UP;
+						break;
+					case 'D':
+						prev_op = Operation::DOWN;
+						break;
+					case 'W':
+						prev_op = Operation::WAIT;
+						break;
+				}
+			} else {
+				prev_op = Operation::UNKNOWN;
+			}
 
             if (game.get_game_state().get_remain()==0) {
                 // search path for goal
@@ -166,6 +191,7 @@ int main(int argc, char **argv)/*{{{*/
                     Game next_game = game;
                     next_game.move(operations[i]);
                     update_score(next_game);
+					int score = next_game.get_game_state().get_score();
 
                     Condition::ConditionType type = next_game.get_game_state().get_condition().get_type();
                     if (type==Condition::LOSING) continue;
@@ -174,6 +200,13 @@ int main(int argc, char **argv)/*{{{*/
                         show_field(next_game.get_field());
                         goto END_SEARCH;
                     }
+
+					if (operations[i].get_type() == Operation::DOWN
+							&& prev_op == Operation::UP
+							&& score < prev_score) {
+						/* Just Digged upper Earth */
+						continue;
+					}
 
                     long field_hash = str_hash(next_game.get_field().get_string());
                     if (hashes.find(field_hash)!=hashes.end()) continue;
