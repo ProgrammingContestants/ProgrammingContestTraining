@@ -124,6 +124,7 @@ int main(int argc, char **argv)/*{{{*/
         while (!game_queue->empty()) {
             Game game = game_queue->front(); game_queue->pop_front();
 			int prev_score = game.get_game_state().get_score();
+			int prev_razors = game.get_game_state().get_razors();
 
 			Operation::OperationType prev_op;
 			string prev_op_str = game.get_operations();
@@ -145,6 +146,8 @@ int main(int argc, char **argv)/*{{{*/
 					case 'W':
 						prev_op = Operation::WAIT;
 						break;
+					case 'S':
+						prev_op = Operation::RAZOR;
 					default:
 						prev_op = Operation::UNKNOWN;
 				}
@@ -201,6 +204,7 @@ int main(int argc, char **argv)/*{{{*/
 					}
                     update_score(next_game);
 					int score = next_game.get_game_state().get_score();
+					int razors = next_game.get_game_state().get_razors();
 
                     Condition::ConditionType type = next_game.get_game_state().get_condition().get_type();
                     if (type==Condition::LOSING) continue;
@@ -210,16 +214,17 @@ int main(int argc, char **argv)/*{{{*/
                         goto END_SEARCH;
                     }
 
-					/* TODO: What about getting razor? */
 					if (operations[i].get_type() == Operation::DOWN
 							&& prev_op == Operation::UP
-							&& score < prev_score) {
+							&& score < prev_score
+							&& razors <= prev_razors) {
 						/* Just Digged upper Earth */
 						continue;
 					}
 					if (operations[i].get_type() == Operation::UP
 							&& prev_op == Operation::DOWN
-							&& score < prev_score) {
+							&& score < prev_score
+							&& razors <= prev_razors) {
 						/* Just Digged lower Earth */
 						continue;
 					}
