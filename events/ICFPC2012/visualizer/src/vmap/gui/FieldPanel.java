@@ -86,6 +86,10 @@ public class FieldPanel extends JPanel
 	public void setChipSize(int size)
 	{
 		chipSize = size;
+		
+		Dimension dim = getActualFieldSize();
+		drawingImage = new BufferedImage(dim.width, dim.height, Transparency.TRANSLUCENT);
+		
 		recalcPreferredSize();
 		repaint();
 		revalidate();
