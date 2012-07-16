@@ -141,6 +141,8 @@ int main(int argc, char **argv)/*{{{*/
 					case 'W':
 						prev_op = Operation::WAIT;
 						break;
+					default:
+						prev_op = Operation::UNKNOWN;
 				}
 			} else {
 				prev_op = Operation::UNKNOWN;
