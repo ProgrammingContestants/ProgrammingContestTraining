@@ -144,7 +144,6 @@ int main(int argc, char **argv)/*{{{*/
                     }
 
                     for (int i=0; i<arr_size(operations); i++) {
-						cerr << "Operation: " << operations[i].get_char() << endl;
                         Game next_game = g;
                         next_game.move(operations[i]);
                         update_score(next_game);
