@@ -201,10 +201,17 @@ int main(int argc, char **argv)/*{{{*/
                         goto END_SEARCH;
                     }
 
+					/* TODO: What about getting razor? */
 					if (operations[i].get_type() == Operation::DOWN
 							&& prev_op == Operation::UP
 							&& score < prev_score) {
 						/* Just Digged upper Earth */
+						continue;
+					}
+					if (operations[i].get_type() == Operation::UP
+							&& prev_op == Operation::DOWN
+							&& score < prev_score) {
+						/* Just Digged lower Earth */
 						continue;
 					}
 
