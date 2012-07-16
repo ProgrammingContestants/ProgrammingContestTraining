@@ -3,7 +3,6 @@ package vmap.gui;
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -260,8 +259,7 @@ public class MainFrame extends JFrame
 			previousInput = input;
 			buttonRestart.setEnabled(true);
 			
-			// TODO: until supported by the simulator
-			//fieldPanel.setTrampolineMapping(readTrampolineMappings());
+			fieldPanel.setTrampolineMapping(makeTrampolineMappings(input));
 			
 			FieldMap m = FieldMap.fromString(fieldText);
 			setGameModel(m);
@@ -288,6 +286,7 @@ public class MainFrame extends JFrame
 		}
 	}
 	
+	/*
 	private TrampolineMappings readTrampolineMappings()
 	{
 		TrampolineMappings tmap = new TrampolineMappings();
@@ -303,6 +302,25 @@ public class MainFrame extends JFrame
 		}
 		
 		return tmap;
+	}
+	*/
+	
+	// simple parser
+	private TrampolineMappings makeTrampolineMappings(String input)
+	{
+		TrampolineMappings tm = new TrampolineMappings();
+		String[] lines = input.split("\n");
+		for (int i = 0; i < lines.length; i++)
+		{
+			String s = lines[i];
+			if (!s.startsWith("Trampoline")) continue;
+			String[] r = s.split(" "); // Trampoline $0 targets $1
+			if (r.length == 4)
+			{
+				tm.set(r[1].charAt(0), r[3].charAt(0) - '0');
+			}
+		}
+		return tm;
 	}
 	
 	private void doCommand(String command)

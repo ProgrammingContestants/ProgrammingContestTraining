@@ -29,7 +29,7 @@ import vmap.model.TrampolineMappings;
 
 public class FieldPanel extends JPanel
 {
-	private static final Stroke STROKE_ARROW = new BasicStroke(3.0F);
+	private static final Stroke STROKE_ARROW = new BasicStroke(2.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	private static final int FADE_COUNT = 20;
 	
 	private Image img;
@@ -206,7 +206,7 @@ public class FieldPanel extends JPanel
 	
 	private static void drawArrowEdge(Graphics2D g, Point p0, Point p1)
 	{
-		g.setColor(new Color(255, 128, 0, 128));
+		g.setColor(new Color(192, 192, 255, 128));
 		g.setStroke(STROKE_ARROW);
 		
 		double a = Math.atan2(p1.y - p0.y, p1.x - p0.x);
