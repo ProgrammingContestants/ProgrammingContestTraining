@@ -138,7 +138,10 @@ bool Field::operate(Operation op, GameState& state, Metadata& metadata)
 	/* Operation cost */
 	state.decrement_score();
 
-	move_robot(dx, dy, state, metadata);
+	if (!move_robot(dx, dy, state, metadata)) {
+		ret = false;
+	}
+	
 	update(state,metadata);
 
 	/* dead check */
@@ -178,7 +181,7 @@ bool Field::move_robot(int dx, int dy, GameState& state, Metadata& metadata)
 	switch (cell.get_type()) {
 		/* Stay */
 		case Cell::ROBOT:
-			break;
+			return true; // staying is meaningful
 
 		/* Cannot move */
 		case Cell::WALL:
