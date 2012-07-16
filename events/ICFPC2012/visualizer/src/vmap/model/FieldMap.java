@@ -17,6 +17,7 @@ public class FieldMap
 		CMAP['.'] = Cell.EARTH;
 		CMAP['W'] = Cell.BEARD;
 		CMAP['!'] = Cell.RAZOR;
+		CMAP['@'] = Cell.HOROCK;
 		CMAP[' '] = Cell.EMPTY;
 	}
 	
@@ -96,13 +97,18 @@ public class FieldMap
 			return null;
 		}
 		
-		int nx = lines[0].length(), ny = lines.length;
+		int nx = 0, ny = lines.length;
+		for (int i = 0; i < lines.length; i++)
+		{
+			nx = Math.max(nx, lines[i].length());
+		}
 		FieldMap m = new FieldMap(nx, ny);
 		for (int iy = 0; iy < ny; iy++)
 		{
-			for (int ix = 0; ix < nx; ix++)
+			String l = lines[iy];
+			for (int ix = 0; ix < l.length(); ix++)
 			{
-				char c = lines[iy].charAt(ix);
+				char c = l.charAt(ix);
 				if ('A' <= c && c <= 'I')
 				{
 					m.trampolines[c - 'A'] = new int[] { ix, iy };

@@ -13,5 +13,6 @@ public enum Cell
 	TARGET,
 	BEARD,
 	RAZOR,
+	HOROCK,
 	EMPTY,
 }
