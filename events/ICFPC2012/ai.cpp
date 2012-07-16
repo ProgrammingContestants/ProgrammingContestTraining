@@ -28,6 +28,7 @@ static Operation operations[] = {
     Operation(Operation::UP),
     Operation(Operation::DOWN),
     Operation(Operation::WAIT),
+    Operation(Operation::RAZOR),
 };
 static Operation op_abort = Operation(Operation::ABORT);
 
@@ -74,7 +75,8 @@ void move_with_best_prunning(deque<Game> *src, deque<Game> *dst) {
     for (deque<Game>::iterator it=src->begin(); it!=src->end(); it++) score += (*it).get_game_state().get_score();
     long average = score/((long)src->size());
     while (!src->empty()) {
-        if (src->front().get_game_state().get_score()>=average) dst->push_back(src->front());
+        if (src->front().get_game_state().get_score()>=average
+				|| src->front().get_field().has_used_razor()) dst->push_back(src->front());
         src->pop_front();
     }
 }
@@ -91,7 +93,9 @@ void move_with_random_best_prunning(deque<Game> *src, deque<Game> *dst, double r
     for (deque<Game>::iterator it=src->begin(); it!=src->end(); it++) score += (*it).get_game_state().get_score();
     long average = score/((long)src->size());
     while (!src->empty()) {
-        if (src->front().get_game_state().get_score()>=average && 1.0*rand()/RAND_MAX<r) dst->push_back(src->front());
+        if ( (src->front().get_game_state().get_score()>=average
+					|| src->front().get_field().has_used_razor() )
+				&& 1.0*rand()/RAND_MAX<r) dst->push_back(src->front());
         src->pop_front();
     }
 }
@@ -120,7 +124,6 @@ int main(int argc, char **argv)/*{{{*/
         while (!game_queue->empty()) {
             Game game = game_queue->front(); game_queue->pop_front();
 
-
             if (game.get_game_state().get_remain()==0) {
                 // search path for goal
 
@@ -141,6 +144,7 @@ int main(int argc, char **argv)/*{{{*/
                     }
 
                     for (int i=0; i<arr_size(operations); i++) {
+						cerr << "Operation: " << operations[i].get_char() << endl;
                         Game next_game = g;
                         next_game.move(operations[i]);
                         update_score(next_game);
@@ -164,7 +168,10 @@ int main(int argc, char **argv)/*{{{*/
 
                 for (int i=0; i<arr_size(operations); i++) {
                     Game next_game = game;
-                    next_game.move(operations[i]);
+                    if (!next_game.move(operations[i])) {
+						/* vain operation */
+						continue;
+					}
                     update_score(next_game);
 
                     Condition::ConditionType type = next_game.get_game_state().get_condition().get_type();
