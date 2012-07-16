@@ -81,11 +81,12 @@ string Field::get_string()
 	return str;
 }
 
-void Field::use_razor(GameState& state)
+bool Field::use_razor(GameState& state)
 {
 	if(state.get_razors()==0){
-		return;
+		return false;
 	}
+	int cut_cnt = 0;
 	int rx=robot.get_x();
 	int ry=robot.get_y();
 	for(int dx=-1;dx<=1;dx++){
@@ -93,14 +94,18 @@ void Field::use_razor(GameState& state)
 			Cell& c=get_cell_internal(rx+dx,ry+dy);
 			if(c.get_type()==Cell::BEARD){
 				c.set_type(Cell::EMPTY);
+				++cut_cnt;
 			}
 		}
 	}
 	state.use_razor();
+	return cut_cnt != 0;
 }
 
-void Field::operate(Operation op, GameState& state, Metadata& metadata)
+/* false -> meaningless operation (temp: razor only) */
+bool Field::operate(Operation op, GameState& state, Metadata& metadata)
 {
+	bool ret = true;
 	++steps;
 	int dx = 0, dy = 0;
 	switch(op.get_type()) {
@@ -120,9 +125,11 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 			break;
 		case Operation::ABORT:
 			state.abort();
-			return;
+			return true;
 		case Operation::RAZOR:
-			use_razor(state);
+			if (!use_razor(state)) {
+				ret = false;
+			}
 			break;
 	}
 
@@ -142,6 +149,7 @@ void Field::operate(Operation op, GameState& state, Metadata& metadata)
 	}
 
 	flood();
+	return ret;
 }
 
 void Field::flood()

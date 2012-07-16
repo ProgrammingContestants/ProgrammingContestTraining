@@ -29,7 +29,7 @@ class Field
 		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
 		void update(GameState& state, Metadata& metadata);
 		void flood();
-		void use_razor(GameState& state);
+		bool use_razor(GameState& state);
 
 	public:
 		Field();
@@ -42,7 +42,7 @@ class Field
 		Cell &get_cell_internal(int x, int y);
 		int get_water_height();
 		string get_string();
-		void operate(Operation op, GameState& state, Metadata& metadata);
+		bool operate(Operation op, GameState& state, Metadata& metadata);
 		void print();
 		Robot& get_robot();
 		const int get_steps();
