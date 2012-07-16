@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 import vmap.model.TreeNode;
@@ -49,6 +51,10 @@ public class TreeDrawPanel extends JPanel
 			throw new RuntimeException("The root node must be contained the node set.");
 		
 		root = r;
+		
+		setPreferredSize(calcPreferredSize());
+		revalidate();
+		repaint();
 	}
 	
 	protected void paintComponent(Graphics g)
@@ -77,7 +83,6 @@ public class TreeDrawPanel extends JPanel
 		queue.add(root);
 		pos.put(root, new int[] { 0, 0 });
 		
-		int depth = 1;
 		while (!queue.isEmpty())
 		{
 			TreeNode node = queue.poll();
@@ -94,12 +99,10 @@ public class TreeDrawPanel extends JPanel
 				if (!visited.contains(n))
 				{
 					queue.add(n);
-					pos.put(n, new int[] { depth, i });
+					pos.put(n, new int[] { p[0] + 1, i });
 					i++;
 				}
 			}
-			
-			depth++;
 		}
 		
 		// draw edges
@@ -109,10 +112,12 @@ public class TreeDrawPanel extends JPanel
 		{
 			visited.add(n0);
 			Point p0 = locations.get(n0);
+			if (p0 == null) continue;
 			for (Map.Entry<TreeNode, String> ent : n0.getChildren())
 			{
 				TreeNode n1 = ent.getKey();
 				Point p1 = locations.get(n1);
+				if (p1 == null) continue;
 				drawArrowEdge(g, p0, p1, ent.getValue());
 				if (!visited.contains(n1)) visited.add(n1);
 			}
@@ -131,6 +136,15 @@ public class TreeDrawPanel extends JPanel
 		}
 	}
 	
+	private Dimension calcPreferredSize()
+	{
+		Dimension dim = calcTreeSize();
+		Insets pad = getPadding();
+		dim.width += pad.left + pad.right;
+		dim.height += pad.top + pad.bottom;
+		return dim;
+	}
+	
 	private Insets getPadding()
 	{
 		return new Insets(40, 40, 40, 40);
@@ -145,21 +159,29 @@ public class TreeDrawPanel extends JPanel
 	private Dimension calcTreeSize()
 	{
 		int[] bd = calcMaxBreadthAndMaxDepth();
-		return new Dimension(2 * nodeR + (bd[1] - 1) * padding, 2 * nodeR + (bd[0] - 1) * padding);
+		return new Dimension(2 * nodeR + bd[1] * padding, 2 * nodeR + (bd[0] - 1) * padding);
 	}
 	
 	private int[] calcMaxBreadthAndMaxDepth()
 	{
-		int maxB = 0, maxD = 1;
+		int maxB = 0, maxD = 0;
 		
 		Set<TreeNode> visited = new HashSet<TreeNode>();
 		Queue<TreeNode> queue = new LinkedList<TreeNode>();
+		Map<TreeNode, Integer> depthMap = new HashMap<TreeNode, Integer>();
+		depthMap.put(root, 0);
 		queue.add(root);
 		while (!queue.isEmpty())
 		{
 			TreeNode node = queue.poll();
 			if (visited.contains(node)) continue;
 			visited.add(node);
+			
+			int depth = depthMap.get(node);
+			depthMap.remove(node);
+			maxD = Math.max(maxD, depth);
+			
+			depth++;
 			
 			int i = 0;
 			for (Map.Entry<TreeNode, String> entry : node.getChildren())
@@ -168,11 +190,11 @@ public class TreeDrawPanel extends JPanel
 				if (!visited.contains(n))
 				{
 					queue.add(n);
+					depthMap.put(n, depth);
 					i++;
 				}
 			}
 			maxB = Math.max(maxB, i);
-			if (i != 0) maxD++;
 		}
 		return new int[] { maxB, maxD };
 	}
@@ -183,13 +205,16 @@ public class TreeDrawPanel extends JPanel
 		
 		double a = Math.atan2(p1.y - p0.y, p1.x - p0.x);
 		double cosA = Math.cos(a), sinA = Math.sin(a);
-		int x0 = (int)(p0.x + NODE_R * cosA), y0 = (int)(p0.y + NODE_R * sinA);
-		int x1 = (int)(p1.x - NODE_R * cosA), y1 = (int)(p1.y - NODE_R * sinA);
-		g.drawLine(x0, y0, x1, y1);
+		double x0 = p0.x + NODE_R * cosA, y0 = p0.y + NODE_R * sinA;
+		double x1 = p1.x - NODE_R * cosA, y1 = p1.y - NODE_R * sinA;
+		g.drawLine((int)Math.round(x0), (int)Math.round(y0), (int)Math.round(x1), (int)Math.round(y1));
 		
-		double l = 8, b = Math.toRadians(30);
-		g.drawLine(x1, y1, (int)(x1 - l * Math.cos(a + b)), (int)(y1 - l * Math.sin(a + b)));
-		g.drawLine(x1, y1, (int)(x1 - l * Math.cos(a - b)), (int)(y1 - l * Math.sin(a - b)));
+		double l = 10, b = Math.toRadians(30);
+		Polygon triangle = new Polygon();
+		triangle.addPoint((int)Math.round(x1), (int)Math.round(y1));
+		triangle.addPoint((int)Math.round(x1 - l * Math.cos(a + b)), (int)Math.round(y1 - l * Math.sin(a + b)));
+		triangle.addPoint((int)Math.round(x1 - l * Math.cos(a - b)), (int)Math.round(y1 - l * Math.sin(a - b)));
+		g.fill(triangle);
 		
 		FontMetrics fm = g.getFontMetrics();
 		int w = fm.stringWidth(label);
@@ -201,20 +226,17 @@ public class TreeDrawPanel extends JPanel
 	
 	public static void main(String[] args)
 	{
-		TreeNode[] nodes = new TreeNode[10];
-		for (int i = 0; i < nodes.length; i++)
+		final int V = 20, E = 30;
+		
+		TreeNode[] nodes = new TreeNode[V];
+		for (int i = 0; i < V; i++) nodes[i] = new TreeNode(i);
+		
+		for (int i = 0; i < E; i++)
 		{
-			nodes[i] = new TreeNode(i);
+			int a = (int)(Math.random() * V);
+			int b = (int)(Math.random() * V);
+			if (a != b) TreeNode.addEdge(nodes[a], nodes[b], "");
 		}
-		TreeNode.addEdge(nodes[0], nodes[1], "0 -> 1");
-		TreeNode.addEdge(nodes[1], nodes[2], "1 -> 2");
-		TreeNode.addEdge(nodes[1], nodes[3], "1 -> 3");
-		TreeNode.addEdge(nodes[1], nodes[4], "1 -> 4");
-		TreeNode.addEdge(nodes[3], nodes[5], "3 -> 5");
-		TreeNode.addEdge(nodes[3], nodes[6], "3 -> 6");
-		TreeNode.addEdge(nodes[3], nodes[7], "3 -> 7");
-		TreeNode.addEdge(nodes[3], nodes[8], "3 -> 8");
-		TreeNode.addEdge(nodes[4], nodes[0], "4 -> 0");
 		
 		TreeDrawPanel p = new TreeDrawPanel();
 		
@@ -223,7 +245,7 @@ public class TreeDrawPanel extends JPanel
 		
 		JFrame f = new JFrame("Tree test");
 		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		f.add(p);
+		f.add(new JScrollPane(p));
 		f.pack();
 		f.setLocationRelativeTo(null);
 		f.setVisible(true);

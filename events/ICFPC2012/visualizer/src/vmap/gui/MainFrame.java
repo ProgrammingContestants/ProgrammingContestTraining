@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -39,7 +37,6 @@ public class MainFrame extends JFrame
 	private String previousInput;
 	
 	private FieldPanel fieldPanel;
-	private JScrollPane scrollPane;
 	
 	private JButton buttonInitialize;
 	private JButton buttonKill;
@@ -62,32 +59,9 @@ public class MainFrame extends JFrame
 		fieldPanel.setFocusable(true);
 		fieldPanel.addKeyListener(new InputHandler());
 		
-		scrollPane = new JScrollPane(fieldPanel);
-		scrollPane.setPreferredSize(new Dimension(400, 300));
-		scrollPane.getViewport().addMouseListener(new MouseListener()
-		{
-			public void mouseReleased(MouseEvent e)
-			{
-			}
-			
-			public void mousePressed(MouseEvent e)
-			{
-				System.out.println("pressed");
-			}
-			
-			public void mouseExited(MouseEvent e)
-			{
-			}
-			
-			public void mouseEntered(MouseEvent e)
-			{
-			}
-			
-			public void mouseClicked(MouseEvent e)
-			{
-			}
-		});
-		add(scrollPane);
+		JScrollPane sp = new JScrollPane(fieldPanel);
+		sp.setPreferredSize(new Dimension(400, 300));
+		add(sp);
 		
 		buttonInitialize = new JButton("Init");
 		buttonInitialize.addActionListener(new ActionListener()
@@ -264,6 +238,8 @@ public class MainFrame extends JFrame
 			FieldMap m = FieldMap.fromString(fieldText);
 			setGameModel(m);
 			buttonKill.setEnabled(true);
+			sentCommands.setText("");
+			fieldPanel.requestFocus();
 		}
 	}
 	
