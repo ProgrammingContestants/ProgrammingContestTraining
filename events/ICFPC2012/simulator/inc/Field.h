@@ -26,6 +26,8 @@ class Field
 
 		Robot robot;
 
+		bool used_razor;
+
 		bool move_robot(int dx, int dy, GameState& state, Metadata& metadata);
 		void update(GameState& state, Metadata& metadata);
 		void flood();
@@ -46,5 +48,6 @@ class Field
 		void print();
 		Robot& get_robot();
 		const int get_steps();
+		bool has_used_razor();
 };
 #endif

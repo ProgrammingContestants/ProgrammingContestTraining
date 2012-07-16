@@ -108,6 +108,7 @@ bool Field::operate(Operation op, GameState& state, Metadata& metadata)
 	bool ret = true;
 	++steps;
 	int dx = 0, dy = 0;
+	used_razor = false;
 	switch(op.get_type()) {
 		case Operation::LEFT:
 			dx = -1;
@@ -127,6 +128,7 @@ bool Field::operate(Operation op, GameState& state, Metadata& metadata)
 			state.abort();
 			return true;
 		case Operation::RAZOR:
+			used_razor = true;
 			if (!use_razor(state)) {
 				ret = false;
 			}
@@ -352,4 +354,9 @@ Robot& Field::get_robot()
 const int Field::get_steps()
 {
 	return steps;
+}
+
+bool Field::has_used_razor()
+{
+	return used_razor;
 }
