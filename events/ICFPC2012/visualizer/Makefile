@@ -16,7 +16,7 @@ default: java tar
 tar: $(ARCHIVE)
 
 $(ARCHIVE): $(TAR_INCLUDE)
-	tar -cvzf $(ARCHIVE) $(TAR_INCLUDE)
+	tar -czf $(ARCHIVE) $(TAR_INCLUDE)
 
 java: jar $(RUN_SH) $(RUN_BAT)
 

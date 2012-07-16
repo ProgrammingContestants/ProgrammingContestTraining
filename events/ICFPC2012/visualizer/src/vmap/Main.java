@@ -57,4 +57,13 @@ Trampoline A targets 1
 Trampoline B targets 2
 Growth 25
 Razors 1
+
+##L###########
+#!!!.WR#D**..#
+#.*A.WW#..1..#
+#C*....#.  \.#
+#.\\\.3#@@.\.#
+#2.....**B..E#
+##############
+
 */
